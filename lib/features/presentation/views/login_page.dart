@@ -1,6 +1,8 @@
 import 'package:chemiplay/features/presentation/viewmodels/login_viewmodel.dart';
 import 'package:chemiplay/injection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -17,13 +19,17 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class _LoginView extends StatelessWidget {
+class _LoginView extends StatefulWidget {
+  @override
+  State<_LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<_LoginView> {
   final _viewModel = getIt<LoginViewModel>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
       body: _viewModel.isLoading
           ? const Center(child: CircularProgressIndicator())
           : _buildLoginForm(context),
@@ -31,16 +37,70 @@ class _LoginView extends StatelessWidget {
   }
 
   Widget _buildLoginForm(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            await _viewModel.loginWithGoogle();
-          },
-          child: const Text('Login'),
+    return CustomScrollView(
+      slivers: [
+        SliverFillViewport(
+          delegate: SliverChildListDelegate([]),
+          viewportFraction: 0.8,
         ),
-      ),
+        SliverList(
+            delegate: SliverChildListDelegate([
+          _buildLogo,
+          Expanded(child: _buildDivider),
+          _buildLoginWithGoogle,
+        ]))
+      ],
+    );
+  }
+
+  Widget get _buildLogo => Container(
+        width: 352,
+        height: 247,
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+        child: SvgPicture.asset('assets/images/img_logo.svg'),
+      );
+
+  Widget get _buildDivider => Container(
+        height: 18,
+        margin: const EdgeInsets.only(left: 24, right: 24, bottom: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const <Widget>[
+            Expanded(
+                child: Divider(
+              color: Colors.grey,
+            )),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  '간편 로그인',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey),
+                )),
+            Expanded(
+                child: Divider(
+              color: Colors.grey,
+            )),
+          ],
+        ),
+      );
+
+  Widget get _buildLoginWithGoogle {
+    return IconButton(
+      onPressed: () async {
+        final result = await _viewModel.loginWithGoogle();
+        if (result) {
+          if (mounted) {
+            context.goNamed('home');
+          } else {
+            /// TODO
+          }
+        } else {
+          /// TODO 로그인 실패 시 처리
+        }
+      },
+      icon: Image.asset('assets/icons/icon_google.png'),
+      iconSize: 50,
     );
   }
 }

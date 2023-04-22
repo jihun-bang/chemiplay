@@ -25,5 +25,5 @@ void setupDependencies() {
   getIt.registerSingleton<LoginUseCase>(LoginUseCase(getIt(), getIt()));
 
   // ViewModels
-  getIt.registerSingleton<LoginViewModel>(LoginViewModel(getIt(), getIt()));
+  getIt.registerSingleton<LoginViewModel>(LoginViewModel(getIt()));
 }
