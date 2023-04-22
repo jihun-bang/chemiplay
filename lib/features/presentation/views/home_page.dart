@@ -1,6 +1,7 @@
 import 'package:chemiplay/injection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../viewmodels/user_viewmodel.dart';
@@ -13,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _viewModel = getIt<UserViewModel>();
   final List<String> _games = [
     '모든게임',
     '리그오브레전드',
@@ -24,7 +26,6 @@ class _HomePageState extends State<HomePage> {
     '오버워치',
     '리그오브레전드: 와일드 리프트'
   ];
-
   String _selGame = '모든게임';
 
   void _showCupertinoPopup() {
@@ -49,12 +50,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _goProfile() {
+    if (_viewModel.isAuthenticated) {
+    } else {
+      context.goNamed('login');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => getIt<UserViewModel>(),
       child: Consumer<UserViewModel>(builder: (_, viewModel, ___) {
-        print('user=${viewModel.user?.toJson()}');
         return Scaffold(
           body: CustomScrollView(
             slivers: [
@@ -68,6 +75,11 @@ class _HomePageState extends State<HomePage> {
             type: BottomNavigationBarType.fixed,
             showSelectedLabels: false,
             showUnselectedLabels: false,
+            onTap: (index) {
+              if (index == 3) {
+                _goProfile();
+              }
+            },
             items: [
               const BottomNavigationBarItem(
                   icon: Icon(CupertinoIcons.home), label: '홈'),
