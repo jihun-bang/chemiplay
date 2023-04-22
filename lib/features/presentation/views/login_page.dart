@@ -30,26 +30,13 @@ class _LoginViewState extends State<_LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _viewModel.isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _buildLoginForm(context),
-    );
-  }
-
-  Widget _buildLoginForm(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverFillViewport(
-          delegate: SliverChildListDelegate([]),
-          viewportFraction: 0.8,
-        ),
-        SliverList(
-            delegate: SliverChildListDelegate([
-          _buildLogo,
-          Expanded(child: _buildDivider),
+      body: Column(
+        children: [
+          Expanded(child: _buildLogo),
+          _buildDivider,
           _buildLoginWithGoogle,
-        ]))
-      ],
+        ],
+      ),
     );
   }
 
@@ -86,21 +73,24 @@ class _LoginViewState extends State<_LoginView> {
       );
 
   Widget get _buildLoginWithGoogle {
-    return IconButton(
-      onPressed: () async {
-        final result = await _viewModel.loginWithGoogle();
-        if (result) {
-          if (mounted) {
-            context.goNamed('home');
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 86),
+      child: IconButton(
+        onPressed: () async {
+          final result = await _viewModel.loginWithGoogle();
+          if (result) {
+            if (mounted) {
+              context.goNamed('home');
+            } else {
+              /// TODO
+            }
           } else {
-            /// TODO
+            /// TODO 로그인 실패 시 처리
           }
-        } else {
-          /// TODO 로그인 실패 시 처리
-        }
-      },
-      icon: Image.asset('assets/icons/icon_google.png'),
-      iconSize: 50,
+        },
+        icon: Image.asset('assets/icons/icon_google.png'),
+        iconSize: 50,
+      ),
     );
   }
 }
