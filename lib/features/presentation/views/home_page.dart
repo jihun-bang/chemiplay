@@ -59,48 +59,45 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => getIt<UserViewModel>(),
-      child: Consumer<UserViewModel>(builder: (_, viewModel, ___) {
-        return Scaffold(
-          body: CustomScrollView(
-            slivers: [
-              _buildGames,
-              _buildBanner,
-              _buildTitle,
-              _buildUserCards,
-            ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            onTap: (index) {
-              if (index == 3) {
-                _goProfile();
-              }
-            },
-            items: [
-              const BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.home), label: '홈'),
-              const BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.rectangle_dock), label: '피드'),
-              const BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.bubble_left_fill), label: '채팅'),
-              BottomNavigationBarItem(
-                  icon: viewModel.isAuthenticated
-                      ? CircleAvatar(
-                          radius: 12,
-                          backgroundImage: NetworkImage(
-                              viewModel.user!.profileImageUrl ?? ''),
-                        )
-                      : const Icon(CupertinoIcons.profile_circled),
-                  label: '프로필'),
-            ],
-          ),
-        );
-      }),
-    );
+    return Consumer<UserViewModel>(builder: (_, viewModel, ___) {
+      return Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            _buildGames,
+            _buildBanner,
+            _buildTitle,
+            _buildUserCards,
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          onTap: (index) {
+            if (index == 3) {
+              _goProfile();
+            }
+          },
+          items: [
+            const BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.home), label: '홈'),
+            const BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.rectangle_dock), label: '피드'),
+            const BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.bubble_left_fill), label: '채팅'),
+            BottomNavigationBarItem(
+                icon: viewModel.isAuthenticated
+                    ? CircleAvatar(
+                        radius: 12,
+                        backgroundImage:
+                            NetworkImage(viewModel.user!.profileImageUrl ?? ''),
+                      )
+                    : const Icon(CupertinoIcons.profile_circled),
+                label: '프로필'),
+          ],
+        ),
+      );
+    });
   }
 
   Widget get _buildGames {

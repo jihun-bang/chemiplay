@@ -17,19 +17,17 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => getIt<LoginViewModel>(),
-        child: Consumer<LoginViewModel>(builder: (_, __, ___) {
-          return Scaffold(
-            body: Column(
-              children: [
-                Expanded(child: _buildLogo),
-                _buildDivider,
-                _buildLoginWithGoogle,
-              ],
-            ),
-          );
-        }));
+    return Consumer<LoginViewModel>(builder: (_, __, ___) {
+      return Scaffold(
+        body: Column(
+          children: [
+            Expanded(child: _buildLogo),
+            _buildDivider,
+            _buildLoginWithGoogle,
+          ],
+        ),
+      );
+    });
   }
 
   Widget get _buildLogo => Container(
