@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>364552677945-38pikp7u4qd26dfbpe973c8fjtnm66gj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.364552677945-38pikp7u4qd26dfbpe973c8fjtnm66gj</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB6lyFT6Z_S9LKuZT_fFZbhPh2RFZ63FA8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>364552677945</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.chemiplay.chemiplay</string>
+	<key>PROJECT_ID</key>
+	<string>gigi-chemiplay</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gigi-chemiplay.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:364552677945:ios:c04226db42e816b84dbbe8</string>
+</dict>
+</plist>

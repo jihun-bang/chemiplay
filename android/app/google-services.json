@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "364552677945",
+    "project_id": "gigi-chemiplay",
+    "storage_bucket": "gigi-chemiplay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364552677945:android:585ced86856749f44dbbe8",
+        "android_client_info": {
+          "package_name": "com.chemiplay.chemiplay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364552677945-avagiicbpb6j6jfi5judn6m4d9fq3c52.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkZWN5NPchokHTB9ikJPtPef_jQLZTewc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364552677945-avagiicbpb6j6jfi5judn6m4d9fq3c52.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
