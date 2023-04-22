@@ -5,39 +5,31 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => getIt<LoginViewModel>(),
-      child: Consumer<LoginViewModel>(builder: (_, __, ___) {
-        return _LoginView();
-      }),
-    );
-  }
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginView extends StatefulWidget {
-  @override
-  State<_LoginView> createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<_LoginView> {
+class _LoginPageState extends State<LoginPage> {
   final _viewModel = getIt<LoginViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(child: _buildLogo),
-          _buildDivider,
-          _buildLoginWithGoogle,
-        ],
-      ),
-    );
+    return ChangeNotifierProvider(
+        create: (context) => getIt<LoginViewModel>(),
+        child: Consumer<LoginViewModel>(builder: (_, __, ___) {
+          return Scaffold(
+            body: Column(
+              children: [
+                Expanded(child: _buildLogo),
+                _buildDivider,
+                _buildLoginWithGoogle,
+              ],
+            ),
+          );
+        }));
   }
 
   Widget get _buildLogo => Container(

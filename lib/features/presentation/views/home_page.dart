@@ -1,29 +1,18 @@
-import 'package:chemiplay/features/presentation/viewmodels/login_viewmodel.dart';
 import 'package:chemiplay/injection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+import '../viewmodels/user_viewmodel.dart';
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => getIt<LoginViewModel>(),
-      child: Consumer<LoginViewModel>(builder: (_, __, ___) {
-        return _HomeView();
-      }),
-    );
-  }
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeView extends StatefulWidget {
-  @override
-  State<_HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<_HomeView> {
+class _HomePageState extends State<HomePage> {
   final List<String> _games = [
     '모든게임',
     '리그오브레전드',
@@ -62,29 +51,43 @@ class _HomeViewState extends State<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          _buildGames,
-          _buildBanner,
-          _buildTitle,
-          _buildUserCards,
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: '홈'),
-          BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.rectangle_dock), label: '피드'),
-          BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.bubble_left_fill), label: '채팅'),
-          BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.profile_circled), label: '프로필'),
-        ],
-      ),
+    return ChangeNotifierProvider(
+      create: (context) => getIt<UserViewModel>(),
+      child: Consumer<UserViewModel>(builder: (_, viewModel, ___) {
+        print('user=${viewModel.user?.toJson()}');
+        return Scaffold(
+          body: CustomScrollView(
+            slivers: [
+              _buildGames,
+              _buildBanner,
+              _buildTitle,
+              _buildUserCards,
+            ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            items: [
+              const BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.home), label: '홈'),
+              const BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.rectangle_dock), label: '피드'),
+              const BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.bubble_left_fill), label: '채팅'),
+              BottomNavigationBarItem(
+                  icon: viewModel.isAuthenticated
+                      ? CircleAvatar(
+                          radius: 12,
+                          backgroundImage: NetworkImage(
+                              viewModel.user!.profileImageUrl ?? ''),
+                        )
+                      : const Icon(CupertinoIcons.profile_circled),
+                  label: '프로필'),
+            ],
+          ),
+        );
+      }),
     );
   }
 

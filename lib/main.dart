@@ -1,5 +1,6 @@
 import 'package:chemiplay/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
@@ -32,8 +33,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routerDelegate: routes.routerDelegate,
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.touch,
+          PointerDeviceKind.stylus,
+          PointerDeviceKind.unknown
+        },
+      ),
+      routeInformationProvider: routes.routeInformationProvider,
       routeInformationParser: routes.routeInformationParser,
+      routerDelegate: routes.routerDelegate,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
