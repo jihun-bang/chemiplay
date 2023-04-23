@@ -105,10 +105,10 @@ class _HomePageState extends State<HomePage> {
 
   Widget get _buildGames {
     return SliverAppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         toolbarHeight: 0,
         pinned: true,
-        floating: false,
+        floating: true,
         snap: false,
         expandedHeight: 48,
         flexibleSpace: Container(

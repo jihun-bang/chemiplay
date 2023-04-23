@@ -132,9 +132,9 @@ class ProfileCard extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(color: MyColors.gray_01)),
         ),
-        const Text(
-          '온라인',
-          style: TextStyle(
+        Text(
+          isOnline ? '온라인' : '오프라인',
+          style: const TextStyle(
             fontWeight: FontWeight.w600,
             letterSpacing: -0.02,
             color: Colors.white,
