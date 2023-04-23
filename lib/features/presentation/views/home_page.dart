@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:chemiplay/injection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../viewmodels/user_viewmodel.dart';
+import '../widgets/profile_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,8 +35,8 @@ class _HomePageState extends State<HomePage> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          height: 200,
+        return SizedBox(
+          height: 300,
           child: CupertinoPicker(
             itemExtent: 30,
             onSelectedItemChanged: (int index) {
@@ -186,17 +189,39 @@ class _HomePageState extends State<HomePage> {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 250,
           childAspectRatio: 170 / 250,
           mainAxisSpacing: 5,
           crossAxisSpacing: 5,
         ),
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            return Container(
-              color: Colors.blue,
-            );
+            Random random = Random();
+            bool randomBoolean = random.nextBool();
+            bool status = random.nextBool();
+            if (randomBoolean) {
+              return ProfileCard(
+                isOnline: status,
+                name: '탑솔러 방지훈',
+                rating: 4.9,
+                game: '리그오브레전드',
+                description: '탑의신입니다.',
+                cost: 1000,
+                imageUrl:
+                    'https://firebasestorage.googleapis.com/v0/b/gigi-chemiplay.appspot.com/o/profile_image%2Fuser_1.jpg?alt=media&token=fa6b5113-9b03-45ca-9c0d-b0871cf98f0b',
+              );
+            } else {
+              return ProfileCard(
+                  isOnline: status,
+                  name: '새게임아이디',
+                  rating: 4.6,
+                  game: '리그오브레전드',
+                  description: '브론즈 소농민 대기중',
+                  cost: 1100,
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/gigi-chemiplay.appspot.com/o/profile_image%2Fuser_2.jpg?alt=media&token=2d827a1a-b61a-4902-a163-b35a9d545fe5');
+            }
           },
           childCount: 20,
         ),
