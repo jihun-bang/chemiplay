@@ -1,4 +1,4 @@
-import '../../data/models/user_model.dart';
+import '../../data/models/user.dart';
 
 abstract class AuthRepository {
   Future<UserModel?> loginWithGoogle(String idToken);

@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../core/services/auth_service.dart';
 import '../../../core/utils/constants.dart';
-import '../../data/models/user_model.dart';
+import '../../data/models/user.dart';
 import '../repositories/auth_repository.dart';
 
 class LoginUseCase {

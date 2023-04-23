@@ -75,7 +75,7 @@ class ProfileCard extends StatelessWidget {
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: onTap,
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),

@@ -196,7 +196,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisSpacing: 5,
         ),
         delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
+          (_, int index) {
             Random random = Random();
             bool randomBoolean = random.nextBool();
             bool status = random.nextBool();
@@ -210,17 +210,24 @@ class _HomePageState extends State<HomePage> {
                 cost: 1000,
                 imageUrl:
                     'https://firebasestorage.googleapis.com/v0/b/gigi-chemiplay.appspot.com/o/profile_image%2Fuser_1.jpg?alt=media&token=fa6b5113-9b03-45ca-9c0d-b0871cf98f0b',
+                onTap: () {
+                  context.pushNamed('user', params: {'id': '탑솔러 방지훈'});
+                },
               );
             } else {
               return ProfileCard(
-                  isOnline: status,
-                  name: '새게임아이디',
-                  rating: 4.6,
-                  game: '리그오브레전드',
-                  description: '브론즈 소농민 대기중',
-                  cost: 1100,
-                  imageUrl:
-                      'https://firebasestorage.googleapis.com/v0/b/gigi-chemiplay.appspot.com/o/profile_image%2Fuser_2.jpg?alt=media&token=2d827a1a-b61a-4902-a163-b35a9d545fe5');
+                isOnline: status,
+                name: '새게임아이디',
+                rating: 4.6,
+                game: '리그오브레전드',
+                description: '브론즈 소농민 대기중',
+                cost: 1100,
+                imageUrl:
+                    'https://firebasestorage.googleapis.com/v0/b/gigi-chemiplay.appspot.com/o/profile_image%2Fuser_2.jpg?alt=media&token=2d827a1a-b61a-4902-a163-b35a9d545fe5',
+                onTap: () {
+                  context.pushNamed('user', params: {'id': '새게임아이디'});
+                },
+              );
             }
           },
           childCount: 20,

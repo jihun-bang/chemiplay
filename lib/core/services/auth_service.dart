@@ -1,4 +1,4 @@
-import '../../features/data/models/user_model.dart';
+import '../../features/data/models/user.dart';
 
 class AuthService {
   UserModel? _currentUser;
