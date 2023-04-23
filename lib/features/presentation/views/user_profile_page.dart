@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/utils/colors.dart';
+import '../dialog/toast.dart';
 import '../viewmodels/user_viewmodel.dart';
 import '../widgets/gigi_elevated_button.dart';
 
@@ -44,6 +45,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             text: '무료로 대화하기',
             onPressed: () {
               if (viewModel.user != null) {
+                showToast(context: context, message: '준비중입니다!');
               } else {
                 context.replaceNamed('login');
               }
@@ -100,6 +102,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       height: 30,
                       onPressed: () {
                         if (_userViewModel.user != null) {
+                          showToast(context: context, message: '준비중입니다!');
                         } else {
                           context.replaceNamed('login');
                         }

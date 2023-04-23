@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../dialog/toast.dart';
 import '../viewmodels/user_viewmodel.dart';
 import '../widgets/profile_card.dart';
 
@@ -55,6 +56,7 @@ class _HomePageState extends State<HomePage> {
 
   void _goProfile() {
     if (_viewModel.isAuthenticated) {
+      showToast(context: context, message: '준비중입니다!');
     } else {
       context.goNamed('login');
     }
@@ -79,6 +81,8 @@ class _HomePageState extends State<HomePage> {
           onTap: (index) {
             if (index == 3) {
               _goProfile();
+            } else {
+              showToast(context: context, message: '준비중입니다!');
             }
           },
           items: [

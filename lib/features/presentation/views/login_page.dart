@@ -1,4 +1,5 @@
 import 'package:chemiplay/features/domain/usecases/login_usecase.dart';
+import 'package:chemiplay/features/presentation/dialog/toast.dart';
 import 'package:chemiplay/features/presentation/viewmodels/login_viewmodel.dart';
 import 'package:chemiplay/features/presentation/widgets/sign_in_button/google_sign_in_button.dart';
 import 'package:chemiplay/injection.dart';
@@ -33,7 +34,12 @@ class _LoginPageState extends State<LoginPage> {
         final result = await getIt<LoginUseCase>().signInFirebase(account);
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted && result) {
-            context.goNamed('home');
+            if (context.canPop()) {
+              showToast(context: context, message: '환영합니다!');
+              context.pop();
+            } else {
+              context.goNamed('home');
+            }
           }
         });
       }
