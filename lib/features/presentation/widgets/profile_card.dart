@@ -135,10 +135,10 @@ class ProfileCard extends StatelessWidget {
         Text(
           isOnline ? '온라인' : '오프라인',
           style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            letterSpacing: -0.02,
-            color: Colors.white,
-          ),
+              fontWeight: FontWeight.w600,
+              letterSpacing: -0.02,
+              color: Colors.white,
+              fontSize: 8),
         )
       ],
     );
