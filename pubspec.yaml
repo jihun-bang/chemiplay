@@ -32,6 +32,8 @@ dependencies:
   go_router: ^6.5.7
   cached_network_image: ^3.2.3
   fluttertoast: ^8.2.1
+  # sendbird
+  sendbird_sdk: ^3.1.15
 dev_dependencies:
   flutter_test:
     sdk: flutter
