@@ -59,3 +59,5 @@ flutter:
           weight: 500
         - asset: assets/fonts/Pretendard/Pretendard-SemiBold.ttf
           weight: 600
+        - asset: assets/fonts/Pretendard/Pretendard-Bold.ttf
+          weight: 700
