@@ -111,7 +111,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   ],
                 ),
                 _buildStatus,
-                _buildCost,
+                _buildGamInfo,
               ],
             ),
           ),
@@ -144,37 +144,65 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
-  Widget get _buildCost {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
+  Widget get _buildGamInfo {
+    return Container(
+      height: 90,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: const Color(0xFFF4F6F9),
+      ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 4),
-            child: SvgPicture.asset(
-              'assets/icons/icon_coin.svg',
-              width: 24,
-              height: 24,
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.77),
+                child: SizedBox(
+                    width: 35,
+                    height: 35,
+                    child: Image.asset('assets/images/games/img_lol.png')),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  '리그오브레전드',
+                  style: TextStyle(),
+                ),
+              )
+            ],
           ),
-          RichText(
-              text: TextSpan(
-                  text: '1100',
-                  style: const TextStyle(
-                      color: Color(0xFF53DCF0),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: -0.02),
-                  children: [
-                TextSpan(
-                    text: '/판',
-                    style: TextStyle(
-                      letterSpacing: -0.02,
-                      color: MyColors.gray_06,
-                      fontSize: 15,
-                    ))
-              ]))
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 4),
+                child: SvgPicture.asset(
+                  'assets/icons/icon_coin.svg',
+                  width: 24,
+                  height: 24,
+                ),
+              ),
+              RichText(
+                  text: TextSpan(
+                      text: '1100',
+                      style: const TextStyle(
+                          color: Color(0xFF53DCF0),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -0.02),
+                      children: [
+                    TextSpan(
+                        text: '/판',
+                        style: TextStyle(
+                          letterSpacing: -0.02,
+                          color: MyColors.gray_06,
+                          fontSize: 15,
+                        ))
+                  ]))
+            ],
+          ),
         ],
       ),
     );
