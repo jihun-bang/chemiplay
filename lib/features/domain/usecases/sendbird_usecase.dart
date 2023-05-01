@@ -27,6 +27,10 @@ class SendbirdUseCase {
     }
   }
 
+  User? getUser() {
+    return _authRepository.currentUser;
+  }
+
   Future<GroupChannel> enterOneToOneChannel(String userID) async {
     final List<String> userIDs = [userID, _authRepository.currentUser!.userId];
     final params = GroupChannelParams()

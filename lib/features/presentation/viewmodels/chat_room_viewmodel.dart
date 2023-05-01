@@ -45,6 +45,10 @@ class ChatRoomViewModel extends ChangeNotifier {
     return result != null;
   }
 
+  User? getSendbirdUser() {
+    return _sendbirdUseCase.getUser();
+  }
+
   Future<void> refresh({
     bool loadPrevious = false,
     bool isForce = false,
