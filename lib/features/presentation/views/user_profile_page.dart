@@ -2,13 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chemiplay/features/data/models/user_profile.dart';
 import 'package:chemiplay/injection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../core/utils/colors.dart';
 import '../dialog/toast.dart';
 import '../viewmodels/user_viewmodel.dart';
+import '../widgets/game_cost.dart';
 import '../widgets/gigi_elevated_button.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -25,6 +26,14 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   final _userViewModel = getIt<UserViewModel>();
+  late PageController _gamInfoController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _gamInfoController = PageController(viewportFraction: 0.9);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +41,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       return Scaffold(
         body: CustomScrollView(
           slivers: [
-            _buildGames,
+            _buildProfileImages,
             _buildHead,
             _buildUserInfo,
             _buildReviews,
@@ -56,7 +65,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     });
   }
 
-  Widget get _buildGames {
+  Widget get _buildProfileImages {
     return SliverAppBar(
         backgroundColor: Colors.white,
         toolbarHeight: 0,
@@ -94,11 +103,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ),
                     GiGiElevatedButton(
                       text: '팔로우',
-                      textStyle: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: -0.01,
-                          fontSize: 14),
-                      height: 30,
+                      textStyle: const TextStyle(fontWeight: FontWeight.w500),
+                      height: 27,
+                      width: 84,
                       onPressed: () {
                         if (_userViewModel.user != null) {
                           showToast(context: context, message: '준비중입니다!');
@@ -110,7 +117,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   ],
                 ),
                 _buildStatus,
-                _buildGamInfo,
+                _buildGameInfo,
+                _buildGameInfoIndicator,
               ],
             ),
           ),
@@ -143,66 +151,145 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
-  Widget get _buildGamInfo {
+  Widget get _buildGameInfo {
+    Widget infoText(String title, String subTitle) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 2),
+            child: Text(
+              title,
+              style: TextStyle(color: MyColors.gray_05, fontSize: 10),
+              textAlign: TextAlign.left,
+            ),
+          ),
+          Text(
+            subTitle,
+            style: const TextStyle(fontSize: 12),
+            textAlign: TextAlign.left,
+          ),
+        ],
+      );
+    }
+
     return Container(
       height: 90,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: const Color(0xFFF4F6F9),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10.77),
-                child: SizedBox(
-                    width: 35,
-                    height: 35,
-                    child: Image.asset('assets/images/games/img_lol.png')),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  '리그오브레전드',
-                  style: TextStyle(),
+      margin: const EdgeInsets.only(top: 23),
+      child: PageView.builder(
+        controller: _gamInfoController,
+        itemBuilder: (_, __) {
+          return Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: MyColors.gray_01,
+                border: Border.all(color: MyColors.gray_02)),
+            margin: const EdgeInsets.only(right: 8),
+            padding: const EdgeInsets.fromLTRB(15, 11, 15, 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10.77),
+                      child: SizedBox(
+                          width: 35,
+                          height: 35,
+                          child:
+                              Image.asset('assets/images/games/img_lol.png')),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            '리그오브레전드',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                                height: 19.09 / 16),
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: infoText('계급', '실버'),
+                              ),
+                              infoText('포지션', '미드, 원딜, 서폿'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 4),
-                child: SvgPicture.asset(
-                  'assets/icons/icon_coin.svg',
-                  width: 24,
-                  height: 24,
-                ),
-              ),
-              RichText(
-                  text: TextSpan(
-                      text: '1100',
-                      style: const TextStyle(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GameCost(
+                      cost: '1100',
+                      unit: '판',
+                      costStyle: const TextStyle(
                           color: Color(0xFF53DCF0),
                           fontSize: 20,
                           fontWeight: FontWeight.w600),
-                      children: [
-                    TextSpan(
-                        text: '/판',
-                        style: TextStyle(
-                          color: MyColors.gray_06,
-                          fontSize: 15,
-                        ))
-                  ]))
-            ],
-          ),
-        ],
+                      unitStyle: TextStyle(
+                        color: MyColors.gray_06,
+                        fontSize: 15,
+                      ),
+                    ),
+                    GiGiElevatedButton(
+                      text: '같이하기',
+                      textStyle: const TextStyle(fontWeight: FontWeight.w500),
+                      height: 30,
+                      width: 64,
+                      backgroundColor: MyColors.aqua,
+                      onPressed: () {
+                        if (_userViewModel.user != null) {
+                          showToast(context: context, message: '준비중입니다!');
+                        } else {
+                          context.replaceNamed('login');
+                        }
+                      },
+                    )
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+        itemCount: 4,
       ),
     );
+  }
+
+  Widget get _buildGameInfoIndicator {
+    return Visibility(
+        visible: true,
+        child: Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.only(top: 8.0),
+          child: SmoothPageIndicator(
+            controller: _gamInfoController,
+            count: 4,
+            effect: ExpandingDotsEffect(
+              dotWidth: 5,
+              dotHeight: 5,
+              spacing: 5,
+              expansionFactor: 4,
+              activeDotColor: MyColors.gray_04,
+              dotColor: MyColors.gray_04,
+            ),
+            onDotClicked: (index) => _gamInfoController.animateToPage(index,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeOutCubic),
+          ),
+        ));
   }
 
   Widget get _buildLine {
@@ -224,7 +311,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
                 Text(
-                  '파트너 정보',
+                  '후원자 랭킹',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,

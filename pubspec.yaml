@@ -34,6 +34,7 @@ dependencies:
   fluttertoast: ^8.2.1
   # sendbird
   sendbird_sdk: ^3.1.15
+  smooth_page_indicator: ^1.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -53,11 +54,11 @@ flutter:
   fonts:
     - family: Pretendard
       fonts:
-        - asset: assets/fonts/Pretendard/Pretendard-Regular.ttf
+        - asset: assets/fonts/Pretendard/Pretendard-Regular.otf
           weight: 400
-        - asset: assets/fonts/Pretendard/Pretendard-Medium.ttf
+        - asset: assets/fonts/Pretendard/Pretendard-Medium.otf
           weight: 500
-        - asset: assets/fonts/Pretendard/Pretendard-SemiBold.ttf
+        - asset: assets/fonts/Pretendard/Pretendard-SemiBold.otf
           weight: 600
-        - asset: assets/fonts/Pretendard/Pretendard-Bold.ttf
+        - asset: assets/fonts/Pretendard/Pretendard-Bold.otf
           weight: 700
