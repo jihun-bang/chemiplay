@@ -89,7 +89,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: -0.02,
                       ),
                       textAlign: TextAlign.left,
                     ),
@@ -137,7 +136,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           height: 18,
           child: Text(
             true ? '온라인' : '오프라인',
-            style: TextStyle(letterSpacing: -0.02, fontSize: 12),
+            style: TextStyle(fontSize: 12),
           ),
         )
       ],
@@ -190,13 +189,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       style: const TextStyle(
                           color: Color(0xFF53DCF0),
                           fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.02),
+                          fontWeight: FontWeight.w600),
                       children: [
                     TextSpan(
                         text: '/판',
                         style: TextStyle(
-                          letterSpacing: -0.02,
                           color: MyColors.gray_06,
                           fontSize: 15,
                         ))
@@ -231,7 +228,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    letterSpacing: -0.02,
                   ),
                 ),
               ],
@@ -256,7 +252,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                letterSpacing: -0.02,
               ),
             ),
           ],

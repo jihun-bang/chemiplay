@@ -181,7 +181,6 @@ class _HomePageState extends State<HomePage> {
             fontSize: 18.0,
             fontWeight: FontWeight.w600,
             height: 25.0 / 18.0,
-            letterSpacing: -0.02,
           ),
           textAlign: TextAlign.left,
         ),

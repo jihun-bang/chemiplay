@@ -11,8 +11,7 @@ class GiGiElevatedButton extends StatelessWidget {
   const GiGiElevatedButton({
     super.key,
     required this.text,
-    this.textStyle = const TextStyle(
-        fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: -0.02),
+    this.textStyle = const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
     this.height = 54,
     this.onPressed,
   });
@@ -26,8 +25,7 @@ class GiGiElevatedButton extends StatelessWidget {
       child: Center(
           child: Text(
         text,
-        style: const TextStyle(
-            fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: -0.02),
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
       )),
     );
   }

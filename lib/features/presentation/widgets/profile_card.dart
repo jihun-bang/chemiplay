@@ -109,10 +109,10 @@ class ProfileCard extends StatelessWidget {
             Text(
               rating.toStringAsFixed(1),
               style: TextStyle(
-                  color: MyColors.pri_05,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: -0.02),
+                color: MyColors.pri_05,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
             )
           ],
         )
@@ -135,10 +135,7 @@ class ProfileCard extends StatelessWidget {
         Text(
           isOnline ? '온라인' : '오프라인',
           style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              letterSpacing: -0.02,
-              color: Colors.white,
-              fontSize: 8),
+              fontWeight: FontWeight.w600, color: Colors.white, fontSize: 8),
         )
       ],
     );
@@ -163,16 +160,15 @@ class ProfileCard extends StatelessWidget {
               Text(
                 game,
                 style: TextStyle(
-                    color: MyColors.gray_04,
-                    fontSize: 10,
-                    letterSpacing: -0.02),
+                  color: MyColors.gray_04,
+                  fontSize: 10,
+                ),
               )
             ],
           ),
           Text(
             description,
-            style: TextStyle(
-                color: MyColors.gray_05, fontSize: 12, letterSpacing: -0.02),
+            style: TextStyle(color: MyColors.gray_05, fontSize: 12),
           )
         ],
       ),
@@ -188,10 +184,10 @@ class ProfileCard extends StatelessWidget {
             text: TextSpan(
                 text: cost.toString(),
                 style: const TextStyle(
-                    color: Color(0xFF53DCF0),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: -0.02),
+                  color: Color(0xFF53DCF0),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
                 children: [
               TextSpan(
                   text: '/판',

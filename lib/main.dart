@@ -1,3 +1,4 @@
+import 'package:chemiplay/core/utils/thema.dart';
 import 'package:chemiplay/features/presentation/viewmodels/chat_room_viewmodel.dart';
 import 'package:chemiplay/features/presentation/viewmodels/login_viewmodel.dart';
 import 'package:chemiplay/features/presentation/viewmodels/user_viewmodel.dart';
@@ -46,9 +47,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp.router(
         title: '캐미플레이',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: lightTheme,
         scrollBehavior: const MaterialScrollBehavior().copyWith(
           dragDevices: {
             PointerDeviceKind.mouse,
