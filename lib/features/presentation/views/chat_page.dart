@@ -1,4 +1,4 @@
-import 'package:chemiplay/features/presentation/viewmodels/chat_viewmodel.dart';
+import 'package:chemiplay/features/presentation/viewmodels/chat_room_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../injection.dart';
@@ -13,9 +13,10 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  final _chatViewModel = getIt<ChatViewModel>();
+  final _chatViewModel = getIt<ChatRoomViewModel>();
 
   final _messageController = TextEditingController();
+
 
   @override
   void dispose() {
@@ -25,14 +26,30 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ChatViewModel>(
+    return Consumer<ChatRoomViewModel>(
       builder: (_, chatViewModel, ___) {
+        if (!chatViewModel.isLoading) {
+          return Container();
+        }
+
         return Scaffold(
           appBar: AppBar(
             title: const Text('상대방 닉네임'),
           ),
           body: Column(
             children: [
+              SingleChildScrollView(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount:
+                        _chatViewModel.channelEventHandlers.messages.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(_chatViewModel
+                            .channelEventHandlers.messages[index].message),
+                      );
+                    }),
+              ),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(
