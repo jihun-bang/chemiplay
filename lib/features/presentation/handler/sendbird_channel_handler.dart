@@ -12,7 +12,8 @@ class ChannelEventHandlers with ChannelEventHandler {
   late PreviousMessageListQuery _messageListQuery;
   ChannelType channelType;
 
-  ChannelEventHandlers(this._sendbirdDataSource,{
+  ChannelEventHandlers(
+    this._sendbirdDataSource, {
     VoidCallback? refresh,
     required this.channelUrl,
     required this.channelType,
@@ -94,12 +95,11 @@ class ChannelEventHandlers with ChannelEventHandler {
       _messageListQuery = PreviousMessageListQuery(
         channelType: channelType,
         channelUrl: channelUrl,
-      )..limit = 5;
+      )..limit = 100;
     }
 
     List<BaseMessage> messageList = await _messageListQuery.loadNext();
 
-    //TODO refactor
     if (isForce) {
       for (var message in messageList) {
         messages.add(message);

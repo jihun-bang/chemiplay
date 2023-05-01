@@ -2,14 +2,17 @@ import 'package:chemiplay/core/utils/logger.dart';
 import 'package:sendbird_sdk/sendbird_sdk.dart';
 import 'package:chemiplay/features/domain/repositories/sendbird_auth_repository.dart';
 
-class SendbirdUseCase {
-  final SendbirdAuthRepository _repository;
+import '../repositories/sendbird_message_repository.dart';
 
-  SendbirdUseCase(this._repository);
+class SendbirdUseCase {
+  final SendbirdAuthRepository _authRepository;
+  final SendbirdMessageRepository _messageRepository;
+
+  SendbirdUseCase(this._authRepository, this._messageRepository);
 
   Future<User?> login(String userID) async {
     try {
-      return await _repository.signIn(userId: userID);
+      return await _authRepository.signIn(userId: userID);
     } catch (e) {
       Logger.error(e);
       return null;
@@ -18,14 +21,14 @@ class SendbirdUseCase {
 
   Future<void> logout() async {
     try {
-      _repository.signOut();
+      _authRepository.signOut();
     } catch (e) {
       Logger.error(e);
     }
   }
 
   Future<GroupChannel> enterOneToOneChannel(String userID) async {
-    final List<String> userIDs = [userID, _repository.currentUser!.userId];
+    final List<String> userIDs = [userID, _authRepository.currentUser!.userId];
     final params = GroupChannelParams()
       ..userIds = userIDs
       ..isDistinct = true;
@@ -33,5 +36,7 @@ class SendbirdUseCase {
     return await GroupChannel.createChannel(params);
   }
 
-
+  Future<BaseMessage> sendMessage(GroupChannel channel, String message) async {
+    return _messageRepository.sendMessage(channel, message);
+  }
 }

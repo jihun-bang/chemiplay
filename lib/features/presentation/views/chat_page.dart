@@ -17,7 +17,6 @@ class _ChatPageState extends State<ChatPage> {
 
   final _messageController = TextEditingController();
 
-
   @override
   void dispose() {
     _messageController.dispose();
@@ -38,17 +37,19 @@ class _ChatPageState extends State<ChatPage> {
           ),
           body: Column(
             children: [
-              SingleChildScrollView(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount:
-                        _chatViewModel.channelEventHandlers.messages.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(_chatViewModel
-                            .channelEventHandlers.messages[index].message),
-                      );
-                    }),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount:
+                          _chatViewModel.channelEventHandlers.messages.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(_chatViewModel
+                              .channelEventHandlers.messages[index].message),
+                        );
+                      }),
+                ),
               ),
               Container(
                 decoration: BoxDecoration(
@@ -58,7 +59,7 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                margin: EdgeInsets.all(10.0),
+                margin: const EdgeInsets.all(10.0),
                 child: Row(
                   children: [
                     Expanded(

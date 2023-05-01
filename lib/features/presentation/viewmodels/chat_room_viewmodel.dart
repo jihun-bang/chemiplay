@@ -34,7 +34,9 @@ class ChatRoomViewModel extends ChangeNotifier {
 
     channel = await _sendbirdUseCase.enterOneToOneChannel(userID);
     channelEventHandlers = ChannelEventHandlers(getIt(),
-        channelUrl: channel.channelUrl, channelType: channel.channelType);
+        refresh: refresh,
+        channelUrl: channel.channelUrl,
+        channelType: channel.channelType);
     await channelEventHandlers.loadMessages(isForce: true);
 
     _isLoading = true;
@@ -47,27 +49,17 @@ class ChatRoomViewModel extends ChangeNotifier {
     bool loadPrevious = false,
     bool isForce = false,
   }) async {
-    //TODO check
-    // switch (_channelType) {
-    //   case ChannelType.group:
-    //     _channel ??= await GroupChannel.getChannel(_channelUrl!);
-    //     break;
-    //   case ChannelType.open:
-    //     _channel ??= await OpenChannel.getChannel(_channelUrl!);
-    //     break;
-    // }
-    //
-    // if (mounted) {
-    //   if (loadPrevious) {
-    //     _channelHandler.loadMessages();
-    //   } else if (isForce) {
-    //     _channelHandler.loadMessages(isForce: true);
-    //   }
-    // }
-    // setState(() {});
+    if (loadPrevious) {
+      channelEventHandlers.loadMessages();
+    } else if (isForce) {
+      channelEventHandlers.loadMessages(isForce: true);
+    }
+    notifyListeners();
   }
 
-  void sendMessage(String message) {
-    // _service.sendMessage(message);
+  Future<void> sendMessage(String message) async {
+    final preMessage = await _sendbirdUseCase.sendMessage(channel, message);
+    channelEventHandlers.messages.add(preMessage);
+    notifyListeners();
   }
 }
