@@ -52,6 +52,7 @@ class _ChatPageState extends State<ChatPage> {
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: SingleChildScrollView(
+            reverse: true,
             child: ListView.separated(
               separatorBuilder: (BuildContext context, int index) =>
                   const SizedBox(height: 17),
