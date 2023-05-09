@@ -1,4 +1,5 @@
 import 'package:chemiplay/features/data/models/user_profile.dart';
+import 'package:chemiplay/features/presentation/views/chat_list_page.dart';
 import 'package:chemiplay/features/presentation/views/chat_page.dart';
 import 'package:chemiplay/features/presentation/views/user_profile_page.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,13 @@ final routes = GoRouter(
                   ),
                 ),
               );
+            },
+          ),
+          GoRoute(
+            path: 'chats',
+            name: 'chats',
+            pageBuilder: (context, state) {
+              return const MaterialPage(child: ChatListPage());
             },
           ),
           GoRoute(

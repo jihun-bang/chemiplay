@@ -54,6 +54,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _goChatList() {
+    if (_viewModel.isAuthenticated) {
+      showToast(context: context, message: '준비중입니다!');
+    } else {
+      context.goNamed('chats');
+    }
+  }
+
   void _goProfile() {
     if (_viewModel.isAuthenticated) {
       showToast(context: context, message: '준비중입니다!');
@@ -79,7 +87,9 @@ class _HomePageState extends State<HomePage> {
           showSelectedLabels: false,
           showUnselectedLabels: false,
           onTap: (index) {
-            if (index == 3) {
+            if (index == 2) {
+              _goChatList();
+            } else if (index == 3) {
               _goProfile();
             } else {
               showToast(context: context, message: '준비중입니다!');

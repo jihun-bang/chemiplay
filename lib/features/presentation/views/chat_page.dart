@@ -1,4 +1,4 @@
-import 'package:chemiplay/features/presentation/viewmodels/chat_room_viewmodel.dart';
+import 'package:chemiplay/features/presentation/viewmodels/chat_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +15,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  final _chatViewModel = getIt<ChatRoomViewModel>();
+  final _chatViewModel = getIt<ChatViewModel>();
 
   final _messageController = TextEditingController();
 
@@ -27,7 +27,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ChatRoomViewModel>(
+    return Consumer<ChatViewModel>(
       builder: (_, chatViewModel, ___) {
         if (!chatViewModel.isLoading) {
           return Container();

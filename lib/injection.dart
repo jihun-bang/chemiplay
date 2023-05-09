@@ -5,7 +5,7 @@ import 'package:chemiplay/features/data/repositories/sendbird_message_repository
 import 'package:chemiplay/features/domain/repositories/auth_repository.dart';
 import 'package:chemiplay/features/domain/repositories/sendbird_auth_repository.dart';
 import 'package:chemiplay/features/domain/usecases/sendbird_usecase.dart';
-import 'package:chemiplay/features/presentation/viewmodels/chat_room_viewmodel.dart';
+import 'package:chemiplay/features/presentation/viewmodels/chat_viewmodel.dart';
 import 'package:chemiplay/features/presentation/viewmodels/user_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -45,5 +45,5 @@ void setupDependencies() {
   // ViewModels
   getIt.registerSingleton<LoginViewModel>(LoginViewModel(getIt()));
   getIt.registerSingleton<UserViewModel>(UserViewModel(getIt()));
-  getIt.registerSingleton<ChatRoomViewModel>(ChatRoomViewModel(getIt()));
+  getIt.registerSingleton<ChatViewModel>(ChatViewModel(getIt()));
 }
