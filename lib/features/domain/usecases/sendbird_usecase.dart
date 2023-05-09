@@ -1,6 +1,6 @@
 import 'package:chemiplay/core/utils/logger.dart';
-import 'package:sendbird_sdk/sendbird_sdk.dart';
 import 'package:chemiplay/features/domain/repositories/sendbird_auth_repository.dart';
+import 'package:sendbird_sdk/sendbird_sdk.dart';
 
 import '../repositories/sendbird_message_repository.dart';
 
@@ -14,7 +14,7 @@ class SendbirdUseCase {
     try {
       return await _authRepository.signIn(userId: userID);
     } catch (e) {
-      Logger.error(e);
+      Logger.e(e);
       return null;
     }
   }
@@ -23,7 +23,7 @@ class SendbirdUseCase {
     try {
       _authRepository.signOut();
     } catch (e) {
-      Logger.error(e);
+      Logger.e(e);
     }
   }
 

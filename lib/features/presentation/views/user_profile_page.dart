@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chemiplay/features/data/models/user_profile.dart';
+import 'package:chemiplay/features/data/models/mate.dart';
 import 'package:chemiplay/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +13,7 @@ import '../widgets/game_cost.dart';
 import '../widgets/gigi_elevated_button.dart';
 
 class UserProfilePage extends StatefulWidget {
-  final UserProfileModel userProfile;
+  final MateModel userProfile;
 
   const UserProfilePage({
     super.key,

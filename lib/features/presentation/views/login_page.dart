@@ -19,7 +19,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _viewModel = getIt<LoginViewModel>();
+  late LoginViewModel _viewModel;
   final GoogleSignIn googleSignIn = GoogleSignIn(
     clientId: Constants.googleClientId,
   );
@@ -49,34 +49,39 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginViewModel>(builder: (_, __, ___) {
-      return Scaffold(
-        body: Column(
-          children: [
-            Expanded(flex: 3, child: _buildLogo),
-            Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    _buildDivider,
-                    buildSignInButton(onPressed: () async {
-                      final result = await _viewModel.loginWithGoogle();
-                      if (result) {
-                        if (mounted) {
-                          context.goNamed('home');
+    return ChangeNotifierProvider(
+      create: (_) => getIt<LoginViewModel>(),
+      child: Consumer<LoginViewModel>(builder: (_, viewModel, ___) {
+        _viewModel = viewModel;
+        return Scaffold(
+          body: Column(
+            children: [
+              Expanded(flex: 3, child: _buildLogo),
+              Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      _buildDivider,
+                      buildSignInButton(onPressed: () async {
+                        final result = await _viewModel.loginWithGoogle();
+                        print('result=$result');
+                        if (result) {
+                          if (mounted) {
+                            context.goNamed('home');
+                          } else {
+                            /// TODO
+                          }
                         } else {
-                          /// TODO
+                          /// TODO 로그인 실패 시 처리
                         }
-                      } else {
-                        /// TODO 로그인 실패 시 처리
-                      }
-                    }),
-                  ],
-                )),
-          ],
-        ),
-      );
-    });
+                      }),
+                    ],
+                  )),
+            ],
+          ),
+        );
+      }),
+    );
   }
 
   Widget get _buildLogo => Container(
@@ -110,26 +115,4 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       );
-
-  Widget get _buildLoginWithGoogle {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 86),
-      child: IconButton(
-        onPressed: () async {
-          final result = await _viewModel.loginWithGoogle();
-          if (result) {
-            if (mounted) {
-              context.goNamed('home');
-            } else {
-              /// TODO
-            }
-          } else {
-            /// TODO 로그인 실패 시 처리
-          }
-        },
-        icon: Image.asset('assets/icons/icon_google.png'),
-        iconSize: 50,
-      ),
-    );
-  }
 }

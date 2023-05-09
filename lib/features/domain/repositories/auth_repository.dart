@@ -1,5 +1,5 @@
-import '../../data/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthRepository {
-  Future<UserModel?> loginWithGoogle(String idToken);
+  Future<User?> loginWithGoogle(String idToken);
 }
