@@ -14,9 +14,13 @@ class UserViewModel extends ChangeNotifier {
   bool get isAuthenticated => user != null;
 
   UserViewModel(this._usecase) {
-    _setUser();
+    _init();
+  }
+
+  Future<void> _init() async {
+    await _setUser();
     FirebaseAuth.instance.authStateChanges().listen((user) async {
-      _setUser();
+      await _setUser();
     });
   }
 
