@@ -12,7 +12,6 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<bool> addUser({required UserModel user}) async {
     try {
-      Logger.d('add ${user.toJson()}');
       return await _firebaseDatabase.addUser(user: user);
     } catch (e) {
       Logger.e(e);

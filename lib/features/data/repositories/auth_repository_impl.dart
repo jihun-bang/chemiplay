@@ -9,7 +9,7 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._authRemoteDataSource);
 
   @override
-  Future<User?> loginWithGoogle(String idToken) async {
+  Future<UserCredential> loginWithGoogle(String idToken) async {
     return await _authRemoteDataSource.loginWithGoogle(idToken);
   }
 }

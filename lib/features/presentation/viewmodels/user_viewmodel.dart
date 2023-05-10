@@ -1,4 +1,4 @@
-import 'package:chemiplay/core/utils/logger.dart';
+import 'package:chemiplay/features/data/extenstion/extension.dart';
 import 'package:chemiplay/features/domain/usecases/user_usecase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -14,9 +14,13 @@ class UserViewModel extends ChangeNotifier {
   bool get isAuthenticated => user != null;
 
   UserViewModel(this._usecase) {
-    _setUser();
+    _init();
+  }
+
+  Future<void> _init() async {
+    await _setUser();
     FirebaseAuth.instance.authStateChanges().listen((user) async {
-      _setUser();
+      await _setUser();
     });
   }
 
@@ -25,15 +29,10 @@ class UserViewModel extends ChangeNotifier {
     if (currentUser != null) {
       final dbUser = await _usecase.getUser(id: currentUser.uid);
       if (dbUser == null) {
-        print('        await _usecase.addUser(currentUser)');
         final result = await _usecase.addUser(currentUser);
-        Logger.d(result);
-        _user = UserModel(
-            id: currentUser.uid,
-            email: currentUser.email!,
-            name: currentUser.displayName ?? currentUser.uid,
-            createdAt: DateTime.now(),
-            modifiedAt: DateTime.now());
+        _user = result ? currentUser.toUserModel() : null;
+      } else {
+        _user = dbUser;
       }
     } else {
       _user = null;

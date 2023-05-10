@@ -1,6 +1,5 @@
 import 'package:chemiplay/core/utils/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/user.dart';
 
@@ -10,22 +9,14 @@ class FirebaseDatabase {
   FirebaseDatabase(this._db);
 
   Future<bool> addUser({required UserModel user}) async {
-    Logger.d(
-        'addUser ${await _db.collection('users').doc(user.id).set(user.copyWith(createdAt: DateTime.now()).toJson()).then((value) => true).catchError((error, stackTrace) {
-      Logger.e(error, null, stackTrace);
-      return false;
-    })}');
-    final result = await _db
-        .collection('users')
+    return await usersRef
         .doc(user.id)
-        .set(user.copyWith(createdAt: DateTime.now()).toJson())
+        .set(user)
         .then((value) => true)
         .catchError((error, stackTrace) {
       Logger.e(error, null, stackTrace);
       return false;
     });
-
-    return result;
   }
 
   Future<UserModel?> getUser({required String id}) async {
@@ -34,7 +25,6 @@ class FirebaseDatabase {
         return value.data!;
       } else {
         Logger.d('$id 존재하지 않음');
-        FirebaseAuth.instance.signOut();
         return null;
       }
     });
