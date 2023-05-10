@@ -1,23 +1,23 @@
 import 'package:chemiplay/core/utils/logger.dart';
+import 'package:chemiplay/features/data/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../../core/services/auth_service.dart';
 import '../../../core/utils/constants.dart';
-import '../../data/models/user.dart';
 import '../repositories/auth_repository.dart';
+import '../repositories/user_repository.dart';
 
 class LoginUseCase {
   final AuthRepository _authRepository;
-  final AuthService _authService;
+  final UserRepository _userRepository;
 
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     clientId: Constants.googleClientId,
   );
 
-  LoginUseCase(this._authRepository, this._authService);
+  LoginUseCase(this._authRepository, this._userRepository);
 
-  Future<UserModel?> loginWithGoogle() async {
+  Future<User?> loginWithGoogle() async {
     try {
       final googleAccount = await _googleSignIn.signIn();
       if (googleAccount != null) {
@@ -29,13 +29,25 @@ class LoginUseCase {
         );
         final user =
             await _authRepository.loginWithGoogle(credential.idToken ?? '');
-        _authService.signIn(user);
+        if (user != null) {
+          final dbUser = await _userRepository.getUser(id: user.uid);
+          Logger.d('await _userRepository.getUser=${dbUser?.toJson()}');
+          if (dbUser == null) {
+            await _userRepository.addUser(
+                user: UserModel(
+                    id: user.uid,
+                    email: user.email!,
+                    name: user.displayName ?? user.uid,
+                    createdAt: DateTime.now(),
+                    modifiedAt: DateTime.now()));
+          }
+        }
         return user;
       } else {
         return null;
       }
     } catch (e) {
-      Logger.error(e);
+      Logger.e(e);
       return null;
     }
   }
@@ -50,10 +62,9 @@ class LoginUseCase {
       );
       final user =
           await _authRepository.loginWithGoogle(credential.idToken ?? '');
-      _authService.signIn(user);
       return true;
     } catch (e) {
-      Logger.error(e);
+      Logger.e(e);
       return false;
     }
   }

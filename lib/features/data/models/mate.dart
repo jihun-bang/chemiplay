@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'user_profile.g.dart';
+part 'mate.g.dart';
 
 @JsonSerializable()
-class UserProfileModel {
+class MateModel {
   final bool isOnline;
   final String name;
   final double rating;
@@ -12,7 +12,7 @@ class UserProfileModel {
   final int cost;
   final List<String> imageUrls;
 
-  const UserProfileModel({
+  const MateModel({
     required this.isOnline,
     required this.name,
     required this.rating,
@@ -22,8 +22,8 @@ class UserProfileModel {
     this.imageUrls = const [],
   });
 
-  factory UserProfileModel.fromJson(Map<String, dynamic> json) =>
-      _$UserGameProfileModelFromJson(json);
+  factory MateModel.fromJson(Map<String, dynamic> json) =>
+      _$MateModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserGameProfileModelToJson(this);
+  Map<String, dynamic> toJson() => _$MateModelToJson(this);
 }

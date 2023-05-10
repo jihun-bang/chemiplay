@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_profile.dart';
+// ignore_for_file: type=lint
+
+part of 'mate.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserProfileModel _$UserGameProfileModelFromJson(Map<String, dynamic> json) =>
-    UserProfileModel(
+MateModel _$MateModelFromJson(Map<String, dynamic> json) => MateModel(
       isOnline: json['isOnline'] as bool,
       name: json['name'] as String,
       rating: (json['rating'] as num).toDouble(),
@@ -20,8 +21,17 @@ UserProfileModel _$UserGameProfileModelFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$UserGameProfileModelToJson(UserProfileModel instance) =>
-    <String, dynamic>{
+const _$MateModelFieldMap = <String, String>{
+  'isOnline': 'isOnline',
+  'name': 'name',
+  'rating': 'rating',
+  'game': 'game',
+  'description': 'description',
+  'cost': 'cost',
+  'imageUrls': 'imageUrls',
+};
+
+Map<String, dynamic> _$MateModelToJson(MateModel instance) => <String, dynamic>{
       'isOnline': instance.isOnline,
       'name': instance.name,
       'rating': instance.rating,

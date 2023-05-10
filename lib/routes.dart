@@ -1,4 +1,4 @@
-import 'package:chemiplay/features/data/models/user_profile.dart';
+import 'package:chemiplay/features/data/models/mate.dart';
 import 'package:chemiplay/features/presentation/views/chat_list_page.dart';
 import 'package:chemiplay/features/presentation/views/chat_page.dart';
 import 'package:chemiplay/features/presentation/views/user_profile_page.dart';
@@ -24,7 +24,7 @@ final routes = GoRouter(
               final id = state.params['id'] ?? 'unknown';
               return MaterialPage(
                 child: UserProfilePage(
-                  userProfile: UserProfileModel(
+                  userProfile: MateModel(
                     name: id,
                     rating: 4.6,
                     game: '리그오브레전드',

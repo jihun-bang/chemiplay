@@ -1,6 +1,5 @@
 import 'package:chemiplay/core/utils/thema.dart';
 import 'package:chemiplay/features/presentation/viewmodels/chat_viewmodel.dart';
-import 'package:chemiplay/features/presentation/viewmodels/login_viewmodel.dart';
 import 'package:chemiplay/features/presentation/viewmodels/user_viewmodel.dart';
 import 'package:chemiplay/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,9 +36,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<UserViewModel>(
           create: (_) => getIt<UserViewModel>(),
-        ),
-        ChangeNotifierProvider<LoginViewModel>(
-          create: (_) => getIt<LoginViewModel>(),
         ),
         ChangeNotifierProvider<ChatViewModel>(
           create: (_) => getIt<ChatViewModel>(),
