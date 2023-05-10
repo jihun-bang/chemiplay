@@ -38,6 +38,8 @@ class LoginUseCase {
                     id: user.uid,
                     email: user.email!,
                     name: user.displayName ?? user.uid,
+                    profileImageUrl: user.photoURL,
+                    phoneNumber: user.phoneNumber,
                     createdAt: DateTime.now(),
                     modifiedAt: DateTime.now()));
           }

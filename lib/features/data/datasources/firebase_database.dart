@@ -10,12 +10,7 @@ class FirebaseDatabase {
   FirebaseDatabase(this._db);
 
   Future<bool> addUser({required UserModel user}) async {
-    Logger.d(
-        'addUser ${await _db.collection('users').doc(user.id).set(user.copyWith(createdAt: DateTime.now()).toJson()).then((value) => true).catchError((error, stackTrace) {
-      Logger.e(error, null, stackTrace);
-      return false;
-    })}');
-    final result = await _db
+    return await _db
         .collection('users')
         .doc(user.id)
         .set(user.copyWith(createdAt: DateTime.now()).toJson())
@@ -24,8 +19,6 @@ class FirebaseDatabase {
       Logger.e(error, null, stackTrace);
       return false;
     });
-
-    return result;
   }
 
   Future<UserModel?> getUser({required String id}) async {
