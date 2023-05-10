@@ -31,23 +31,22 @@ class _ChatPageState extends State<ChatPage> {
 
     return Consumer<ChatViewModel>(
       builder: (_, chatViewModel, ___) {
-        if (chatViewModel.isLoggedIn) {
-          chatViewModel.getMessage(userID);
-
-          return Scaffold(
-            appBar: AppBar(
-              title: const Center(child: Text('채팅 상대방 닉네임')),
-            ),
-            body: Column(
-              children: [
-                _chats,
-                _bottomInput,
-              ],
-            ),
-          );
-        } else {
+        if (!chatViewModel.isLoggedIn) {
           return Container();
         }
+
+        chatViewModel.getMessage(userID);
+        return Scaffold(
+          appBar: AppBar(
+            title: const Center(child: Text('채팅 상대방 닉네임')),
+          ),
+          body: Column(
+            children: [
+              _chats,
+              _bottomInput,
+            ],
+          ),
+        );
       },
     );
   }

@@ -22,12 +22,6 @@ class _ChatListPageState extends State<ChatListPage> {
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _chatViewModel.loadChannelList();
-  }
-
   // 채팅 리스트 아이템 위젯
   Widget _buildChatListItem(GroupChannel channel) {
     Member? otherMember;
@@ -58,9 +52,11 @@ class _ChatListPageState extends State<ChatListPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ChatViewModel>(builder: (_, chatViewModel, ___) {
-      if (!chatViewModel.isLoading) {
+      if (!chatViewModel.isLoggedIn) {
         return Container();
       }
+
+      _chatViewModel.loadChannelList();
 
       return Scaffold(
         appBar: AppBar(

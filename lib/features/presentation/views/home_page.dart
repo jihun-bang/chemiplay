@@ -56,9 +56,9 @@ class _HomePageState extends State<HomePage> {
 
   void _goChatList() {
     if (_viewModel.isAuthenticated) {
-      showToast(context: context, message: '준비중입니다!');
-    } else {
       context.goNamed('chats');
+    } else {
+      context.goNamed('login');
     }
   }
 
