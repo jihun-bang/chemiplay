@@ -1,4 +1,5 @@
 import 'package:chemiplay/core/utils/logger.dart';
+import 'package:chemiplay/features/data/extenstion/extension.dart';
 import 'package:chemiplay/features/data/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -17,57 +18,42 @@ class LoginUseCase {
 
   LoginUseCase(this._authRepository, this._userRepository);
 
-  Future<User?> loginWithGoogle() async {
+  Future<UserModel?> loginWithGoogle({GoogleSignInAccount? account}) async {
     try {
-      final googleAccount = await _googleSignIn.signIn();
-      if (googleAccount != null) {
-        final GoogleSignInAuthentication googleAuth =
-            await googleAccount.authentication;
+      GoogleSignInAuthentication? googleAuth = await account?.authentication;
+      if (googleAuth == null) {
+        final google = await _googleSignIn.signIn();
+        googleAuth = await google?.authentication;
+      }
+      if (googleAuth != null) {
         final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
-        final user =
+        final userCredential =
             await _authRepository.loginWithGoogle(credential.idToken ?? '');
+        final user = userCredential.user;
         if (user != null) {
-          final dbUser = await _userRepository.getUser(id: user.uid);
-          Logger.d('await _userRepository.getUser=${dbUser?.toJson()}');
+          UserModel? dbUser = await _userRepository.getUser(id: user.uid);
           if (dbUser == null) {
-            await _userRepository.addUser(
-                user: UserModel(
-                    id: user.uid,
-                    email: user.email!,
-                    name: user.displayName ?? user.uid,
-                    profileImageUrl: user.photoURL,
-                    phoneNumber: user.phoneNumber,
-                    createdAt: DateTime.now(),
-                    modifiedAt: DateTime.now()));
+            final newUser = user.toUserModel();
+            final addResult = await _userRepository.addUser(user: newUser);
+            if (!addResult) {
+              return null;
+            } else {
+              dbUser = newUser;
+            }
           }
+          await FirebaseAuth.instance.signOut();
+          await FirebaseAuth.instance
+              .signInWithCredential(userCredential.credential!);
+          return dbUser;
         }
-        return user;
-      } else {
-        return null;
       }
+      return null;
     } catch (e) {
       Logger.e(e);
       return null;
-    }
-  }
-
-  Future<bool> signInFirebase(GoogleSignInAccount account) async {
-    try {
-      final GoogleSignInAuthentication googleAuth =
-          await account.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      final user =
-          await _authRepository.loginWithGoogle(credential.idToken ?? '');
-      return true;
-    } catch (e) {
-      Logger.e(e);
-      return false;
     }
   }
 }

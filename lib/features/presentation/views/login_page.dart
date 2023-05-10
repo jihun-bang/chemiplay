@@ -31,17 +31,19 @@ class _LoginPageState extends State<LoginPage> {
     googleSignIn.onCurrentUserChanged
         .listen((GoogleSignInAccount? account) async {
       if (account != null) {
-        final result = await getIt<LoginUseCase>().signInFirebase(account);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted && result) {
-            if (context.canPop()) {
-              showToast(context: context, message: '환영합니다!');
-              context.pop();
-            } else {
-              context.goNamed('home');
-            }
+        final result =
+            await getIt<LoginUseCase>().loginWithGoogle(account: account);
+        if (!mounted) return;
+        if (result != null) {
+          if (context.canPop()) {
+            showToast(context: context, message: '환영합니다!');
+            context.pop();
+          } else {
+            context.goNamed('home');
           }
-        });
+        } else {
+          showToast(context: context, message: '로그인을 실패했어요.');
+        }
       }
     });
     googleSignIn.signInSilently();
@@ -64,7 +66,6 @@ class _LoginPageState extends State<LoginPage> {
                       _buildDivider,
                       buildSignInButton(onPressed: () async {
                         final result = await _viewModel.loginWithGoogle();
-                        print('result=$result');
                         if (result) {
                           if (mounted) {
                             context.goNamed('home');

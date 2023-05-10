@@ -5,13 +5,13 @@ class AuthRemoteDataSource {
 
   AuthRemoteDataSource(this._firebaseAuth);
 
-  Future<User?> loginWithGoogle(String idToken) async {
+  Future<UserCredential> loginWithGoogle(String idToken) async {
     try {
       final OAuthCredential credential =
           GoogleAuthProvider.credential(idToken: idToken);
       final UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
-      return userCredential.user;
+      return userCredential;
     } catch (e) {
       throw Exception('Failed to log in with Google: ${e.toString()}');
     }
