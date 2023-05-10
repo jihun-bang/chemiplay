@@ -39,13 +39,15 @@ class _ChatListPageState extends State<ChatListPage> {
       }
     }
 
+    final lastMessage =
+        channel.lastMessage == null ? "" : channel.lastMessage!.message;
+
     return ListTile(
       // leading: CircleAvatar(
       //   backgroundImage: NetworkImage(channel.coverUrl),
       // ),
       title: Text(otherMember == null ? "" : otherMember.nickname),
-      subtitle:
-          Text(channel.lastMessage == null ? "" : channel.lastMessage!.message),
+      subtitle: Text(lastMessage),
       onTap: () {
         context.pushNamed('chat');
         // context.pushNamed('user', params: {'id': '새게임아이디'});

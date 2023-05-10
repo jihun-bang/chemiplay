@@ -27,23 +27,27 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    const userID = 'test_user'; // todo: 상대방 sendbird user id
+
     return Consumer<ChatViewModel>(
       builder: (_, chatViewModel, ___) {
-        if (!chatViewModel.isLoading) {
+        if (chatViewModel.isLoggedIn) {
+          chatViewModel.getMessage(userID);
+
+          return Scaffold(
+            appBar: AppBar(
+              title: const Center(child: Text('채팅 상대방 닉네임')),
+            ),
+            body: Column(
+              children: [
+                _chats,
+                _bottomInput,
+              ],
+            ),
+          );
+        } else {
           return Container();
         }
-
-        return Scaffold(
-          appBar: AppBar(
-            title: const Center(child: Text('채팅 상대방 닉네임')),
-          ),
-          body: Column(
-            children: [
-              _chats,
-              _bottomInput,
-            ],
-          ),
-        );
       },
     );
   }

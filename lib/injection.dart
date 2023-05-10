@@ -25,7 +25,7 @@ final getIt = GetIt.instance;
 
 void setupDependencies() {
   getIt.registerSingleton<SendbirdSdk>(
-      SendbirdSdk(appId: '2EDF7F38-549C-43C7-9688-164126406A08'));
+      SendbirdSdk(appId: '8C610B6C-31CE-4E27-994F-C8C76DF0D188'));
 
   // Data Resource
   getIt.registerSingleton<AuthRemoteDataSource>(

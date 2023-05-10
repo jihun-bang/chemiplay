@@ -10,7 +10,10 @@ class ChatViewModel extends ChangeNotifier {
 
   late GroupChannel channel;
 
-  bool _isLoading = false;
+  bool _isLoggedIn = false;
+  bool get isLoggedIn => _isLoggedIn;
+
+  bool _isLoading = true;
 
   bool get isLoading => _isLoading;
 
@@ -20,6 +23,8 @@ class ChatViewModel extends ChangeNotifier {
     _setIsLoading(true);
     _setSendbird();
     _setIsLoading(false);
+
+    notifyListeners();
   }
 
   void _setIsLoading(bool value) {
@@ -30,18 +35,7 @@ class ChatViewModel extends ChangeNotifier {
   Future<bool> _setSendbird() async {
     final result = await _sendbirdUseCase.login('junga');
 
-    const userID = 'junga1234'; // todo: 상대방 sendbird user id
-
-    channel = await _sendbirdUseCase.enterOneToOneChannel(userID);
-    channelEventHandlers = ChannelEventHandlers(getIt(),
-        refresh: refresh,
-        channelUrl: channel.channelUrl,
-        channelType: channel.channelType);
-
-    await channelEventHandlers.loadMessages(isForce: true);
-
-    _isLoading = true;
-
+    _isLoggedIn = true;
     notifyListeners();
 
     return result != null;
@@ -63,9 +57,24 @@ class ChatViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> getMessage(String userID) async {
+    channel = await _sendbirdUseCase.enterOneToOneChannel(userID);
+    channelEventHandlers = ChannelEventHandlers(getIt(),
+        refresh: refresh,
+        channelUrl: channel.channelUrl,
+        channelType: channel.channelType);
+
+    await channelEventHandlers.loadMessages(isForce: true);
+
+    notifyListeners();
+
+    return true;
+  }
+
   Future<void> sendMessage(String message) async {
     final preMessage = await _sendbirdUseCase.sendMessage(channel, message);
     channelEventHandlers.messages.add(preMessage);
+
     notifyListeners();
   }
 
