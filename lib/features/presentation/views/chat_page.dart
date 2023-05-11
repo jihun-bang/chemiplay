@@ -6,8 +6,11 @@ import 'package:sendbird_sdk/core/message/base_message.dart';
 import '../../../injection.dart';
 
 class ChatPage extends StatefulWidget {
+  final String userId;
+
   const ChatPage({
     super.key,
+    required this.userId,
   });
 
   @override
@@ -27,15 +30,13 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    const userID = 'test_user'; // todo: 상대방 sendbird user id
-
     return Consumer<ChatViewModel>(
       builder: (_, chatViewModel, ___) {
         if (!chatViewModel.isLoggedIn) {
           return Container();
         }
 
-        chatViewModel.getMessage(userID);
+        chatViewModel.getMessage(widget.userId);
         return Scaffold(
           appBar: AppBar(
             title: const Center(child: Text('채팅 상대방 닉네임')),

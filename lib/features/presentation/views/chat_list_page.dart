@@ -33,20 +33,23 @@ class _ChatListPageState extends State<ChatListPage> {
       }
     }
 
-    final lastMessage =
-        channel.lastMessage == null ? "" : channel.lastMessage!.message;
+    if (otherMember == null) {
+      return const ListTile();
+    } else {
+      final lastMessage =
+          channel.lastMessage != null ? "" : channel.lastMessage!.message;
 
-    return ListTile(
-      // leading: CircleAvatar(
-      //   backgroundImage: NetworkImage(channel.coverUrl),
-      // ),
-      title: Text(otherMember == null ? "" : otherMember.nickname),
-      subtitle: Text(lastMessage),
-      onTap: () {
-        context.pushNamed('chat');
-        // context.pushNamed('user', params: {'id': '새게임아이디'});
-      },
-    );
+      return ListTile(
+        // leading: CircleAvatar(
+        //   backgroundImage: NetworkImage(channel.coverUrl),
+        // ),
+        title: Text('닉네임: ${otherMember.nickname}'),
+        subtitle: Text(lastMessage + otherMember.userId),
+        onTap: () {
+          context.pushNamed('chat', params: {'userId': otherMember!.userId});
+        },
+      );
+    }
   }
 
   @override

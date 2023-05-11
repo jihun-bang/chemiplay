@@ -47,10 +47,11 @@ final routes = GoRouter(
             },
           ),
           GoRoute(
-            path: 'chat',
+            path: 'chat/:userId',
             name: 'chat',
             pageBuilder: (context, state) {
-              return const MaterialPage(child: ChatPage());
+              final userId = state.params['userId'] ?? 'unknown';
+              return MaterialPage(child: ChatPage(userId: userId));
             },
           )
         ]),
