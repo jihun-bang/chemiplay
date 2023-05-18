@@ -4,6 +4,8 @@ import 'package:chemiplay/injection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sendbird_sdk/sendbird_sdk.dart';
 
+import '../../domain/usecases/user_usecase.dart';
+
 class ChatViewModel extends ChangeNotifier {
   final SendbirdUseCase _sendbirdUseCase;
   late ChannelEventHandlers channelEventHandlers;
@@ -20,11 +22,11 @@ class ChatViewModel extends ChangeNotifier {
   List<GroupChannel> channelList = [];
 
   ChatViewModel(this._sendbirdUseCase) {
-    _setIsLoading(true);
-    _setSendbird();
-    _setIsLoading(false);
+    // _setIsLoading(true);
+    // setSendbird();
+    // _setIsLoading(false);
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   void _setIsLoading(bool value) {
@@ -32,11 +34,12 @@ class ChatViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> _setSendbird() async {
-    final result = await _sendbirdUseCase.login('junga');
-
+  Future<bool> setSendbird(String userEmail) async {
+    final result = await _sendbirdUseCase.login(userEmail);
     _isLoggedIn = true;
-    notifyListeners();
+
+    _setIsLoading(false);
+    // notifyListeners();
 
     return result != null;
   }

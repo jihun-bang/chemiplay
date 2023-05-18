@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sendbird_sdk/sendbird_sdk.dart';
 
 import '../../../injection.dart';
+import '../viewmodels/user_viewmodel.dart';
 
 // 채팅 리스트 화면
 class ChatListPage extends StatefulWidget {
@@ -16,6 +17,7 @@ class ChatListPage extends StatefulWidget {
 
 class _ChatListPageState extends State<ChatListPage> {
   final _chatViewModel = getIt<ChatViewModel>();
+  final _userViewModel = getIt<UserViewModel>();
 
   @override
   void initState() {
@@ -54,7 +56,11 @@ class _ChatListPageState extends State<ChatListPage> {
 
   @override
   Widget build(BuildContext context) {
+    String userEmail = _userViewModel.user!.email;
+
     return Consumer<ChatViewModel>(builder: (_, chatViewModel, ___) {
+      chatViewModel.setSendbird(userEmail);
+
       if (!chatViewModel.isLoggedIn) {
         return Container();
       }
