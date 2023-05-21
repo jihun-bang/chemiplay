@@ -24,7 +24,6 @@ class ChannelEventHandlers with ChannelEventHandler {
     callback = refresh;
     _sendbirdDataSource.sendbirdSdk
         .addChannelEventHandler('ChannelEventHandler', this);
-    getChannel(channelUrl, channelType: channelType);
   }
 
   Future<BaseChannel> getChannel(String channelUrl,

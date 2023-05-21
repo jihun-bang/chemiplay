@@ -4,19 +4,17 @@ import 'package:chemiplay/injection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sendbird_sdk/sendbird_sdk.dart';
 
-import '../../domain/usecases/user_usecase.dart';
-
 class ChatViewModel extends ChangeNotifier {
   final SendbirdUseCase _sendbirdUseCase;
   late ChannelEventHandlers channelEventHandlers;
 
+  late User? sendbirdUser;
   late GroupChannel channel;
 
   bool _isLoggedIn = false;
   bool get isLoggedIn => _isLoggedIn;
 
-  bool _isLoading = true;
-
+  bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   List<GroupChannel> channelList = [];
@@ -29,19 +27,18 @@ class ChatViewModel extends ChangeNotifier {
     // notifyListeners();
   }
 
-  void _setIsLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
+  Future<void> setSendbird(String userEmail) async {
+    if (_isLoggedIn == true) {
+      return;
+    }
 
-  Future<bool> setSendbird(String userEmail) async {
-    final result = await _sendbirdUseCase.login(userEmail);
+    sendbirdUser = await _sendbirdUseCase.login(userEmail);
+
+    loadChannelList();
+
     _isLoggedIn = true;
 
-    _setIsLoading(false);
-    // notifyListeners();
-
-    return result != null;
+    notifyListeners();
   }
 
   User? getSendbirdUser() {
@@ -57,16 +54,25 @@ class ChatViewModel extends ChangeNotifier {
     } else if (isForce) {
       channelEventHandlers.loadMessages(isForce: true);
     }
+
     notifyListeners();
   }
 
-  Future<bool> getMessage(String userID) async {
+  Future<void> enterOneToOneChannelWith(String userID) async {
     channel = await _sendbirdUseCase.enterOneToOneChannel(userID);
+
+    notifyListeners();
+  }
+
+  Future<bool> getMessageWith(String userID) async {
+    channel = await _sendbirdUseCase.enterOneToOneChannel(userID);
+
     channelEventHandlers = ChannelEventHandlers(getIt(),
         refresh: refresh,
         channelUrl: channel.channelUrl,
         channelType: channel.channelType);
 
+    await channelEventHandlers.getChannel(channel.channelUrl, channelType: channel.channelType);
     await channelEventHandlers.loadMessages(isForce: true);
 
     notifyListeners();
@@ -82,14 +88,20 @@ class ChatViewModel extends ChangeNotifier {
   }
 
   Future<void> loadChannelList() async {
+    if (_isLoading == true) {
+      return;
+    }
+    _isLoading = true;
+
     final query = GroupChannelListQuery()
-      ..includeEmptyChannel = false
+      ..includeEmptyChannel = true
       ..memberStateFilter = MemberStateFilter.all
       ..order = GroupChannelListOrder.latestLastMessage
       ..limit = 20;
 
     channelList = await query.loadNext();
 
+    _isLoading = false;
     notifyListeners();
   }
 }

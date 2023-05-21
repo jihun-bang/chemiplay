@@ -30,13 +30,11 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    _chatViewModel.getMessageWith(widget.userId);
+
     return Consumer<ChatViewModel>(
       builder: (_, chatViewModel, ___) {
-        if (!chatViewModel.isLoggedIn) {
-          return Container();
-        }
 
-        chatViewModel.getMessage(widget.userId);
         return Scaffold(
           appBar: AppBar(
             title: const Center(child: Text('채팅 상대방 닉네임')),
