@@ -64,7 +64,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 flex: 130,
                 child: GigiElevatedButton(
                   text: '팔로우',
-                  backgroundColor: MyColors.gray_03,
+                  shadowColor: MyColors.gray_03,
+                  backgroundColor: Colors.white,
                   onPressed: () {
                     if (viewModel.user != null) {
                       showToast(context: context, message: '준비중입니다!');
@@ -543,6 +544,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 text: _isMoreReview ? '전체 리뷰 닫기' : '전체 리뷰 보기',
                 height: 40,
                 backgroundColor: Colors.white,
+                shadowColor: MyColors.gray_03,
                 textStyle: TextStyle(
                     color: MyColors.black_02,
                     fontSize: 15,

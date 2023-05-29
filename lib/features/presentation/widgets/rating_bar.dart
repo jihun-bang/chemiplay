@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../core/utils/colors.dart';
-
 class GigiRatingBar extends StatelessWidget {
   final double initialRating;
   final ValueChanged<double>? onRatingUpdate;
@@ -24,7 +22,7 @@ class GigiRatingBar extends StatelessWidget {
       initialRating: initialRating,
       minRating: 1,
       allowHalfRating: true,
-      unratedColor: MyColors.gray_06,
+      unratedColor: Colors.white,
       itemCount: 5,
       itemBuilder: (_, __) => SvgPicture.asset('assets/icons/icon_star.svg'),
       itemSize: itemSize,
