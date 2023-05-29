@@ -31,6 +31,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   late PageController _gamInfoController;
 
   bool _isPlayVoice = false;
+  bool _isMoreReview = false;
 
   @override
   void initState() {
@@ -535,18 +536,22 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 )
               ],
             ),
-            ...List.generate(4, (_) => _buildReview),
+            ...List.generate(_isMoreReview ? 20 : 4, (_) => _buildReview),
             Padding(
               padding: const EdgeInsets.only(bottom: 70),
               child: GigiElevatedButton(
-                text: '전체 리뷰 보기',
+                text: _isMoreReview ? '전체 리뷰 닫기' : '전체 리뷰 보기',
                 height: 40,
                 backgroundColor: Colors.white,
                 textStyle: TextStyle(
                     color: MyColors.black_02,
                     fontSize: 15,
                     fontWeight: FontWeight.w600),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    _isMoreReview = !_isMoreReview;
+                  });
+                },
               ),
             ),
           ],
