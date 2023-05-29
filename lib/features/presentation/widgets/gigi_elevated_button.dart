@@ -44,6 +44,7 @@ class GigiElevatedButton extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
+            borderRadius: BorderRadius.circular(12.0),
             onTap: onPressed,
             child: Center(
               child: Text(
