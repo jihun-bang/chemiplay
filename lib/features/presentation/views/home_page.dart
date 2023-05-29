@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:chemiplay/core/utils/colors.dart';
 import 'package:chemiplay/injection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _viewModel = getIt<UserViewModel>();
   final List<String> _games = [
-    '모든게임',
     '리그오브레전드',
     '전략적 팀 전투',
     '발로란트',
@@ -76,8 +76,8 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
         body: CustomScrollView(
           slivers: [
-            _buildGames,
             _buildBanner,
+            _buildGames,
             _buildTitle,
             _buildUserCards,
           ],
@@ -118,50 +118,41 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget get _buildGames {
-    return SliverAppBar(
-        backgroundColor: Colors.white,
-        toolbarHeight: 0,
-        pinned: true,
-        floating: true,
-        snap: false,
-        expandedHeight: 48,
-        flexibleSpace: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          height: 48,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Text(
-                '👾',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(width: 8),
-              InkWell(
-                onTap: _showCupertinoPopup,
-                child: Row(
-                  children: [
-                    Text(
-                      _selGame,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: -0.01,
+    return SliverToBoxAdapter(
+      child: Container(
+        margin: const EdgeInsets.only(top: 15.81),
+        height: 98,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: _games.length,
+            itemBuilder: (_, index) => SizedBox(
+                  width: 85,
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 4),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: MyColors.gray_06),
+                        width: 60,
+                        height: 60,
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 11.75),
-                      child: Icon(Icons.keyboard_arrow_down_sharp,
-                          color: Color(0xFF2B2B2B)),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ));
+                      Text(
+                        _games[index],
+                        style: TextStyle(
+                            height: 14.31 / 12,
+                            letterSpacing: -0.02,
+                            color: MyColors.black_02,
+                            fontSize: 12,
+                            overflow: TextOverflow.ellipsis),
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                )),
+      ),
+    );
   }
 
   Widget get _buildBanner {

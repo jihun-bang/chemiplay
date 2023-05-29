@@ -20,5 +20,6 @@ class MyColors {
   static Color gray_05 = const Color(0xFFAEB4BD);
   static Color gray_06 = const Color(0xFF8A9099);
 
+  static Color black_02 = const Color(0xFF2B2B2B);
   static Color black_03 = const Color(0xFF4D4D4D);
 }
