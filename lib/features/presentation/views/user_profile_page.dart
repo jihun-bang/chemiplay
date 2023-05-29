@@ -12,6 +12,7 @@ import '../dialog/toast.dart';
 import '../viewmodels/user_viewmodel.dart';
 import '../widgets/game_cost.dart';
 import '../widgets/gigi_elevated_button.dart';
+import '../widgets/rating_bar.dart';
 
 class UserProfilePage extends StatefulWidget {
   final MateModel userProfile;
@@ -54,18 +55,39 @@ class _UserProfilePageState extends State<UserProfilePage> {
             _buildReviews,
           ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Container(
-          margin: const EdgeInsets.all(24),
-          child: GiGiElevatedButton(
-            text: '무료로 대화하기',
-            onPressed: () {
-              if (viewModel.user != null) {
-                showToast(context: context, message: '준비중입니다!');
-              } else {
-                context.replaceNamed('login');
-              }
-            },
+        bottomSheet: Container(
+          margin: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 130,
+                child: GigiElevatedButton(
+                  text: '팔로우',
+                  backgroundColor: MyColors.gray_03,
+                  onPressed: () {
+                    if (viewModel.user != null) {
+                      showToast(context: context, message: '준비중입니다!');
+                    } else {
+                      context.replaceNamed('login');
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                flex: 390,
+                child: GigiElevatedButton(
+                  text: '무료로 대화하기',
+                  onPressed: () {
+                    if (viewModel.user != null) {
+                      showToast(context: context, message: '준비중입니다!');
+                    } else {
+                      context.replaceNamed('login');
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       );
@@ -105,7 +127,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   ),
                   textAlign: TextAlign.left,
                 ),
-                GiGiElevatedButton(
+                GigiElevatedButton(
                   text: '팔로우',
                   textStyle: const TextStyle(fontWeight: FontWeight.w500),
                   height: 27,
@@ -244,7 +266,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         fontSize: 15,
                       ),
                     ),
-                    GiGiElevatedButton(
+                    GigiElevatedButton(
                       text: '같이하기',
                       textStyle: const TextStyle(fontWeight: FontWeight.w500),
                       height: 30,
@@ -352,6 +374,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
               ],
             ),
             _buildVoice,
+            const Text(
+              '언제나 열심히 합니당 ! 안가리구 다 합니당 맘편하게 같이 게임해요~~~~ 전 시즌 롤체 마스터입니다~~입니다',
+              style: TextStyle(fontSize: 15, height: 17.9 / 15),
+            ),
           ],
         ),
       ),
@@ -375,11 +401,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
           Container(
             width: 180,
             height: 45,
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: MyColors.black_03,
-                width: 1.2999999523162842,
+                width: 0.8,
               ),
             ),
             child: InkWell(
@@ -405,7 +432,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     return Container(
         width: 4,
         height: 20,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(4),
             topRight: Radius.circular(4),
@@ -435,8 +462,44 @@ class _UserProfilePageState extends State<UserProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildLabel('후원자 랭킹'),
+            const SizedBox(height: 9),
+            ...List.generate(3, (_) => _buildRankingUser)
           ],
         ),
+      ),
+    );
+  }
+
+  Widget get _buildRankingUser {
+    return SizedBox(
+      height: 56,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: const [
+              CircleAvatar(
+                child: SizedBox(
+                  width: 42,
+                  height: 42,
+                ),
+              ),
+              SizedBox(width: 10),
+              Text(
+                '닉네임',
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+          GameCost(
+            cost: '9500',
+            unit: '',
+            costStyle: TextStyle(
+                color: MyColors.black_02,
+                fontSize: 16,
+                fontWeight: FontWeight.w600),
+          ),
+        ],
       ),
     );
   }
@@ -444,15 +507,104 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Widget get _buildReviews {
     return SliverToBoxAdapter(
       child: Padding(
-        padding:
-            const EdgeInsets.only(left: 24, top: 60, right: 24, bottom: 24),
+        padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildLabel('100개의 리뷰'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 24),
+                  child: _buildLabel('100개의 리뷰'),
+                ),
+                Row(
+                  children: [
+                    SvgPicture.asset('assets/icons/icon_star.svg'),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 3),
+                      child: Text(
+                        '5.0',
+                        style: TextStyle(
+                            fontSize: 18,
+                            height: 21.48 / 18,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            ...List.generate(4, (_) => _buildReview),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 70),
+              child: GigiElevatedButton(
+                text: '전체 리뷰 보기',
+                height: 40,
+                backgroundColor: Colors.white,
+                textStyle: TextStyle(
+                    color: MyColors.black_02,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600),
+                onPressed: () {},
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget get _buildReview {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                const CircleAvatar(
+                  child: SizedBox(
+                    width: 42,
+                    height: 42,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 3),
+                      child: Text(
+                        '닉네임',
+                        style: TextStyle(fontSize: 13, height: 16.71 / 14),
+                      ),
+                    ),
+                    Text(
+                      '2023-09-10',
+                      style: TextStyle(
+                          fontSize: 12,
+                          height: 14.32 / 12,
+                          color: MyColors.gray_06),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const GigiRatingBar(
+              initialRating: 2,
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 6, bottom: 26),
+          child: Text(
+            '리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰',
+            style: TextStyle(
+                color: MyColors.gray_07, fontSize: 15, height: 17.9 / 15),
+          ),
+        )
+      ],
     );
   }
 }

@@ -31,10 +31,11 @@ class GameCost extends StatelessWidget {
         SvgPicture.asset('assets/icons/icon_coin.svg'),
         RichText(
             text: TextSpan(text: cost, style: costStyle, children: [
-          TextSpan(
-            text: '/$unit',
-            style: unitStyle,
-          )
+          if (unit.isNotEmpty)
+            TextSpan(
+              text: '/$unit',
+              style: unitStyle,
+            )
         ]))
       ],
     );

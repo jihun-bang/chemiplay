@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GiGiElevatedButton extends StatelessWidget {
+class GigiElevatedButton extends StatelessWidget {
   final String text;
   final TextStyle textStyle;
   final double height;
@@ -8,10 +8,11 @@ class GiGiElevatedButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Color backgroundColor;
 
-  const GiGiElevatedButton({
+  const GigiElevatedButton({
     super.key,
     required this.text,
-    this.textStyle = const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+    this.textStyle = const TextStyle(
+        fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF2B2B2B)),
     this.height = 54,
     this.width,
     this.onPressed,
