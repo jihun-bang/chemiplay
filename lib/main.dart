@@ -1,11 +1,11 @@
-import 'package:chemiplay/core/utils/thema.dart';
-import 'package:chemiplay/features/presentation/viewmodels/chat_viewmodel.dart';
-import 'package:chemiplay/features/presentation/viewmodels/user_viewmodel.dart';
+import 'package:chemiplay/presentation/viewmodels/chat_viewmodel.dart';
+import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
 import 'package:chemiplay/routes.dart';
+import 'package:chemiplay/utils/thema.dart';
+import 'package:chemiplay/utils/web_plugins/web_plugin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -22,7 +22,7 @@ Future<void> main() async {
   setupDependencies();
 
   /// URL # 제거
-  usePathUrlStrategy();
+  pathUrlStrategy();
 
   runApp(const MyApp());
 }
@@ -35,10 +35,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<UserViewModel>(
-          create: (_) => getIt<UserViewModel>(),
+          create: (_) => getIt(),
         ),
         ChangeNotifierProvider<ChatViewModel>(
-          create: (_) => getIt<ChatViewModel>(),
+          create: (_) => getIt(),
         ),
       ],
       child: MaterialApp.router(

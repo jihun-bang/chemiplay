@@ -1,12 +1,12 @@
-import 'package:chemiplay/features/data/models/mate.dart';
-import 'package:chemiplay/features/presentation/views/chat_list_page.dart';
-import 'package:chemiplay/features/presentation/views/chat_page.dart';
-import 'package:chemiplay/features/presentation/views/user_profile_page.dart';
+import 'package:chemiplay/presentation/views/chat_list_page.dart';
+import 'package:chemiplay/presentation/views/chat_page.dart';
+import 'package:chemiplay/presentation/views/home_page.dart';
+import 'package:chemiplay/presentation/views/login_page.dart';
+import 'package:chemiplay/presentation/views/user_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'features/presentation/views/home_page.dart';
-import 'features/presentation/views/login_page.dart';
+import 'data/models/mate.dart';
 
 final routes = GoRouter(
   routes: [
