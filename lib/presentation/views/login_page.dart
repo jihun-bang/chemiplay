@@ -9,7 +9,7 @@ import '../../domain/usecases/login_usecase.dart';
 import '../../utils/constants.dart';
 import '../dialog/toast.dart';
 import '../viewmodels/login_viewmodel.dart';
-import '../widgets/sign_in_button/stub.dart';
+import '../widgets/sign_in_button/google_sign_in_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
