@@ -5,4 +5,5 @@ final lightTheme = ThemeData(
   textTheme: const TextTheme(
     bodySmall: TextStyle(fontFamily: 'Pretandard', letterSpacing: -0.02),
   ),
+  scaffoldBackgroundColor: Colors.white,
 );

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../viewmodels/user_viewmodel.dart';
 import '../../widgets/gigi_app_bar.dart';
+import 'widgets/my_profile.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -40,7 +41,9 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
         appBar:
             const GigiAppBar(title: '내 정보', titleAlign: Alignment.centerLeft),
         body: ListView(
-          children: [],
+          children: [
+            MyProfile(user: _user),
+          ],
         ),
       );
     });
