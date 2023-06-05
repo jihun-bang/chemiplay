@@ -1,3 +1,4 @@
+import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -85,8 +86,9 @@ class _ChatListPageState extends State<ChatListPage> {
       }
 
       return Scaffold(
-        appBar: AppBar(
-          title: const Text("메시지"),
+        appBar: const GigiAppBar(
+          title: '메시지',
+          titleAlign: Alignment.centerLeft,
         ),
         body: Column(
           mainAxisSize: MainAxisSize.max,

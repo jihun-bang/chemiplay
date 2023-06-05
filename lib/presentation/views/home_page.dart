@@ -1,5 +1,6 @@
 import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/views/chat_list_page.dart';
+import 'package:chemiplay/presentation/views/feed/feed_page.dart';
 import 'package:chemiplay/presentation/views/mate/mates_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../dialog/toast.dart';
 import '../viewmodels/user_viewmodel.dart';
+import 'my/my_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,9 +39,9 @@ class _HomePageState extends State<HomePage> {
             physics: const NeverScrollableScrollPhysics(),
             children: const [
               MatesPage(),
-              SizedBox(),
+              FeedPage(),
               ChatListPage(),
-              SizedBox(),
+              MyPage(),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -47,12 +49,7 @@ class _HomePageState extends State<HomePage> {
             showSelectedLabels: false,
             showUnselectedLabels: false,
             onTap: (index) {
-              _pageController.animateToPage(index,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeOutCubic);
-              if (index == 1) {
-                showToast(context: context, message: '준비중입니다!');
-              }
+              _pageController.jumpToPage(index);
               if ((index == 2 || index == 3) &&
                   !_userViewModel.isAuthenticated) {
                 context.goNamed('login');
