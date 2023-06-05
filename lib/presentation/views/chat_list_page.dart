@@ -20,7 +20,7 @@ class _ChatListPageState extends State<ChatListPage> {
   final _chatViewModel = getIt<ChatViewModel>();
   final _userViewModel = getIt<UserViewModel>();
 
-  final _textController = TextEditingController();
+  // final _textController = TextEditingController();
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _ChatListPageState extends State<ChatListPage> {
 
   @override
   void dispose() {
-    _textController.dispose();
+    // _textController.dispose();
     super.dispose();
   }
 
@@ -94,22 +94,22 @@ class _ChatListPageState extends State<ChatListPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Text('채팅방 개수 ${chatViewModel.channelList.length}'),
-            TextField(
-              controller: _textController,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
-                hintText: '추가할 채팅 닉네임(추가 후 새로고침 해줘)',
-              ),
-              onEditingComplete: () {
-                if (_textController.text.isNotEmpty) {
-                  setState(() {
-                    chatViewModel
-                        .enterOneToOneChannelWith(_textController.text);
-                    _textController.clear();
-                  });
-                }
-              },
-            ),
+            // TextField(
+            //   controller: _textController,
+            //   decoration: const InputDecoration(
+            //     contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
+            //     hintText: '추가할 채팅 닉네임(추가 후 새로고침 해줘)',
+            //   ),
+            //   onEditingComplete: () {
+            //     if (_textController.text.isNotEmpty) {
+            //       setState(() {
+            //         chatViewModel
+            //             .enterOneToOneChannelWith(_textController.text);
+            //         _textController.clear();
+            //       });
+            //     }
+            //   },
+            // ),
             Expanded(
               child: ListView.builder(
                 itemCount: chatViewModel.channelList.length,

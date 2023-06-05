@@ -75,6 +75,9 @@ class _MateProfilePageState extends State<MateProfilePage> {
         if (_mateViewModel.user == null) {
           return const SizedBox();
         }
+        if (_chatViewModel.isLoggedIn == false && _userViewModel.user != null) {
+          _chatViewModel.setSendbird(_userViewModel.user!.email);
+        }
         return Scaffold(
           body: CustomScrollView(
             slivers: [
@@ -114,7 +117,6 @@ class _MateProfilePageState extends State<MateProfilePage> {
                     text: '무료로 대화하기',
                     onPressed: () {
                       if (_userViewModel.user != null) {
-                        _chatViewModel.enterOneToOneChannelWith(_mate.email);
                         context.pushNamed('chat', params: {'userId': _mate.email});
                       } else {
                         context.replaceNamed('login');
