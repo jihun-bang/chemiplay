@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/injection.dart';
+import 'package:chemiplay/presentation/viewmodels/chat_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/mate_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,6 +35,7 @@ class _MateProfilePageState extends State<MateProfilePage> {
   final _userViewModel = getIt<UserViewModel>();
   late final MateViewModel _mateViewModel;
   late PageController _gamInfoController;
+  late final ChatViewModel _chatViewModel;
 
   bool _isPlayVoice = false;
   bool _isMoreReview = false;
@@ -66,6 +68,7 @@ class _MateProfilePageState extends State<MateProfilePage> {
     return ChangeNotifierProvider<MateViewModel>(
       create: (_) {
         _mateViewModel = getIt();
+        _chatViewModel = getIt();
         return _mateViewModel;
       },
       child: Consumer<MateViewModel>(builder: (_, __, ___) {
@@ -111,7 +114,8 @@ class _MateProfilePageState extends State<MateProfilePage> {
                     text: '무료로 대화하기',
                     onPressed: () {
                       if (_userViewModel.user != null) {
-                        showToast(context: context, message: '준비중입니다!');
+                        _chatViewModel.enterOneToOneChannelWith(_mate.email);
+                        context.pushNamed('chat', params: {'userId': _mate.email});
                       } else {
                         context.replaceNamed('login');
                       }
