@@ -1,5 +1,7 @@
 import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/injection.dart';
+import 'package:chemiplay/presentation/views/my/widgets/my_coin.dart';
+import 'package:chemiplay/presentation/views/my/widgets/user_interaction.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +44,21 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
             const GigiAppBar(title: '내 정보', titleAlign: Alignment.centerLeft),
         body: ListView(
           children: [
-            MyProfile(user: _user),
+            MyProfile(
+              user: _user,
+              onTap: () {},
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 24),
+              child: UserInteractionWidget(
+                  following: 990, follower: 990, visitor: 990),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              child: MyCoin(
+                onPressed: () {},
+              ),
+            )
           ],
         ),
       );
