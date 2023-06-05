@@ -2,7 +2,7 @@ import 'package:chemiplay/presentation/views/chat_list_page.dart';
 import 'package:chemiplay/presentation/views/chat_page.dart';
 import 'package:chemiplay/presentation/views/home_page.dart';
 import 'package:chemiplay/presentation/views/login_page.dart';
-import 'package:chemiplay/presentation/views/mate_page.dart';
+import 'package:chemiplay/presentation/views/mate/mate_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

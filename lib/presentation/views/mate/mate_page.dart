@@ -8,13 +8,13 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../data/models/mate.dart';
-import '../../utils/colors.dart';
-import '../dialog/toast.dart';
-import '../viewmodels/user_viewmodel.dart';
-import '../widgets/game_cost.dart';
-import '../widgets/gigi_elevated_button.dart';
-import '../widgets/rating_bar.dart';
+import '../../../data/models/mate.dart';
+import '../../../utils/colors.dart';
+import '../../dialog/toast.dart';
+import '../../viewmodels/user_viewmodel.dart';
+import '../../widgets/game_cost.dart';
+import '../../widgets/gigi_elevated_button.dart';
+import '../../widgets/rating_bar.dart';
 
 class MateProfilePage extends StatefulWidget {
   final String id;
@@ -38,7 +38,7 @@ class _MateProfilePageState extends State<MateProfilePage> {
   bool _isPlayVoice = false;
   bool _isMoreReview = false;
 
-  UserModel? get _mate => _mateViewModel.user;
+  UserModel get _mate => _mateViewModel.user!;
 
   @override
   void initState() {
@@ -69,6 +69,9 @@ class _MateProfilePageState extends State<MateProfilePage> {
         return _mateViewModel;
       },
       child: Consumer<MateViewModel>(builder: (_, __, ___) {
+        if (_mateViewModel.user == null) {
+          return const SizedBox();
+        }
         return Scaffold(
           body: CustomScrollView(
             slivers: [
@@ -149,7 +152,7 @@ class _MateProfilePageState extends State<MateProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  _mateViewModel.user?.name ?? '',
+                  _mate.name,
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
