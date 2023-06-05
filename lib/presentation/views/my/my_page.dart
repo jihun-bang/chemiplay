@@ -1,5 +1,6 @@
 import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/injection.dart';
+import 'package:chemiplay/presentation/views/my/widgets/list_button.dart';
 import 'package:chemiplay/presentation/views/my/widgets/my_coin.dart';
 import 'package:chemiplay/presentation/views/my/widgets/user_interaction.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,11 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
               child: MyCoin(
                 onPressed: () {},
               ),
-            )
+            ),
+            ListButton(label: '게임 메이트 되기', onPressed: () {}),
+            ListButton(label: '지난 플레이', onPressed: () {}),
+            ListButton(label: '고객센터', onPressed: () {}),
+            ListButton(label: '설정', onPressed: () {}),
           ],
         ),
       );

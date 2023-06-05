@@ -27,6 +27,9 @@ class MyTextStyle {
         fontSize: 18,
       );
 
+  static TextStyle body1Med({Color? color}) =>
+      TextStyle(color: color, fontSize: 16, fontWeight: FontWeight.w500);
+
   static TextStyle body2Reg({Color? color}) => TextStyle(
         color: color,
         fontSize: 14,
