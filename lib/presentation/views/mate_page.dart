@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/injection.dart';
+import 'package:chemiplay/presentation/viewmodels/mate_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -14,86 +16,111 @@ import '../widgets/game_cost.dart';
 import '../widgets/gigi_elevated_button.dart';
 import '../widgets/rating_bar.dart';
 
-class UserProfilePage extends StatefulWidget {
+class MateProfilePage extends StatefulWidget {
+  final String id;
   final MateModel userProfile;
 
-  const UserProfilePage({
+  const MateProfilePage({
     super.key,
+    required this.id,
     required this.userProfile,
   });
 
   @override
-  State<UserProfilePage> createState() => _UserProfilePageState();
+  State<MateProfilePage> createState() => _MateProfilePageState();
 }
 
-class _UserProfilePageState extends State<UserProfilePage> {
+class _MateProfilePageState extends State<MateProfilePage> {
   final _userViewModel = getIt<UserViewModel>();
+  late final MateViewModel _mateViewModel;
   late PageController _gamInfoController;
 
   bool _isPlayVoice = false;
   bool _isMoreReview = false;
+
+  UserModel? get _mate => _mateViewModel.user;
 
   @override
   void initState() {
     super.initState();
 
     _gamInfoController = PageController(viewportFraction: 0.9);
+
+    /// TODO 임시 Mate
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        _mateViewModel.init(widget.id);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _gamInfoController.dispose();
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserViewModel>(builder: (_, viewModel, ___) {
-      return Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            _buildProfileImages,
-            _buildHead,
-            _buildLine(),
-            _buildUserInfo,
-            _buildLine(height: 8),
-            _buildRanking,
-            _buildLine(height: 8),
-            _buildReviews,
-          ],
-        ),
-        bottomSheet: Container(
-          margin: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 130,
-                child: GigiElevatedButton(
-                  text: '팔로우',
-                  shadowColor: MyColors.gray_03,
-                  backgroundColor: Colors.white,
-                  onPressed: () {
-                    if (viewModel.user != null) {
-                      showToast(context: context, message: '준비중입니다!');
-                    } else {
-                      context.replaceNamed('login');
-                    }
-                  },
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                flex: 390,
-                child: GigiElevatedButton(
-                  text: '무료로 대화하기',
-                  onPressed: () {
-                    if (viewModel.user != null) {
-                      showToast(context: context, message: '준비중입니다!');
-                    } else {
-                      context.replaceNamed('login');
-                    }
-                  },
-                ),
-              ),
+    return ChangeNotifierProvider<MateViewModel>(
+      create: (_) {
+        _mateViewModel = getIt();
+        return _mateViewModel;
+      },
+      child: Consumer<MateViewModel>(builder: (_, __, ___) {
+        return Scaffold(
+          body: CustomScrollView(
+            slivers: [
+              _buildProfileImages,
+              _buildHead,
+              _buildLine(),
+              _buildUserInfo,
+              _buildLine(height: 8),
+              _buildRanking,
+              _buildLine(height: 8),
+              _buildReviews,
             ],
           ),
-        ),
-      );
-    });
+          bottomSheet: Container(
+            margin: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 130,
+                  child: GigiElevatedButton(
+                    text: '팔로우',
+                    shadowColor: MyColors.gray_03,
+                    backgroundColor: Colors.white,
+                    onPressed: () {
+                      if (_userViewModel.user != null) {
+                        showToast(context: context, message: '준비중입니다!');
+                      } else {
+                        context.replaceNamed('login');
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  flex: 390,
+                  child: GigiElevatedButton(
+                    text: '무료로 대화하기',
+                    onPressed: () {
+                      if (_userViewModel.user != null) {
+                        showToast(context: context, message: '준비중입니다!');
+                      } else {
+                        context.replaceNamed('login');
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }),
+    );
   }
 
   Widget get _buildProfileImages {
@@ -122,7 +149,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  widget.userProfile.name,
+                  _mateViewModel.user?.name ?? '',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,

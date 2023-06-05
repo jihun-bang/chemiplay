@@ -2,7 +2,7 @@ import 'package:chemiplay/presentation/views/chat_list_page.dart';
 import 'package:chemiplay/presentation/views/chat_page.dart';
 import 'package:chemiplay/presentation/views/home_page.dart';
 import 'package:chemiplay/presentation/views/login_page.dart';
-import 'package:chemiplay/presentation/views/user_profile_page.dart';
+import 'package:chemiplay/presentation/views/mate_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,12 +18,13 @@ final routes = GoRouter(
         },
         routes: [
           GoRoute(
-            path: 'user/:id',
-            name: 'user',
+            path: 'mate/:id',
+            name: 'mate',
             pageBuilder: (context, state) {
               final id = state.params['id'] ?? 'unknown';
               return MaterialPage(
-                child: UserProfilePage(
+                child: MateProfilePage(
+                  id: id,
                   userProfile: MateModel(
                     name: id,
                     rating: 4.6,

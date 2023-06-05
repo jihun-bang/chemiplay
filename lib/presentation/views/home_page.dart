@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/injection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,27 +33,7 @@ class _HomePageState extends State<HomePage> {
   ];
   String _selGame = '모든게임';
 
-  void _showCupertinoPopup() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SizedBox(
-          height: 300,
-          child: CupertinoPicker(
-            itemExtent: 30,
-            onSelectedItemChanged: (int index) {
-              setState(() {
-                _selGame = _games[index];
-              });
-            },
-            children: _games.map((String value) {
-              return Text(value);
-            }).toList(),
-          ),
-        );
-      },
-    );
-  }
+  List<UserModel> _users = [];
 
   void _goChatList() {
     if (_viewModel.isAuthenticated) {
@@ -71,6 +52,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    /// TODO 임시 Mate
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final users = await usersRef
+          .get()
+          .then((value) => value.docs.map((e) => e.data).toList());
+      if (mounted) {
+        setState(() {
+          _users = users;
+        });
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<UserViewModel>(builder: (_, viewModel, ___) {
       return Scaffold(
@@ -79,7 +77,7 @@ class _HomePageState extends State<HomePage> {
             _buildBanner,
             _buildGames,
             _buildTitle,
-            _buildUserCards,
+            if (_users.isNotEmpty) _buildMateCards,
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -189,7 +187,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget get _buildUserCards {
+  Widget get _buildMateCards {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       sliver: SliverGrid(
@@ -205,9 +203,10 @@ class _HomePageState extends State<HomePage> {
             bool randomBoolean = random.nextBool();
             bool status = random.nextBool();
             if (randomBoolean) {
+              int nextIndex = random.nextInt(6);
               return ProfileCard(
                 isOnline: status,
-                name: '탑솔러 방지훈',
+                name: _users[nextIndex].name,
                 rating: 4.9,
                 game: '리그오브레전드',
                 description: '탑의신입니다.',
@@ -215,13 +214,15 @@ class _HomePageState extends State<HomePage> {
                 imageUrl:
                     'https://firebasestorage.googleapis.com/v0/b/gigi-chemiplay.appspot.com/o/profile_image%2Fuser_1.jpg?alt=media&token=fa6b5113-9b03-45ca-9c0d-b0871cf98f0b',
                 onTap: () {
-                  context.pushNamed('user', params: {'id': '탑솔러 방지훈'});
+                  context
+                      .pushNamed('mate', params: {'id': _users[nextIndex].id});
                 },
               );
             } else {
+              int nextIndex = random.nextInt(6);
               return ProfileCard(
                 isOnline: status,
-                name: '새게임아이디',
+                name: _users[nextIndex].name,
                 rating: 4.6,
                 game: '리그오브레전드',
                 description: '브론즈 소농민 대기중',
@@ -229,7 +230,8 @@ class _HomePageState extends State<HomePage> {
                 imageUrl:
                     'https://firebasestorage.googleapis.com/v0/b/gigi-chemiplay.appspot.com/o/profile_image%2Fuser_2.jpg?alt=media&token=2d827a1a-b61a-4902-a163-b35a9d545fe5',
                 onTap: () {
-                  context.pushNamed('user', params: {'id': '새게임아이디'});
+                  context
+                      .pushNamed('mate', params: {'id': _users[nextIndex].id});
                 },
               );
             }
