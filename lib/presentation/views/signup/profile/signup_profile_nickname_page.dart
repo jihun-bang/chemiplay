@@ -1,4 +1,5 @@
 import 'package:chemiplay/presentation/views/signup/profile/layout/signup_profile_layout.dart';
+import 'package:chemiplay/presentation/views/signup/profile/signup_profile_image_page.dart';
 import 'package:chemiplay/presentation/widgets/gigi_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +48,16 @@ class _SignupProfileNicknamePageState extends State<SignupProfileNicknamePage> {
         ],
       ),
       disableNextButton: disabled,
-      onNextPage: () {},
+      onNextPage: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return const SignupProfileImagePage();
+            },
+          ),
+        );
+      },
     );
   }
 }

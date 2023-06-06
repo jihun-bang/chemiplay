@@ -8,6 +8,7 @@ class SignupProfileLayout extends StatefulWidget {
   final bool disableNextButton;
   final String title, subTitle;
   final Widget contents;
+  final CrossAxisAlignment crossAxisAlignment;
 
   const SignupProfileLayout({
     super.key,
@@ -16,6 +17,7 @@ class SignupProfileLayout extends StatefulWidget {
     this.subTitle = '',
     required this.contents,
     required this.disableNextButton,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
   });
 
   @override
