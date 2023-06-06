@@ -1,4 +1,5 @@
 import 'package:chemiplay/presentation/views/signup/profile/layout/signup_profile_layout.dart';
+import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_image_content.dart';
 import 'package:flutter/material.dart';
 
 class SignupProfileImagePage extends StatefulWidget {
@@ -22,7 +23,7 @@ class _SignupProfileImagePageState extends State<SignupProfileImagePage> {
     return SignupProfileLayout(
       crossAxisAlignment: CrossAxisAlignment.center,
       title: '프로필 사진 추가',
-      contents: Container(),
+      contents: const SignupProfileImageContent(),
       disableNextButton: disabled,
       onNextPage: () {
         // Navigator.push(

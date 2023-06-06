@@ -1,20 +1,20 @@
 import 'package:chemiplay/presentation/widgets/gigi_elevated_button.dart';
 import 'package:flutter/material.dart';
 
-class SignupProfileGenderContents extends StatefulWidget {
+class SignupProfileGenderContent extends StatefulWidget {
   final VoidCallback setDisabledFalse;
-  const SignupProfileGenderContents({
+  const SignupProfileGenderContent({
     super.key,
     required this.setDisabledFalse,
   });
 
   @override
-  State<SignupProfileGenderContents> createState() =>
-      _SignupProfileGenderContentsState();
+  State<SignupProfileGenderContent> createState() =>
+      _SignupProfileGenderContentState();
 }
 
-class _SignupProfileGenderContentsState
-    extends State<SignupProfileGenderContents> {
+class _SignupProfileGenderContentState
+    extends State<SignupProfileGenderContent> {
   String? gender;
   final inActiveBackgroundColor = Colors.white;
   final inActiveShadowColor = const Color(0xffe3e6eb);

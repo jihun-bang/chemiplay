@@ -1,6 +1,6 @@
 import 'package:chemiplay/presentation/views/signup/profile/layout/signup_profile_layout.dart';
 import 'package:chemiplay/presentation/views/signup/profile/signup_profile_nickname_page.dart';
-import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_gender_contents.dart';
+import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_gender_content.dart';
 import 'package:flutter/material.dart';
 
 class SignupProfileGenderPage extends StatefulWidget {
@@ -25,7 +25,7 @@ class _SignupProfileGenderPageState extends State<SignupProfileGenderPage> {
     return SignupProfileLayout(
       title: '성별:',
       subTitle: '프로필에 보여집니다.',
-      contents: SignupProfileGenderContents(setDisabledFalse: setDisabledFalse),
+      contents: SignupProfileGenderContent(setDisabledFalse: setDisabledFalse),
       disableNextButton: disabled,
       onNextPage: () {
         Navigator.push(
