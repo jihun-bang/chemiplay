@@ -12,20 +12,29 @@ class SignupProfileNicknamePage extends StatefulWidget {
 
 class _SignupProfileNicknamePageState extends State<SignupProfileNicknamePage> {
   bool disabled = true;
-  void _onTextChange(String value) {
-    if (value.isNotEmpty && disabled == true) {
-      setState(() {
-        disabled = false;
-      });
-    } else if (value.isEmpty && disabled == false) {
-      setState(() {
-        disabled = true;
-      });
-    }
+
+  final TextEditingController textController = TextEditingController();
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    textController.addListener(() {
+      final value = textController.value.text;
+      if (value.isNotEmpty && disabled == true) {
+        setState(() {
+          disabled = false;
+        });
+      } else if (value.isEmpty && disabled == false) {
+        setState(() {
+          disabled = true;
+        });
+      }
+    });
     return SignupProfileLayout(
       title: '내 닉네임:',
       contents: Column(
@@ -33,7 +42,7 @@ class _SignupProfileNicknamePageState extends State<SignupProfileNicknamePage> {
           GigiTextField(
             labelText: '닉네임',
             hintText: '닉네임',
-            onChange: _onTextChange,
+            controller: textController,
           ),
         ],
       ),

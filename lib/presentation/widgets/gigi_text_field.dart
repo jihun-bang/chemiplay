@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class GigiTextField extends StatefulWidget {
   final String labelText, hintText;
-  final void Function(String) onChange;
+  final TextEditingController controller;
   final TextInputType keyboardType;
   const GigiTextField({
     super.key,
     required this.labelText,
     required this.hintText,
-    required this.onChange,
+    required this.controller,
     this.keyboardType = TextInputType.text,
   });
 
@@ -19,23 +19,11 @@ class GigiTextField extends StatefulWidget {
 class _GigiTextFieldState extends State<GigiTextField> {
   final Color primaryColor = const Color(0xFFFF8066);
   final Color labelTextColor = const Color.fromARGB(255, 70, 70, 70);
-  late final TextEditingController textController;
-  @override
-  void initState() {
-    super.initState();
-    textController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    textController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: textController,
+      controller: widget.controller,
       keyboardType: widget.keyboardType,
       cursorColor: primaryColor,
       decoration: InputDecoration(
@@ -57,7 +45,6 @@ class _GigiTextFieldState extends State<GigiTextField> {
           ),
         ),
       ),
-      onChanged: widget.onChange,
     );
   }
 }
