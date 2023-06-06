@@ -1,3 +1,4 @@
+import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_title.dart';
 import 'package:chemiplay/presentation/widgets/gigi_elevated_button.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,12 @@ class _SignupProfileGenderContentState
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SignupProfileTitle(
+          title: '성별:',
+          subTitle: '프로필에 보여집니다.',
+        ),
         const SizedBox(
           height: 48,
         ),

@@ -4,12 +4,15 @@ class GigiTextField extends StatefulWidget {
   final String labelText, hintText;
   final TextEditingController controller;
   final TextInputType keyboardType;
-  const GigiTextField({
+  String? Function(String?)? validator;
+
+  GigiTextField({
     super.key,
     required this.labelText,
     required this.hintText,
     required this.controller,
     this.keyboardType = TextInputType.text,
+    this.validator,
   });
 
   @override
@@ -20,9 +23,13 @@ class _GigiTextFieldState extends State<GigiTextField> {
   final Color primaryColor = const Color(0xFFFF8066);
   final Color labelTextColor = const Color.fromARGB(255, 70, 70, 70);
 
+  void _onClearTap() {
+    widget.controller.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: widget.controller,
       keyboardType: widget.keyboardType,
       cursorColor: primaryColor,
@@ -44,7 +51,16 @@ class _GigiTextFieldState extends State<GigiTextField> {
             width: 3,
           ),
         ),
+        suffix: GestureDetector(
+          onTap: _onClearTap,
+          child: const Icon(
+            Icons.cancel,
+            color: Color(0xffaeb4bd),
+            size: 24,
+          ),
+        ),
       ),
+      validator: widget.validator,
     );
   }
 }

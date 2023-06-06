@@ -6,18 +6,13 @@ import 'package:flutter/material.dart';
 class SignupProfileLayout extends StatefulWidget {
   final VoidCallback onNextPage;
   final bool disableNextButton;
-  final String title, subTitle;
   final Widget contents;
-  final CrossAxisAlignment crossAxisAlignment;
 
   const SignupProfileLayout({
     super.key,
     required this.onNextPage,
-    required this.title,
-    this.subTitle = '',
     required this.contents,
     required this.disableNextButton,
-    this.crossAxisAlignment = CrossAxisAlignment.start,
   });
 
   @override
@@ -51,28 +46,7 @@ class _SignupProfileLayoutState extends State<SignupProfileLayout> {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 64,
-              ),
-              Text(
-                widget.title,
-                style: const TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Text(
-                widget.subTitle,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              widget.contents,
-            ],
-          ),
+          child: widget.contents,
         ),
         bottomSheet: BottomNextButton(
           disabled: widget.disableNextButton,
