@@ -1,7 +1,8 @@
-import 'dart:math';
+import 'dart:io';
 
 import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_title.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignupProfileImageContent extends StatefulWidget {
   const SignupProfileImageContent({super.key});
@@ -12,9 +13,19 @@ class SignupProfileImageContent extends StatefulWidget {
 }
 
 class _SignupProfileImageContentState extends State<SignupProfileImageContent> {
+  XFile? pickedImage;
+  Future<void> _onPickImagePressed() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return;
+    }
+    setState(() {
+      pickedImage = image;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool isModification = Random().nextBool();
     return Column(
       children: [
         const SignupProfileTitle(
@@ -24,44 +35,53 @@ class _SignupProfileImageContentState extends State<SignupProfileImageContent> {
           height: 48,
         ),
         Center(
-          child: Stack(
-            children: [
-              Positioned(
-                child: Container(
-                  clipBehavior: Clip.hardEdge,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xffFFB9A9),
-                  ),
-                  height: 130,
-                  child: Transform.translate(
-                    offset: const Offset(0, 8),
-                    child: const Icon(
-                      Icons.person,
-                      size: 150,
-                      color: Color(0xffFFE7E1),
+          child: GestureDetector(
+            onTap: _onPickImagePressed,
+            child: Stack(
+              children: [
+                CircleAvatar(
+                  radius: 65,
+                  foregroundImage: pickedImage != null
+                      ? FileImage(File(pickedImage!.path))
+                      : null,
+                  backgroundColor: Colors.transparent,
+                  child: Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xffFFB9A9),
+                    ),
+                    width: 130,
+                    height: 130,
+                    child: Transform.translate(
+                      offset: const Offset(-10, 8),
+                      child: const Icon(
+                        Icons.person,
+                        size: 150,
+                        color: Color(0xffFFE7E1),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Positioned(
-                right: 10,
-                bottom: 10,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xff2b2b2b),
-                  ),
-                  height: 30,
-                  width: 30,
-                  child: Icon(
-                    isModification ? Icons.edit : Icons.add,
-                    size: 25,
-                    color: const Color(0xffe4e4e4),
+                Positioned(
+                  right: 5,
+                  bottom: 5,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xff2b2b2b),
+                    ),
+                    height: 30,
+                    width: 30,
+                    child: Icon(
+                      pickedImage != null ? Icons.edit : Icons.add,
+                      size: 25,
+                      color: const Color(0xffe4e4e4),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         Expanded(
