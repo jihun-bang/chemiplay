@@ -3,9 +3,6 @@ import 'package:chemiplay/presentation/views/home_page.dart';
 import 'package:chemiplay/presentation/views/login_page.dart';
 import 'package:chemiplay/presentation/views/mate/mate_page.dart';
 import 'package:chemiplay/presentation/views/my/my_profile_image_page.dart';
-import 'package:chemiplay/presentation/views/signup/profile/signup_profile_gender_page.dart';
-import 'package:chemiplay/presentation/views/signup/profile/signup_profile_image_page.dart';
-import 'package:chemiplay/presentation/views/signup/profile/signup_profile_nickname_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
