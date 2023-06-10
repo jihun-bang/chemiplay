@@ -35,11 +35,19 @@ class _LoginPageState extends State<LoginPage> {
             await getIt<LoginUseCase>().loginWithGoogle(account: account);
         if (!mounted) return;
         if (result != null) {
-          if (context.canPop()) {
-            showToast(context: context, message: '환영합니다!');
-            context.pop();
+          const List<String> requiredProfileField = ['gender', 'name'];
+          final isRequiredProfileDataMissing = requiredProfileField
+              .any((element) => result.toJson()[element] == null);
+          if (isRequiredProfileDataMissing) {
+            // TODO: CP-38(https://gigistudio.atlassian.net/browse/CP-38?atlOrigin=eyJpIjoiNWFhMTg4OWEwODQ3NGMxMWIyMTdhNTExZmViNThmNWQiLCJwIjoiaiJ9)
+            context.goNamed('signup/gender');
           } else {
-            context.goNamed('home');
+            if (context.canPop()) {
+              showToast(context: context, message: '환영합니다!');
+              context.pop();
+            } else {
+              context.goNamed('home');
+            }
           }
         } else {
           showToast(context: context, message: '로그인을 실패했어요.');
@@ -95,9 +103,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget get _buildDivider => Container(
         height: 18,
         margin: const EdgeInsets.only(left: 24, right: 24, bottom: 20),
-        child: Row(
+        child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
+          children: <Widget>[
             Expanded(
                 child: Divider(
               color: Colors.grey,
