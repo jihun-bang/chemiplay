@@ -79,6 +79,7 @@ class _MateProfilePageState extends State<MateProfilePage> {
           _chatViewModel.setSendbird(_userViewModel.user!.email);
         }
         return Scaffold(
+          backgroundColor: Colors.white,
           body: CustomScrollView(
             slivers: [
               _buildProfileImages,
@@ -117,7 +118,8 @@ class _MateProfilePageState extends State<MateProfilePage> {
                     text: '무료로 대화하기',
                     onPressed: () {
                       if (_userViewModel.user != null) {
-                        context.pushNamed('chat', params: {'userId': _mate.email});
+                        context
+                            .pushNamed('chat', params: {'userId': _mate.email});
                       } else {
                         context.replaceNamed('login');
                       }
@@ -153,32 +155,13 @@ class _MateProfilePageState extends State<MateProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  _mate.name,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                GigiElevatedButton(
-                  text: '팔로우',
-                  textStyle: const TextStyle(fontWeight: FontWeight.w500),
-                  height: 27,
-                  width: 84,
-                  onPressed: () {
-                    if (_userViewModel.user != null) {
-                      showToast(context: context, message: '준비중입니다!');
-                    } else {
-                      context.replaceNamed('login');
-                    }
-                  },
-                )
-              ],
+            Text(
+              _mate.name,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.left,
             ),
             _buildStatus,
             _buildGameInfo,
@@ -486,7 +469,7 @@ class _MateProfilePageState extends State<MateProfilePage> {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 16),
         height: height ?? 1,
-        color: MyColors.gray_03,
+        color: MyColors.gray_01,
       ),
     );
   }
@@ -514,8 +497,8 @@ class _MateProfilePageState extends State<MateProfilePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: const [
+          const Row(
+            children: [
               CircleAvatar(
                 child: SizedBox(
                   width: 42,
