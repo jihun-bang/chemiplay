@@ -5,6 +5,7 @@ import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profi
 import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_nickname_content.dart';
 import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_wrapper.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class SignupProfilePage extends StatefulWidget {
@@ -32,14 +33,14 @@ class _SignupProfilePageState extends State<SignupProfilePage> {
     // update user
     await _signupProfileViewModel.updateUserProfile();
     // go home
-    // context.goNamed('home');
+    GoRouter.of(context).goNamed('home');
   }
 
   Future<void> onImagePageSkipTap() async {
     // update user
     await _signupProfileViewModel.updateUserProfile();
     // go home
-    // context.goNamed('home');
+    GoRouter.of(context).goNamed('home');
   }
 
   @override
