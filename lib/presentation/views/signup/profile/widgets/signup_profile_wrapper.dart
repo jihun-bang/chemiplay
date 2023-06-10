@@ -4,6 +4,7 @@ import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class SignupProfileWrapper extends StatefulWidget {
+  final PageController pageController;
   final VoidCallback onNextPage;
   final bool disableNextButton;
   final Widget contents;
@@ -13,6 +14,7 @@ class SignupProfileWrapper extends StatefulWidget {
     required this.onNextPage,
     required this.contents,
     required this.disableNextButton,
+    required this.pageController,
   });
 
   @override
@@ -36,13 +38,23 @@ class _SignupProfileWrapperState extends State<SignupProfileWrapper> {
     FocusScope.of(context).unfocus();
   }
 
+  void _onBackIconTap() {
+    widget.pageController.previousPage(
+      duration: const Duration(milliseconds: 150),
+      curve: Curves.linear,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _onScaffoldTap,
       child: Scaffold(
         appBar: GigiAppBar(
-          leading: AppBarLeadIcon(context: context),
+          leading: AppBarLeadIcon(
+            context: context,
+            onPressed: _onBackIconTap,
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),

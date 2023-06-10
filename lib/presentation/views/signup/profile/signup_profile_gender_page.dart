@@ -1,12 +1,12 @@
 import 'package:chemiplay/presentation/viewmodels/signup_profile_viewmodel.dart';
 import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_wrapper.dart';
-import 'package:chemiplay/presentation/views/signup/profile/signup_profile_nickname_page.dart';
 import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_gender_content.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SignupProfileGenderPage extends StatefulWidget {
-  const SignupProfileGenderPage({super.key});
+  final PageController pageController;
+  const SignupProfileGenderPage({super.key, required this.pageController});
 
   @override
   State<SignupProfileGenderPage> createState() =>
@@ -26,15 +26,12 @@ class _SignupProfileGenderPageState extends State<SignupProfileGenderPage> {
         contents: const SignupProfileGenderContent(),
         disableNextButton: disabled,
         onNextPage: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return const SignupProfileNicknamePage();
-              },
-            ),
+          widget.pageController.nextPage(
+            duration: const Duration(milliseconds: 150),
+            curve: Curves.linear,
           );
         },
+        pageController: widget.pageController,
       );
     });
   }

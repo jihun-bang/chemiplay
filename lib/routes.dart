@@ -3,9 +3,7 @@ import 'package:chemiplay/presentation/views/chat_page.dart';
 import 'package:chemiplay/presentation/views/home_page.dart';
 import 'package:chemiplay/presentation/views/login_page.dart';
 import 'package:chemiplay/presentation/views/mate/mate_page.dart';
-import 'package:chemiplay/presentation/views/signup/profile/signup_profile_gender_page.dart';
-import 'package:chemiplay/presentation/views/signup/profile/signup_profile_image_page.dart';
-import 'package:chemiplay/presentation/views/signup/profile/signup_profile_nickname_page.dart';
+import 'package:chemiplay/presentation/views/signup/profile/signup_profile.page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -67,33 +65,20 @@ final routes = GoRouter(
       },
     ),
     GoRoute(
-        path: '/signup',
-        name: 'signup',
-        pageBuilder: (context, state) {
-          return const MaterialPage(child: LoginPage());
-        },
-        routes: [
-          GoRoute(
-            path: 'gender',
-            name: 'signup/gender',
-            pageBuilder: (context, state) {
-              return const MaterialPage(child: SignupProfileGenderPage());
-            },
-          ),
-          GoRoute(
-            path: 'nickname',
-            name: 'signup/nickname',
-            pageBuilder: (context, state) {
-              return const MaterialPage(child: SignupProfileNicknamePage());
-            },
-          ),
-          GoRoute(
-            path: 'profile-image',
-            name: 'signup/profile-image',
-            pageBuilder: (context, state) {
-              return const MaterialPage(child: SignupProfileImagePage());
-            },
-          ),
-        ]),
+      path: '/signup',
+      name: 'signup',
+      pageBuilder: (context, state) {
+        return const MaterialPage(child: LoginPage());
+      },
+      routes: [
+        GoRoute(
+          path: 'profile',
+          name: 'signup/profile',
+          pageBuilder: (context, state) {
+            return const MaterialPage(child: SignupProfilePage());
+          },
+        ),
+      ],
+    ),
   ],
 );
