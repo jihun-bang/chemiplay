@@ -8,7 +8,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class SignupProfileImageContent extends StatefulWidget {
-  const SignupProfileImageContent({super.key});
+  final VoidCallback onSkipTap;
+  const SignupProfileImageContent({
+    super.key,
+    required this.onSkipTap,
+  });
 
   @override
   State<SignupProfileImageContent> createState() =>
@@ -96,17 +100,20 @@ class _SignupProfileImageContentState extends State<SignupProfileImageContent> {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 150),
-                child: Container(
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(color: Colors.black, width: 1.5),
+                child: GestureDetector(
+                  onTap: widget.onSkipTap,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: Colors.black, width: 1.5),
+                      ),
                     ),
-                  ),
-                  child: const Text(
-                    '나중에 설정하기',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                    child: const Text(
+                      '나중에 설정하기',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),

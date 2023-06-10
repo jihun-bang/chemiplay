@@ -57,5 +57,6 @@ void setupDependencies() {
   getIt.registerSingleton<UserViewModel>(UserViewModel(getIt()));
   getIt.registerSingleton<ChatViewModel>(ChatViewModel(getIt()));
   getIt.registerFactory<MateViewModel>(() => MateViewModel(getIt()));
-  getIt.registerSingleton<SignupProfileViewModel>(SignupProfileViewModel());
+  getIt.registerSingleton<SignupProfileViewModel>(
+      SignupProfileViewModel(getIt(), getIt()));
 }

@@ -1,3 +1,4 @@
+import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/viewmodels/signup_profile_viewmodel.dart';
 import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_wrapper.dart';
 import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_image_content.dart';
@@ -13,6 +14,20 @@ class SignupProfileImagePage extends StatefulWidget {
 
 class _SignupProfileImagePageState extends State<SignupProfileImagePage> {
   bool disabled = true;
+  final _signupProfileViewModel = getIt<SignupProfileViewModel>();
+
+  Future<void> onNextTap() async {
+    // validate image exist
+    // upload image
+    await _signupProfileViewModel.uploadProfileImage();
+    // update user
+    await _signupProfileViewModel.updateUserProfile();
+  }
+
+  Future<void> onSkipTap() async {
+    // update user
+    await _signupProfileViewModel.updateUserProfile();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +36,11 @@ class _SignupProfileImagePageState extends State<SignupProfileImagePage> {
         disabled = false;
       }
       return SignupProfileWrapper(
-        contents: const SignupProfileImageContent(),
+        contents: SignupProfileImageContent(
+          onSkipTap: onSkipTap,
+        ),
         disableNextButton: disabled,
-        onNextPage: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) {
-          //       return const SignupProfileImagePage();
-          //     },
-          //   ),
-          // );
-        },
+        onNextPage: onNextTap,
       );
     });
   }

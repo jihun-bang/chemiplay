@@ -1,33 +1,51 @@
+import 'package:chemiplay/data/models/user.dart';
+import 'package:chemiplay/domain/usecases/user_usecase.dart';
+import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignupProfileViewModel extends ChangeNotifier {
-  String? _gender;
+  final UserUseCase _userUseCase;
+  final UserViewModel _userViewModel;
+
+  SignupProfileViewModel(this._userUseCase, this._userViewModel);
+
+  Gender? _gender;
   String? _nickname;
   XFile? _profileImage;
-  String? get gender => _gender;
+  Gender? get gender => _gender;
   String? get nickname => _nickname;
   XFile? get profileImage => _profileImage;
 
-  setGender(String gender) {
+  void setGender(Gender gender) {
     _gender = gender;
     notifyListeners();
   }
 
-  setNickname(String nickname) {
+  void setNickname(String nickname) {
     _nickname = nickname;
     notifyListeners();
   }
 
-  validateNickname(String? nickname) {
+  bool validateNickname(String? nickname) {
     if (nickname == null || nickname.isEmpty) {
       return false;
     }
     return true;
   }
 
-  setProfileImage(XFile profileImage) {
+  void setProfileImage(XFile profileImage) {
     _profileImage = profileImage;
     notifyListeners();
   }
+
+  Future<void> updateUserProfile() async {
+    final user = _userViewModel.user!.copyWith(
+      gender: _gender,
+      name: _nickname,
+    );
+    await _userUseCase.updateUser(user: user);
+  }
+
+  Future<void> uploadProfileImage() async {}
 }

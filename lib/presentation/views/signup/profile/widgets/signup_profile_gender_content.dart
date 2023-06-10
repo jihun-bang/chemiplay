@@ -1,3 +1,4 @@
+import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/viewmodels/signup_profile_viewmodel.dart';
 import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_title.dart';
@@ -23,7 +24,7 @@ class _SignupProfileGenderContentState
   final activeBackgroundColor = const Color(0xFFFF8066);
   final activeShadowColor = const Color(0xFF4D4D4D);
 
-  void selectGender(String gender) {
+  void selectGender(Gender gender) {
     _signupProfileViewModel.setGender(gender);
   }
 
@@ -43,11 +44,11 @@ class _SignupProfileGenderContentState
           ),
           GigiElevatedButton(
             text: '여성',
-            onPressed: () => selectGender('여성'),
-            backgroundColor: _signupProfileViewModel.gender == '여성'
+            onPressed: () => selectGender(Gender.female),
+            backgroundColor: _signupProfileViewModel.gender == Gender.female
                 ? activeBackgroundColor
                 : inActiveBackgroundColor,
-            shadowColor: _signupProfileViewModel.gender == '여성'
+            shadowColor: _signupProfileViewModel.gender == Gender.female
                 ? activeShadowColor
                 : inActiveShadowColor,
           ),
@@ -56,11 +57,11 @@ class _SignupProfileGenderContentState
           ),
           GigiElevatedButton(
             text: '남성',
-            onPressed: () => selectGender('남성'),
-            backgroundColor: _signupProfileViewModel.gender == '남성'
+            onPressed: () => selectGender(Gender.male),
+            backgroundColor: _signupProfileViewModel.gender == Gender.male
                 ? activeBackgroundColor
                 : inActiveBackgroundColor,
-            shadowColor: _signupProfileViewModel.gender == '남성'
+            shadowColor: _signupProfileViewModel.gender == Gender.male
                 ? activeShadowColor
                 : inActiveShadowColor,
           ),
