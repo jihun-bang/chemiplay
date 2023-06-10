@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 
 class GigiTextField extends StatefulWidget {
   final String labelText, hintText;
-  final TextEditingController controller;
+  final void Function(String) onChanged;
   final TextInputType keyboardType;
-  String? Function(String?)? validator;
 
-  GigiTextField({
+  const GigiTextField({
     super.key,
     required this.labelText,
     required this.hintText,
-    required this.controller,
+    required this.onChanged,
     this.keyboardType = TextInputType.text,
-    this.validator,
   });
 
   @override
@@ -23,14 +21,22 @@ class _GigiTextFieldState extends State<GigiTextField> {
   final Color primaryColor = const Color(0xFFFF8066);
   final Color labelTextColor = const Color.fromARGB(255, 70, 70, 70);
 
+  final TextEditingController textController = TextEditingController();
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
   void _onClearTap() {
-    widget.controller.clear();
+    textController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: widget.controller,
+    return TextField(
+      controller: textController,
       keyboardType: widget.keyboardType,
       cursorColor: primaryColor,
       decoration: InputDecoration(
@@ -60,7 +66,7 @@ class _GigiTextFieldState extends State<GigiTextField> {
           ),
         ),
       ),
-      validator: widget.validator,
+      onChanged: widget.onChanged,
     );
   }
 }

@@ -1,34 +1,42 @@
+import 'package:chemiplay/injection.dart';
+import 'package:chemiplay/presentation/viewmodels/signup_profile_viewmodel.dart';
 import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_title.dart';
 import 'package:chemiplay/presentation/widgets/gigi_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class SignupProfileNicknameContent extends StatelessWidget {
-  final TextEditingController textController;
+class SignupProfileNicknameContent extends StatefulWidget {
   const SignupProfileNicknameContent({
     super.key,
-    required this.textController,
   });
 
   @override
+  State<SignupProfileNicknameContent> createState() =>
+      _SignupProfileNicknameContentState();
+}
+
+class _SignupProfileNicknameContentState
+    extends State<SignupProfileNicknameContent> {
+  var _signupProfileViewModel = getIt<SignupProfileViewModel>();
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SignupProfileTitle(
-          title: '닉네임:',
-        ),
-        GigiTextField(
-          labelText: '닉네임',
-          hintText: '닉네임',
-          controller: textController,
-          validator: (String? value) {
-            if (value == 'nickname') {
-              return '이미 사용중인 닉네임입니다.';
-            }
-            return null;
-          },
-        ),
-      ],
-    );
+    return Consumer<SignupProfileViewModel>(builder: (context, viewModel, _) {
+      _signupProfileViewModel = viewModel;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SignupProfileTitle(
+            title: '닉네임:',
+          ),
+          GigiTextField(
+            labelText: '닉네임',
+            hintText: '닉네임',
+            onChanged: (nickname) =>
+                _signupProfileViewModel.setNickname(nickname),
+          ),
+        ],
+      );
+    });
   }
 }

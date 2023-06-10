@@ -3,12 +3,12 @@ import 'package:chemiplay/presentation/views/signup/widgets/bottom_next_button.d
 import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:flutter/material.dart';
 
-class SignupProfileLayout extends StatefulWidget {
+class SignupProfileWrapper extends StatefulWidget {
   final VoidCallback onNextPage;
   final bool disableNextButton;
   final Widget contents;
 
-  const SignupProfileLayout({
+  const SignupProfileWrapper({
     super.key,
     required this.onNextPage,
     required this.contents,
@@ -16,10 +16,10 @@ class SignupProfileLayout extends StatefulWidget {
   });
 
   @override
-  State<SignupProfileLayout> createState() => _SignupProfileLayoutState();
+  State<SignupProfileWrapper> createState() => _SignupProfileWrapperState();
 }
 
-class _SignupProfileLayoutState extends State<SignupProfileLayout> {
+class _SignupProfileWrapperState extends State<SignupProfileWrapper> {
   String? gender;
   final inActiveBackgroundColor = Colors.white;
   final inActiveShadowColor = const Color(0xffe3e6eb);

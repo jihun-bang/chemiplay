@@ -5,6 +5,7 @@ import 'package:chemiplay/domain/usecases/mate_usecase.dart';
 import 'package:chemiplay/presentation/viewmodels/chat_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/login_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/mate_viewmodel.dart';
+import 'package:chemiplay/presentation/viewmodels/signup_profile_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -56,4 +57,5 @@ void setupDependencies() {
   getIt.registerSingleton<UserViewModel>(UserViewModel(getIt()));
   getIt.registerSingleton<ChatViewModel>(ChatViewModel(getIt()));
   getIt.registerFactory<MateViewModel>(() => MateViewModel(getIt()));
+  getIt.registerSingleton<SignupProfileViewModel>(SignupProfileViewModel());
 }
