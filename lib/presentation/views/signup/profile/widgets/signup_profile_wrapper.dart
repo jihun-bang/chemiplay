@@ -8,6 +8,7 @@ class SignupProfileWrapper extends StatefulWidget {
   final VoidCallback onNextPage;
   final bool disableNextButton;
   final Widget contents;
+  final int page;
 
   const SignupProfileWrapper({
     super.key,
@@ -15,6 +16,7 @@ class SignupProfileWrapper extends StatefulWidget {
     required this.contents,
     required this.disableNextButton,
     required this.pageController,
+    required this.page,
   });
 
   @override
@@ -22,17 +24,11 @@ class SignupProfileWrapper extends StatefulWidget {
 }
 
 class _SignupProfileWrapperState extends State<SignupProfileWrapper> {
-  String? gender;
+  final primaryColor = const Color(0xFFFF8066);
   final inActiveBackgroundColor = Colors.white;
   final inActiveShadowColor = const Color(0xffe3e6eb);
-  final activeBackgroundColor = const Color(0xFFFF8066);
+  late final activeBackgroundColor = primaryColor;
   final activeShadowColor = const Color(0xFF4D4D4D);
-
-  void selectGender(String gender) {
-    setState(() {
-      this.gender = gender;
-    });
-  }
 
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
@@ -54,6 +50,14 @@ class _SignupProfileWrapperState extends State<SignupProfileWrapper> {
           leading: AppBarLeadIcon(
             context: context,
             onPressed: _onBackIconTap,
+          ),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(2),
+            child: LinearProgressIndicator(
+              backgroundColor: inActiveShadowColor,
+              valueColor: AlwaysStoppedAnimation(primaryColor),
+              value: (widget.page + 1) / 3,
+            ),
           ),
         ),
         body: Padding(

@@ -39,8 +39,7 @@ class _LoginPageState extends State<LoginPage> {
           final isRequiredProfileDataMissing = requiredProfileField
               .any((element) => result.toJson()[element] == null);
           if (isRequiredProfileDataMissing) {
-            // TODO: CP-38(https://gigistudio.atlassian.net/browse/CP-38?atlOrigin=eyJpIjoiNWFhMTg4OWEwODQ3NGMxMWIyMTdhNTExZmViNThmNWQiLCJwIjoiaiJ9)
-            context.goNamed('signup/gender');
+            context.goNamed('signup/profile');
           } else {
             if (context.canPop()) {
               showToast(context: context, message: '환영합니다!');

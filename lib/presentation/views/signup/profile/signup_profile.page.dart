@@ -1,8 +1,9 @@
 import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/viewmodels/signup_profile_viewmodel.dart';
-import 'package:chemiplay/presentation/views/signup/profile/signup_profile_gender_page.dart';
-import 'package:chemiplay/presentation/views/signup/profile/signup_profile_image_page.dart';
-import 'package:chemiplay/presentation/views/signup/profile/signup_profile_nickname_page.dart';
+import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_gender_content.dart';
+import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_image_content.dart';
+import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_nickname_content.dart';
+import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,9 @@ class SignupProfilePage extends StatefulWidget {
 }
 
 class _SignupProfilePageState extends State<SignupProfilePage> {
-  final _pageController = PageController();
+  var _signupProfileViewModel = getIt<SignupProfileViewModel>();
+  final _pageController = PageController(initialPage: 0);
+  int page = 0;
 
   @override
   void dispose() {
@@ -22,24 +25,72 @@ class _SignupProfilePageState extends State<SignupProfilePage> {
     super.dispose();
   }
 
+  Future<void> onImagePageNextTap() async {
+    // validate image exist
+    // upload image
+    await _signupProfileViewModel.uploadProfileImage();
+    // update user
+    await _signupProfileViewModel.updateUserProfile();
+    // go home
+    // context.goNamed('home');
+  }
+
+  Future<void> onImagePageSkipTap() async {
+    // update user
+    await _signupProfileViewModel.updateUserProfile();
+    // go home
+    // context.goNamed('home');
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SignupProfileViewModel>(
       create: (context) => getIt(),
-      child: PageView(
-        controller: _pageController,
-        children: [
-          SignupProfileGenderPage(
-            pageController: _pageController,
+      child: Consumer<SignupProfileViewModel>(builder: (context, viewModel, _) {
+        _signupProfileViewModel = viewModel;
+        return SignupProfileWrapper(
+          onNextPage: () {
+            if (_signupProfileViewModel.page == 0 ||
+                _signupProfileViewModel.page == 1) {
+              _pageController.nextPage(
+                duration: const Duration(milliseconds: 150),
+                curve: Curves.linear,
+              );
+            } else {
+              onImagePageNextTap();
+            }
+          },
+          contents: PageView(
+            controller: _pageController,
+            children: [
+              const SignupProfileGenderContent(),
+              const SignupProfileNicknameContent(),
+              SignupProfileImageContent(onSkipTap: onImagePageSkipTap)
+            ],
+            onPageChanged: (page) {
+              _signupProfileViewModel.setNextButtonDisabled(true);
+              _signupProfileViewModel.setPage(page);
+            },
           ),
-          SignupProfileNicknamePage(
-            pageController: _pageController,
-          ),
-          SignupProfileImagePage(
-            pageController: _pageController,
-          )
-        ],
-      ),
+          pageController: _pageController,
+          page: _signupProfileViewModel.page,
+          disableNextButton: _signupProfileViewModel.nextButtonDisabled,
+        );
+      }),
+      // child: PageView(
+      //   controller: _pageController,
+      //   children: [
+      //     SignupProfileGenderPage(
+      //       pageController: _pageController,
+      //     ),
+      //     SignupProfileNicknamePage(
+      //       pageController: _pageController,
+      //     ),
+      //     SignupProfileImagePage(
+      //       pageController: _pageController,
+      //     )
+      //   ],
+      // ),
     );
   }
 }

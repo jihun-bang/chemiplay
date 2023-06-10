@@ -7,15 +7,18 @@ class GigiAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color backgroundColor;
   final Widget? leading;
   final List<Widget>? actions;
+  final PreferredSizeWidget? bottom;
 
-  const GigiAppBar(
-      {super.key,
-      this.title = '',
-      this.titleAlign = Alignment.center,
-      this.titleWidget,
-      this.leading,
-      this.actions,
-      this.backgroundColor = Colors.white});
+  const GigiAppBar({
+    super.key,
+    this.title = '',
+    this.titleAlign = Alignment.center,
+    this.titleWidget,
+    this.leading,
+    this.actions,
+    this.backgroundColor = Colors.white,
+    this.bottom,
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(48);
@@ -23,6 +26,7 @@ class GigiAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      bottom: bottom,
       backgroundColor: backgroundColor,
       title: Align(
         alignment: titleAlign,

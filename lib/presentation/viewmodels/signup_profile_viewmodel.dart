@@ -9,10 +9,16 @@ class SignupProfileViewModel extends ChangeNotifier {
   final UserViewModel _userViewModel;
 
   SignupProfileViewModel(this._userUseCase, this._userViewModel);
+  int _page = 0;
+  bool _nextButtonDisabled = true;
 
   Gender? _gender;
   String? _nickname;
   XFile? _profileImage;
+
+  int get page => _page;
+  bool get nextButtonDisabled => _nextButtonDisabled;
+
   Gender? get gender => _gender;
   String? get nickname => _nickname;
   XFile? get profileImage => _profileImage;
@@ -24,6 +30,7 @@ class SignupProfileViewModel extends ChangeNotifier {
 
   void setNickname(String nickname) {
     _nickname = nickname;
+    _nextButtonDisabled = !validateNickname(_nickname);
     notifyListeners();
   }
 
@@ -48,4 +55,14 @@ class SignupProfileViewModel extends ChangeNotifier {
   }
 
   Future<void> uploadProfileImage() async {}
+
+  setNextButtonDisabled(bool value) {
+    _nextButtonDisabled = value;
+    notifyListeners();
+  }
+
+  setPage(int value) {
+    _page = value;
+    notifyListeners();
+  }
 }

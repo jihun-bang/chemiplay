@@ -27,6 +27,7 @@ class _SignupProfileImageContentState extends State<SignupProfileImageContent> {
       return;
     }
     _signupProfileViewModel.setProfileImage(image);
+    _signupProfileViewModel.setNextButtonDisabled(false);
   }
 
   @override
