@@ -4,7 +4,7 @@ class GigiAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Alignment titleAlign;
   final Widget? titleWidget;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final Widget? leading;
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;
@@ -16,7 +16,7 @@ class GigiAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.titleWidget,
     this.leading,
     this.actions,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor,
     this.bottom,
   });
 

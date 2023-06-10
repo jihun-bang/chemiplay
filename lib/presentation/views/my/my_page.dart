@@ -1,8 +1,8 @@
 import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/injection.dart';
-import 'package:chemiplay/presentation/views/my/widgets/list_button.dart';
 import 'package:chemiplay/presentation/views/my/widgets/my_coin.dart';
-import 'package:chemiplay/presentation/views/my/widgets/user_interaction.dart';
+import 'package:chemiplay/presentation/views/my/widgets/my_list_button.dart';
+import 'package:chemiplay/presentation/views/my/widgets/my_user_interaction.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,13 +45,10 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
             const GigiAppBar(title: '내 정보', titleAlign: Alignment.centerLeft),
         body: ListView(
           children: [
-            MyProfile(
-              user: _user,
-              onTap: () {},
-            ),
+            MyProfile(user: _user),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 24),
-              child: UserInteractionWidget(
+              child: MyUserInteractionWidget(
                   following: 990, follower: 990, visitor: 990),
             ),
             Padding(
@@ -60,10 +57,10 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
                 onPressed: () {},
               ),
             ),
-            ListButton(label: '게임 메이트 되기', onPressed: () {}),
-            ListButton(label: '지난 플레이', onPressed: () {}),
-            ListButton(label: '고객센터', onPressed: () {}),
-            ListButton(label: '설정', onPressed: () {}),
+            MyListButton(label: '게임 메이트 되기', onPressed: () {}),
+            MyListButton(label: '지난 플레이', onPressed: () {}),
+            MyListButton(label: '고객센터', onPressed: () {}),
+            MyListButton(label: '설정', onPressed: () {}),
           ],
         ),
       );

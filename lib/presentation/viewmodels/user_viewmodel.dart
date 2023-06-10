@@ -39,4 +39,28 @@ class UserViewModel extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  Future<bool> updateProfileImage(Uint8List imageFile) async {
+    if (user != null) {
+      final profileImageUrl =
+          await _usecase.uploadImage(userId: user!.id, imageFile: imageFile);
+      final result =
+          await updateUser(user!.copyWith(profileImageUrl: profileImageUrl));
+      if (result) {
+        _user = user;
+        notifyListeners();
+      }
+    }
+
+    return false;
+  }
+
+  Future<bool> updateUser(UserModel user) async {
+    final result = await _usecase.updateUser(user: user);
+    if (result) {
+      _user = user;
+      notifyListeners();
+    }
+    return result;
+  }
 }

@@ -2,11 +2,11 @@ import 'package:chemiplay/utils/colors.dart';
 import 'package:chemiplay/utils/text_style.dart';
 import 'package:flutter/material.dart';
 
-class ListButton extends StatelessWidget {
+class MyListButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
 
-  const ListButton({
+  const MyListButton({
     super.key,
     required this.label,
     this.onPressed,

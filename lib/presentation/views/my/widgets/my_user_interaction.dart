@@ -2,12 +2,12 @@ import 'package:chemiplay/utils/colors.dart';
 import 'package:chemiplay/utils/text_style.dart';
 import 'package:flutter/material.dart';
 
-class UserInteractionWidget extends StatelessWidget {
+class MyUserInteractionWidget extends StatelessWidget {
   final int following;
   final int follower;
   final int visitor;
 
-  const UserInteractionWidget({
+  const MyUserInteractionWidget({
     super.key,
     required this.following,
     required this.follower,

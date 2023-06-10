@@ -1,13 +1,16 @@
 import 'package:chemiplay/presentation/views/chat_list_page.dart';
-import 'package:chemiplay/presentation/views/chat_page.dart';
 import 'package:chemiplay/presentation/views/home_page.dart';
 import 'package:chemiplay/presentation/views/login_page.dart';
 import 'package:chemiplay/presentation/views/mate/mate_page.dart';
-import 'package:chemiplay/presentation/views/signup/profile/signup_profile.page.dart';
+import 'package:chemiplay/presentation/views/my/my_profile_image_page.dart';
+import 'package:chemiplay/presentation/views/signup/profile/signup_profile_gender_page.dart';
+import 'package:chemiplay/presentation/views/signup/profile/signup_profile_image_page.dart';
+import 'package:chemiplay/presentation/views/signup/profile/signup_profile_nickname_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'data/models/mate.dart';
+import 'presentation/views/signup/profile/signup_profile.page.dart';
 
 final routes = GoRouter(
   routes: [
@@ -49,13 +52,12 @@ final routes = GoRouter(
             },
           ),
           GoRoute(
-            path: 'chat/:userId',
-            name: 'chat',
+            path: 'profile/edit',
+            name: 'profileEdit',
             pageBuilder: (context, state) {
-              final userId = state.params['userId'] ?? 'unknown';
-              return MaterialPage(child: ChatPage(userId: userId));
+              return const MaterialPage(child: MyProfileImagePage());
             },
-          )
+          ),
         ]),
     GoRoute(
       path: '/login',
