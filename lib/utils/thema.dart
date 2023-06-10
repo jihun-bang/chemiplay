@@ -2,9 +2,9 @@ import 'package:chemiplay/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 final lightTheme = ThemeData(
-    fontFamily: 'Pretandard',
+    fontFamily: 'Pretendard',
     textTheme: const TextTheme(
-      bodySmall: TextStyle(fontFamily: 'Pretandard', letterSpacing: -0.02),
+      bodySmall: TextStyle(fontFamily: 'Pretendard', letterSpacing: -0.02),
     ),
     scaffoldBackgroundColor: MyColors.gray_01,
     appBarTheme: AppBarTheme(

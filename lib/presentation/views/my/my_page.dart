@@ -57,10 +57,23 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
                 onPressed: () {},
               ),
             ),
-            MyListButton(label: '게임 메이트 되기', onPressed: () {}),
-            MyListButton(label: '지난 플레이', onPressed: () {}),
-            MyListButton(label: '고객센터', onPressed: () {}),
-            MyListButton(label: '설정', onPressed: () {}),
+            MyListButton(
+                label: '게임 메이트 되기',
+                icon: 'logo',
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16)),
+                onPressed: () {}),
+            MyListButton(label: '지난 플레이', icon: 'history', onPressed: () {}),
+            MyListButton(label: '고객센터', icon: 'service', onPressed: () {}),
+            MyListButton(
+                label: '설정',
+                icon: 'setting',
+                hasLine: false,
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16)),
+                onPressed: () {}),
           ],
         ),
       );

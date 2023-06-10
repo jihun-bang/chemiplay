@@ -27,7 +27,7 @@ class MyProfile extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _buildProfileImage,
+              _buildProfileImage(context),
               _buildNameEmail,
             ],
           ),
@@ -36,13 +36,16 @@ class MyProfile extends StatelessWidget {
     );
   }
 
-  Widget get _buildProfileImage {
+  Widget _buildProfileImage(BuildContext context) {
     return Container(
         margin: const EdgeInsets.only(right: 16, left: 24),
         child: MyProfileImage(
           profileImageUrl: user.profileImageUrl,
           width: 80,
           height: 80,
+          onTap: () {
+            context.pushNamed('profileEdit');
+          },
         ));
   }
 
