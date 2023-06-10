@@ -3,6 +3,7 @@ import 'package:chemiplay/presentation/views/chat_page.dart';
 import 'package:chemiplay/presentation/views/home_page.dart';
 import 'package:chemiplay/presentation/views/login_page.dart';
 import 'package:chemiplay/presentation/views/mate/mate_page.dart';
+import 'package:chemiplay/presentation/views/mate/mate_request_together_page.dart';
 import 'package:chemiplay/presentation/views/signup/profile/signup_profile.page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -79,6 +80,13 @@ final routes = GoRouter(
           },
         ),
       ],
+    ),
+    GoRoute(
+      path: '/together',
+      name: 'together',
+      pageBuilder: (context, state) {
+        return const MaterialPage(child: MateRequestTogetherPage());
+      },
     ),
   ],
 );
