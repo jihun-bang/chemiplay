@@ -26,6 +26,7 @@ class _SignupProfileGenderContentState
 
   void selectGender(Gender gender) {
     _signupProfileViewModel.setGender(gender);
+    _signupProfileViewModel.setNextButtonDisabled(false);
   }
 
   @override
