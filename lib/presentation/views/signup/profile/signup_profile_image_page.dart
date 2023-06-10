@@ -6,7 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SignupProfileImagePage extends StatefulWidget {
-  const SignupProfileImagePage({super.key});
+  final PageController pageController;
+  const SignupProfileImagePage({
+    super.key,
+    required this.pageController,
+  });
 
   @override
   State<SignupProfileImagePage> createState() => _SignupProfileImagePageState();
@@ -22,11 +26,15 @@ class _SignupProfileImagePageState extends State<SignupProfileImagePage> {
     await _signupProfileViewModel.uploadProfileImage();
     // update user
     await _signupProfileViewModel.updateUserProfile();
+    // go home
+    // context.goNamed('home');
   }
 
   Future<void> onSkipTap() async {
     // update user
     await _signupProfileViewModel.updateUserProfile();
+    // go home
+    // context.goNamed('home');
   }
 
   @override
@@ -41,6 +49,7 @@ class _SignupProfileImagePageState extends State<SignupProfileImagePage> {
         ),
         disableNextButton: disabled,
         onNextPage: onNextTap,
+        pageController: widget.pageController,
       );
     });
   }

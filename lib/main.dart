@@ -1,5 +1,4 @@
 import 'package:chemiplay/presentation/viewmodels/chat_viewmodel.dart';
-import 'package:chemiplay/presentation/viewmodels/signup_profile_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
 import 'package:chemiplay/routes.dart';
 import 'package:chemiplay/utils/thema.dart';
@@ -41,9 +40,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ChatViewModel>(
           create: (_) => getIt(),
         ),
-        ChangeNotifierProvider<SignupProfileViewModel>(
-          create: (_) => getIt(),
-        )
       ],
       child: MaterialApp.router(
         title: '캐미플레이',
