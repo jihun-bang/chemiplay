@@ -1,6 +1,7 @@
 import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
 import 'package:chemiplay/presentation/views/my/widgets/my_profile_image.dart';
+import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:chemiplay/utils/logger.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,7 @@ class _MyProfileImagePageState extends State<MyProfileImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const GigiAppBar(),
       body: Consumer<UserViewModel>(builder: (context, viewModel, _) {
         if (viewModel.user == null) {
           return const Center(child: CircularProgressIndicator());

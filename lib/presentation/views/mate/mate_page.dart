@@ -439,7 +439,10 @@ class _MateProfilePageState extends State<MateProfilePage> {
               child: Row(
                 children: [
                   SvgPicture.asset(
-                      'assets/icons/icon_${_isPlayVoice ? 'pause' : 'play'}.svg'),
+                    'assets/icons/icon_${_isPlayVoice ? 'pause' : 'play'}.svg',
+                    width: 33,
+                    height: 33,
+                  ),
                 ],
               ),
             ),
