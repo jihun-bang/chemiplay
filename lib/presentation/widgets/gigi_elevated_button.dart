@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GigiElevatedButton extends StatelessWidget {
+class GigiElevatedButton extends StatefulWidget {
   final String text;
   final TextStyle textStyle;
   final double height;
@@ -22,34 +22,54 @@ class GigiElevatedButton extends StatelessWidget {
   });
 
   @override
+  State<GigiElevatedButton> createState() => _GigiElevatedButtonState();
+}
+
+class _GigiElevatedButtonState extends State<GigiElevatedButton> {
+  bool isDown = false;
+
+  @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          color: backgroundColor,
-          boxShadow: [
-            BoxShadow(
-              color: shadowColor,
-              offset: const Offset(4.0, 4.0),
-              blurRadius: 0,
+    return Container(
+      alignment: Alignment.bottomCenter,
+      height: widget.height,
+      child: SizedBox(
+        height: widget.height - (isDown ? 4 : 0),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.0),
+            color: widget.backgroundColor,
+            boxShadow: !isDown
+                ? [
+                    BoxShadow(
+                      color: widget.shadowColor,
+                      offset: const Offset(4.0, 4.0),
+                      blurRadius: 0,
+                    ),
+                  ]
+                : null,
+            border: Border.all(
+              color: widget.shadowColor,
+              width: 1.4, // Width: 1.4px
             ),
-          ],
-          border: Border.all(
-            color: shadowColor,
-            width: 1.4, // Width: 1.4px
           ),
-        ),
-        child: Material(
-          color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(12.0),
-            onTap: onPressed,
+            onTap: widget.onPressed,
+            onTapDown: (_) {
+              setState(() {
+                isDown = true;
+              });
+            },
+            onTapUp: (_) {
+              setState(() {
+                isDown = false;
+              });
+            },
             child: Center(
               child: Text(
-                text,
-                style: textStyle,
+                widget.text,
+                style: widget.textStyle,
               ),
             ),
           ),
