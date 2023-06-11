@@ -5,6 +5,7 @@ import 'package:chemiplay/presentation/widgets/game_cost.dart';
 import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:chemiplay/presentation/widgets/gigi_elevated_three_input_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class MateRequestTogetherPage extends StatefulWidget {
@@ -302,40 +303,44 @@ class MateInformationCard extends StatelessWidget {
           width: 1,
         ),
       ),
-      child: const Padding(
-        padding: EdgeInsets.symmetric(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
           vertical: 12,
           horizontal: 20,
         ),
         child: Row(
           children: [
-            CircleAvatar(),
-            SizedBox(
+            const CircleAvatar(),
+            const SizedBox(
               width: 8,
             ),
             Column(
               children: [
-                Text(
+                const Text(
                   '메이트 닉네임',
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 3,
                 ),
                 Row(
                   children: [
-                    Icon(
-                      Icons.star_border,
+                    SvgPicture.asset('assets/icons/icon_star.svg'),
+                    const SizedBox(
+                      width: 3,
                     ),
-                    Text(
+                    const Text(
                       '5.0',
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                       ),
                     ),
-                    Text(
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    const Text(
                       '(100+)',
                       style: TextStyle(
                         color: Color(0xff8A9099),
