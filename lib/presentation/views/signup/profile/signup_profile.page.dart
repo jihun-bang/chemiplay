@@ -47,52 +47,40 @@ class _SignupProfilePageState extends State<SignupProfilePage> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SignupProfileViewModel>(
       create: (context) => getIt(),
-      child: Consumer<SignupProfileViewModel>(builder: (context, viewModel, _) {
-        _signupProfileViewModel = viewModel;
-        return SignupProfileWrapper(
-          onNextPage: () {
-            if (_signupProfileViewModel.page == 0 ||
-                _signupProfileViewModel.page == 1) {
-              _pageController.nextPage(
-                duration: const Duration(milliseconds: 150),
-                curve: Curves.linear,
-              );
-            } else {
-              onImagePageNextTap();
-            }
-          },
-          contents: PageView(
-            controller: _pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              const SignupProfileGenderContent(),
-              const SignupProfileNicknameContent(),
-              SignupProfileImageContent(onSkipTap: onImagePageSkipTap)
-            ],
-            onPageChanged: (page) {
-              _signupProfileViewModel.setNextButtonDisabled(true);
-              _signupProfileViewModel.setPage(page);
+      child: Consumer<SignupProfileViewModel>(
+        builder: (context, viewModel, _) {
+          _signupProfileViewModel = viewModel;
+          return SignupProfileWrapper(
+            onNextPage: () {
+              if (_signupProfileViewModel.page == 0 ||
+                  _signupProfileViewModel.page == 1) {
+                _pageController.nextPage(
+                  duration: const Duration(milliseconds: 150),
+                  curve: Curves.linear,
+                );
+              } else {
+                onImagePageNextTap();
+              }
             },
-          ),
-          pageController: _pageController,
-          page: _signupProfileViewModel.page,
-          disableNextButton: _signupProfileViewModel.nextButtonDisabled,
-        );
-      }),
-      // child: PageView(
-      //   controller: _pageController,
-      //   children: [
-      //     SignupProfileGenderPage(
-      //       pageController: _pageController,
-      //     ),
-      //     SignupProfileNicknamePage(
-      //       pageController: _pageController,
-      //     ),
-      //     SignupProfileImagePage(
-      //       pageController: _pageController,
-      //     )
-      //   ],
-      // ),
+            contents: PageView(
+              controller: _pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                const SignupProfileGenderContent(),
+                const SignupProfileNicknameContent(),
+                SignupProfileImageContent(onSkipTap: onImagePageSkipTap)
+              ],
+              onPageChanged: (page) {
+                _signupProfileViewModel.setNextButtonDisabled(true);
+                _signupProfileViewModel.setPage(page);
+              },
+            ),
+            pageController: _pageController,
+            page: _signupProfileViewModel.page,
+            disableNextButton: _signupProfileViewModel.nextButtonDisabled,
+          );
+        },
+      ),
     );
   }
 }

@@ -73,15 +73,6 @@ class GigiElevatedThreeInputButton extends StatelessWidget {
                     ),
                   ],
                 ),
-                // child: Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     prefixWidget,
-                //     widget,
-                //     suffixWidget,
-                //   ],
-                // ),
               ),
             ),
           ),
