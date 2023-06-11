@@ -13,8 +13,12 @@ class MateTogetherViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  final int _minimumTime = 1;
+  final int _maximumTime = 99;
+
   void increseTime() {
     if (isMaximumTime) {
+      _theNumberOfTime = _maximumTime;
       return;
     }
     _theNumberOfTime++;
@@ -23,12 +27,13 @@ class MateTogetherViewModel extends ChangeNotifier {
 
   void decreseTime() {
     if (isMinimumTime) {
+      _theNumberOfTime = _minimumTime;
       return;
     }
     _theNumberOfTime--;
     notifyListeners();
   }
 
-  bool get isMinimumTime => _theNumberOfTime == 1;
-  bool get isMaximumTime => _theNumberOfTime == 99;
+  bool get isMinimumTime => _theNumberOfTime <= _minimumTime;
+  bool get isMaximumTime => _theNumberOfTime >= _maximumTime;
 }
