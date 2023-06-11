@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:chemiplay/data/models/user.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,8 +14,7 @@ class MatesPage extends StatefulWidget {
   State<MatesPage> createState() => _MatesPageState();
 }
 
-class _MatesPageState extends State<MatesPage>
-    with AutomaticKeepAliveClientMixin {
+class _MatesPageState extends State<MatesPage> {
   final List<String> _games = [
     '리그오브레전드',
     '전략적 팀 전투',
@@ -50,19 +48,17 @@ class _MatesPageState extends State<MatesPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    return CustomScrollView(
-      slivers: [
-        _buildBanner,
-        _buildGames,
-        _buildTitle,
-        if (_users.isNotEmpty) _buildMateCards,
-      ],
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          _buildBanner,
+          _buildGames,
+          _buildTitle,
+          if (_users.isNotEmpty) _buildMateCards,
+        ],
+      ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 
   Widget get _buildGames {
     return SliverToBoxAdapter(
@@ -72,30 +68,37 @@ class _MatesPageState extends State<MatesPage>
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: _games.length,
-            itemBuilder: (_, index) => SizedBox(
-                  width: 85,
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 4),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: MyColors.gray_06),
-                        width: 60,
-                        height: 60,
-                      ),
-                      Text(
-                        _games[index],
-                        style: TextStyle(
-                            height: 14.31 / 12,
-                            letterSpacing: -0.02,
-                            color: MyColors.black_02,
-                            fontSize: 12,
-                            overflow: TextOverflow.ellipsis),
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                      )
-                    ],
+            itemBuilder: (_, index) => InkWell(
+                  onTap: () {
+                    setState(() {
+                      _selGame = _games[index];
+                    });
+                  },
+                  child: SizedBox(
+                    width: 85,
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 4),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: MyColors.gray_06),
+                          width: 60,
+                          height: 60,
+                        ),
+                        Text(
+                          _games[index],
+                          style: TextStyle(
+                              height: 14.31 / 12,
+                              letterSpacing: -0.02,
+                              color: MyColors.black_02,
+                              fontSize: 12,
+                              overflow: TextOverflow.ellipsis),
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ),
                   ),
                 )),
       ),
@@ -163,8 +166,8 @@ class _MatesPageState extends State<MatesPage>
                 imageUrl:
                     'https://firebasestorage.googleapis.com/v0/b/gigi-chemiplay.appspot.com/o/profile_image%2Fuser_1.jpg?alt=media&token=fa6b5113-9b03-45ca-9c0d-b0871cf98f0b',
                 onTap: () {
-                  context
-                      .pushNamed('mate', params: {'id': _users[nextIndex].id});
+                  context.pushNamed('mate',
+                      pathParameters: {'id': _users[nextIndex].id});
                 },
               );
             } else {
@@ -179,8 +182,8 @@ class _MatesPageState extends State<MatesPage>
                 imageUrl:
                     'https://firebasestorage.googleapis.com/v0/b/gigi-chemiplay.appspot.com/o/profile_image%2Fuser_2.jpg?alt=media&token=2d827a1a-b61a-4902-a163-b35a9d545fe5',
                 onTap: () {
-                  context
-                      .pushNamed('mate', params: {'id': _users[nextIndex].id});
+                  context.pushNamed('mate',
+                      pathParameters: {'id': _users[nextIndex].id});
                 },
               );
             }

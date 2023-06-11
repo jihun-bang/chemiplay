@@ -1,4 +1,5 @@
 import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
+import 'package:chemiplay/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -55,9 +56,18 @@ class _ChatListPageState extends State<ChatListPage> {
         //   backgroundImage: NetworkImage(channel.coverUrl),
         // ),
         title: Text('닉네임: ${otherMember.nickname}'),
-        subtitle: Text(lastMessage),
+        subtitle: Text(
+          lastMessage,
+          style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              height: 16.71 / 14,
+              color: MyColors.black_02),
+        ),
+
         onTap: () {
-          context.pushNamed('chat', params: {'userId': otherMember!.userId});
+          context.pushNamed('chat',
+              pathParameters: {'userId': otherMember!.userId});
         },
       );
     }

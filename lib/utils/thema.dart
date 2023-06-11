@@ -6,6 +6,11 @@ final lightTheme = ThemeData(
     textTheme: const TextTheme(
       bodySmall: TextStyle(fontFamily: 'Pretendard', letterSpacing: -0.02),
     ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      type: BottomNavigationBarType.fixed,
+    ),
     scaffoldBackgroundColor: MyColors.gray_01,
     appBarTheme: AppBarTheme(
         color: MyColors.gray_01,

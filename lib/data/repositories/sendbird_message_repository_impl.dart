@@ -1,12 +1,9 @@
 import 'package:sendbird_sdk/sendbird_sdk.dart';
 
 import '../../domain/repositories/sendbird_message_repository.dart';
-import '../network/datasources/sendbird_data_source.dart';
 
 class SendbirdMessageRepositoryImpl extends SendbirdMessageRepository {
-  final SendbirdDataSource _dataSource;
-
-  SendbirdMessageRepositoryImpl(this._dataSource);
+  SendbirdMessageRepositoryImpl();
 
   @override
   Future<BaseMessage> sendMessage(
