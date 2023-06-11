@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icons/bottom_navigation/icon_feed_${_getOnOff(1)}.svg',
-                  width: 24,
+                  width: 20,
                 ),
                 label: '피드',
               ),

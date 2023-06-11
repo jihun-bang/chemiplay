@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'data/models/mate.dart';
-import 'presentation/views/signup/profile/signup_profile_page.dart';
+import 'presentation/views/signup/profile/signup_profile.page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
