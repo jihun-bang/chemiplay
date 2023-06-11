@@ -60,10 +60,7 @@ class _SignupProfileWrapperState extends State<SignupProfileWrapper> {
             ),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: widget.contents,
-        ),
+        body: widget.contents,
         bottomSheet: BottomNextButton(
           disabled: widget.disableNextButton,
           onPressed: widget.onNextPage,

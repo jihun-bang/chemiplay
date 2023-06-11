@@ -21,8 +21,8 @@ class _SignupProfileGenderContentState
   var _signupProfileViewModel = getIt<SignupProfileViewModel>();
   final inActiveBackgroundColor = Colors.white;
   final inActiveShadowColor = const Color(0xffe3e6eb);
-  final activeBackgroundColor = const Color(0xFFFF8066);
-  final activeShadowColor = const Color(0xFF4D4D4D);
+  final activeBackgroundColor = const Color(0xffFFF0ED);
+  final activeShadowColor = const Color(0xffFF8066);
 
   void selectGender(Gender gender) {
     _signupProfileViewModel.setGender(gender);
@@ -33,40 +33,43 @@ class _SignupProfileGenderContentState
   Widget build(BuildContext context) {
     return Consumer<SignupProfileViewModel>(builder: (context, viewModel, __) {
       _signupProfileViewModel = viewModel;
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SignupProfileTitle(
-            title: '성별:',
-            subTitle: '프로필에 보여집니다.',
-          ),
-          const SizedBox(
-            height: 48,
-          ),
-          GigiElevatedButton(
-            text: '여성',
-            onPressed: () => selectGender(Gender.female),
-            backgroundColor: _signupProfileViewModel.gender == Gender.female
-                ? activeBackgroundColor
-                : inActiveBackgroundColor,
-            shadowColor: _signupProfileViewModel.gender == Gender.female
-                ? activeShadowColor
-                : inActiveShadowColor,
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          GigiElevatedButton(
-            text: '남성',
-            onPressed: () => selectGender(Gender.male),
-            backgroundColor: _signupProfileViewModel.gender == Gender.male
-                ? activeBackgroundColor
-                : inActiveBackgroundColor,
-            shadowColor: _signupProfileViewModel.gender == Gender.male
-                ? activeShadowColor
-                : inActiveShadowColor,
-          ),
-        ],
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SignupProfileTitle(
+              title: '성별:',
+              subTitle: '프로필에 보여집니다.',
+            ),
+            const SizedBox(
+              height: 48,
+            ),
+            GigiElevatedButton(
+              text: '여성',
+              onPressed: () => selectGender(Gender.female),
+              backgroundColor: _signupProfileViewModel.gender == Gender.female
+                  ? activeBackgroundColor
+                  : inActiveBackgroundColor,
+              shadowColor: _signupProfileViewModel.gender == Gender.female
+                  ? activeShadowColor
+                  : inActiveShadowColor,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            GigiElevatedButton(
+              text: '남성',
+              onPressed: () => selectGender(Gender.male),
+              backgroundColor: _signupProfileViewModel.gender == Gender.male
+                  ? activeBackgroundColor
+                  : inActiveBackgroundColor,
+              shadowColor: _signupProfileViewModel.gender == Gender.male
+                  ? activeShadowColor
+                  : inActiveShadowColor,
+            ),
+          ],
+        ),
       );
     });
   }

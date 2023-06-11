@@ -23,19 +23,22 @@ class _SignupProfileNicknameContentState
   Widget build(BuildContext context) {
     return Consumer<SignupProfileViewModel>(builder: (context, viewModel, _) {
       _signupProfileViewModel = viewModel;
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SignupProfileTitle(
-            title: '닉네임:',
-          ),
-          GigiTextField(
-            labelText: '닉네임',
-            hintText: '닉네임',
-            onChanged: (nickname) =>
-                _signupProfileViewModel.setNickname(nickname),
-          ),
-        ],
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SignupProfileTitle(
+              title: '닉네임:',
+            ),
+            GigiTextField(
+              labelText: '닉네임',
+              hintText: '닉네임',
+              onChanged: (nickname) =>
+                  _signupProfileViewModel.setNickname(nickname),
+            ),
+          ],
+        ),
       );
     });
   }
