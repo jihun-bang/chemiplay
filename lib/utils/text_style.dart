@@ -30,7 +30,6 @@ class MyTextStyle {
   static TextStyle body1Med({Color? color}) =>
       TextStyle(color: color, fontSize: 16, fontWeight: FontWeight.w500);
 
-
   static TextStyle body1Semi({Color? color}) =>
       TextStyle(color: color, fontSize: 16, height: 1.5, fontWeight: FontWeight.w500);
 

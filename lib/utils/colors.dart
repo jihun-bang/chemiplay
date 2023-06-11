@@ -12,6 +12,9 @@ class MyColors {
   static Color aqua = const Color(0xFF2ED0E5);
 
   static Color pri_05 = const Color(0xFFFF8066);
+  static Color pri_06 = const Color(0xFFF76D52);
+
+  static Color vio_06 = const Color(0xFFA58BF0);
 
   static Color gray_01 = const Color(0xFFF5F7FA);
   static Color gray_02 = const Color(0xFFEDEFF2);

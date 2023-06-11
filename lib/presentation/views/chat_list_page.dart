@@ -2,6 +2,7 @@ import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:chemiplay/utils/colors.dart';
 import 'package:chemiplay/utils/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +14,7 @@ import '../viewmodels/user_viewmodel.dart';
 
 // 채팅 리스트 화면
 class ChatListPage extends StatefulWidget {
-  const ChatListPage
-
-  ({super.key});
+  const ChatListPage({super.key});
 
   @override
   State<ChatListPage> createState() => _ChatListPageState();
@@ -51,32 +50,63 @@ class _ChatListPageState extends State<ChatListPage> {
 
     if (mate == null) {
       return const ListTile();
-    } else {
-      final lastMessage =
-      channel.lastMessage == null ? "" : channel.lastMessage!.message;
+    }
 
-      String lastMessageTime = channel.lastMessage == null ? "" : getLastMessageTime(channel.lastMessage!.createdAt);
+    final lastMessage = channel.lastMessage?.message ?? "";
+    final lastMessageTime = channel.lastMessage?.createdAt != null
+        ? getLastMessageTime(channel.lastMessage!.createdAt)
+        : "";
 
       var profileUrl = "";
 
-      return ListTile(
-        leading: CircleAvatar(
-          backgroundImage: null,
+      return Slidable(
+        key: const Key('modification'),
+        startActionPane: ActionPane(
+          motion: const BehindMotion(),
+          extentRatio: 70 / 390,
+          children: <Widget> [
+            SlidableAction(
+              backgroundColor: MyColors.vio_06,
+              foregroundColor: Colors.white,
+              label: '고정',
+              onPressed: (BuildContext context) {
+                print('고정');
+              },
+            ),
+          ],
         ),
-        title: Text(mate.nickname, style: MyTextStyle.body1Med()),
-        subtitle: Text(lastMessage, style: MyTextStyle.body2Reg()),
-        trailing: SizedBox(
-          height: double.infinity,
-          child: Text(lastMessageTime,
-            style: MyTextStyle.body2Semi(color: MyColors.gray_06),),
+        endActionPane: ActionPane(
+          motion: const BehindMotion(),
+          extentRatio: 70 / 390,
+          children: <Widget> [
+            SlidableAction(
+              backgroundColor: MyColors.pri_06,
+              foregroundColor: Colors.white,
+              label: '삭제',
+              onPressed: (BuildContext context) {
+                print('삭제');
+              },
+            ),
+          ],
         ),
-
-        onTap: () {
-          context.pushNamed('chat',
-              pathParameters: {'userId': mate!.userId});
-        },
+        child: ListTile(
+          leading: const CircleAvatar(
+            backgroundImage: null,
+          ),
+          title: Text(mate.nickname, style: MyTextStyle.body1Med()),
+          subtitle: Text(lastMessage, style: MyTextStyle.body2Reg()),
+          trailing: SizedBox(
+            height: double.infinity,
+            child: Text(
+              lastMessageTime,
+              style: MyTextStyle.body2Semi(color: MyColors.gray_06),
+            ),
+          ),
+          onTap: () {
+            context.pushNamed('chat', pathParameters: {'userId': mate!.userId});
+          },
+        ),
       );
-    }
   }
 
   String getLastMessageTime(int createdAt) {
