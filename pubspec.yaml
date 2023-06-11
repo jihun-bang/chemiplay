@@ -57,6 +57,7 @@ flutter:
     - assets/images/games/
     - assets/icons/
     - assets/icons/bottom_navigation/
+    - assets/icons/my/
     - assets/fonts/
   fonts:
     - family: Pretendard
