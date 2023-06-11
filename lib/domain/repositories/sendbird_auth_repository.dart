@@ -7,8 +7,8 @@ abstract class SendbirdAuthRepository {
     String? accessToken,
     String? apiHost,
     String? wsHost,
-  });
 
+  });
   Future<void> signOut();
 
   User? get currentUser;

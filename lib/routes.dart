@@ -4,12 +4,12 @@ import 'package:chemiplay/presentation/views/login_page.dart';
 import 'package:chemiplay/presentation/views/mate/mate_page.dart';
 import 'package:chemiplay/presentation/views/mate/mate_request_together_page.dart';
 import 'package:chemiplay/presentation/views/my/my_profile_image_page.dart';
+import 'package:chemiplay/presentation/views/signup/profile/signup_profile.page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'data/models/mate.dart';
-import 'presentation/views/signup/profile/signup_profile_page.dart';
 
 final routes = GoRouter(
   routes: [

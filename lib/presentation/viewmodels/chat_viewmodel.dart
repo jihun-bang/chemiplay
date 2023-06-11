@@ -28,12 +28,12 @@ class ChatViewModel extends ChangeNotifier {
     // notifyListeners();
   }
 
-  Future<void> setSendbird(String userEmail) async {
+  Future<void> setSendbird(String userEmail, nickName) async {
     if (_isLoggedIn == true) {
       return;
     }
 
-    sendbirdUser = await _sendbirdUseCase.login(userEmail);
+    sendbirdUser = await _sendbirdUseCase.login(userEmail, nickName);
 
     loadChannelList();
 

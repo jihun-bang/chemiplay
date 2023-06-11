@@ -76,7 +76,7 @@ class _MateProfilePageState extends State<MateProfilePage> {
           return const SizedBox();
         }
         if (_chatViewModel.isLoggedIn == false && _userViewModel.user != null) {
-          _chatViewModel.setSendbird(_userViewModel.user!.email);
+          _chatViewModel.setSendbird(_userViewModel.user!.email, _userViewModel.user!.name);
         }
         return Scaffold(
           backgroundColor: Colors.white,

@@ -1,6 +1,9 @@
 import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
+import 'package:chemiplay/utils/colors.dart';
+import 'package:chemiplay/utils/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sendbird_sdk/sendbird_sdk.dart';
 
@@ -10,7 +13,9 @@ import '../viewmodels/user_viewmodel.dart';
 
 // 채팅 리스트 화면
 class ChatListPage extends StatefulWidget {
-  const ChatListPage({super.key});
+  const ChatListPage
+
+  ({super.key});
 
   @override
   State<ChatListPage> createState() => _ChatListPageState();
@@ -35,45 +40,72 @@ class _ChatListPageState extends State<ChatListPage> {
 
   // 채팅 리스트 아이템 위젯
   Widget _buildChatListItem(GroupChannel channel) {
-    Member? otherMember;
+    Member? mate;
 
     for (var member in channel.members) {
       if (member.userId != _chatViewModel.getSendbirdUser()!.userId) {
-        otherMember = member;
+        mate = member;
         break;
       }
     }
 
-    if (otherMember == null) {
+    if (mate == null) {
       return const ListTile();
     } else {
       final lastMessage =
-          channel.lastMessage == null ? "" : channel.lastMessage!.message;
+      channel.lastMessage == null ? "" : channel.lastMessage!.message;
+
+      String lastMessageTime = channel.lastMessage == null ? "" : getLastMessageTime(channel.lastMessage!.createdAt);
+
+      var profileUrl = "";
 
       return ListTile(
-        // leading: CircleAvatar(
-        //   backgroundImage: NetworkImage(channel.coverUrl),
-        // ),
-        title: Text('닉네임: ${otherMember.nickname}'),
-        subtitle: Text(lastMessage),
+        leading: const CircleAvatar(
+          backgroundImage: null,  // NetworkImage(profileUrl),
+        ),
+        title: Text(mate.nickname, style: MyTextStyle.body1Med()),
+        subtitle: Text(lastMessage, style: MyTextStyle.body2Reg()),
+        trailing: SizedBox(
+          height: double.infinity,
+          child: Text(lastMessageTime,
+            style: MyTextStyle.body2Semi(color: MyColors.gray_06),),
+        ),
         onTap: () {
-          context.pushNamed('chat', params: {'userId': otherMember!.userId});
+          context.pushNamed('chat', params: {'userId': mate!.userId});
         },
       );
     }
   }
 
+  String getLastMessageTime(int createdAt) {
+    DateTime now = DateTime.now();
+    DateTime createdAtTime = DateTime.fromMillisecondsSinceEpoch(createdAt);
+
+    Duration difference = now.difference(createdAtTime);
+
+    if (difference.inMinutes < 60) {
+      return '${difference.inMinutes}분 전';
+    }
+
+    if (difference.inDays < 1) {
+      return DateFormat('a h시 mm분').format(createdAtTime);
+    }
+
+    return DateFormat('MM월 dd일').format(createdAtTime);
+  }
+
   @override
   Widget build(BuildContext context) {
     final userEmail = _userViewModel.user?.email;
-    print('userEmail : $userEmail');
+    final name = _userViewModel.user?.name;
+
     if (userEmail == null) {
       return Container();
     }
 
     return Consumer<ChatViewModel>(builder: (_, chatViewModel, ___) {
       if (chatViewModel.isLoggedIn == false) {
-        chatViewModel.setSendbird(userEmail);
+        chatViewModel.setSendbird(userEmail, name);
       }
 
       // if (chatViewModel.isLoggedIn == true && _chatViewModel.isLoading == false) {
@@ -93,7 +125,6 @@ class _ChatListPageState extends State<ChatListPage> {
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Text('채팅방 개수 ${chatViewModel.channelList.length}'),
             // TextField(
             //   controller: _textController,
             //   decoration: const InputDecoration(

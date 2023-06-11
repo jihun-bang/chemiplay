@@ -10,9 +10,9 @@ class SendbirdUseCase {
 
   SendbirdUseCase(this._authRepository, this._messageRepository);
 
-  Future<User?> login(String userID) async {
+  Future<User?> login(String userID, nickName) async {
     try {
-      return await _authRepository.signIn(userId: userID, nickName: userID);
+      return await _authRepository.signIn(userId: userID, nickName: nickName);
     } catch (e) {
       Logger.e(e);
       return null;
