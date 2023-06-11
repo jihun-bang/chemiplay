@@ -51,7 +51,7 @@ class MyListButton extends StatelessWidget {
                       margin: const EdgeInsets.only(right: 8),
                       width: 24,
                       height: 24,
-                      child: SvgPicture.asset('assets/icons/icon_$icon.svg'),
+                      child: SvgPicture.asset('assets/icons/$icon.svg'),
                     ),
                     Container(
                       height: 24,

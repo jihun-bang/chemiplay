@@ -60,8 +60,8 @@ class _ChatListPageState extends State<ChatListPage> {
       var profileUrl = "";
 
       return ListTile(
-        leading: const CircleAvatar(
-          backgroundImage: null,  // NetworkImage(profileUrl),
+        leading: CircleAvatar(
+          backgroundImage: null,
         ),
         title: Text(mate.nickname, style: MyTextStyle.body1Med()),
         subtitle: Text(lastMessage, style: MyTextStyle.body2Reg()),
@@ -70,8 +70,10 @@ class _ChatListPageState extends State<ChatListPage> {
           child: Text(lastMessageTime,
             style: MyTextStyle.body2Semi(color: MyColors.gray_06),),
         ),
+
         onTap: () {
-          context.pushNamed('chat', params: {'userId': mate!.userId});
+          context.pushNamed('chat',
+              pathParameters: {'userId': mate!.userId});
         },
       );
     }

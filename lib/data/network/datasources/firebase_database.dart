@@ -1,12 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../../utils/logger.dart';
 import '../../models/user.dart';
 
 class FirebaseDatabase {
-  final FirebaseFirestore _db;
-
-  FirebaseDatabase(this._db);
+  FirebaseDatabase();
 
   Future<bool> addUser({required UserModel user}) async {
     return await usersRef

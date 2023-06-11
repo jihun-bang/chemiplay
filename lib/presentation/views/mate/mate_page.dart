@@ -118,8 +118,8 @@ class _MateProfilePageState extends State<MateProfilePage> {
                     text: '무료로 대화하기',
                     onPressed: () {
                       if (_userViewModel.user != null) {
-                        context
-                            .pushNamed('chat', params: {'userId': _mate.email});
+                        context.pushNamed('chat',
+                            pathParameters: {'userId': _mate.email});
                       } else {
                         context.replaceNamed('login');
                       }

@@ -8,7 +8,6 @@ import 'package:chemiplay/presentation/viewmodels/mate_together_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/mate_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/signup_profile_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sendbird_sdk/sdk/sendbird_sdk_api.dart';
@@ -35,15 +34,14 @@ void setupDependencies() {
   getIt.registerSingleton<AuthRemoteDataSource>(
       AuthRemoteDataSource(FirebaseAuth.instance));
   getIt.registerSingleton<SendbirdDataSource>(SendbirdDataSource(getIt()));
-  getIt.registerSingleton<FirebaseDatabase>(
-      FirebaseDatabase(FirebaseFirestore.instance));
+  getIt.registerSingleton<FirebaseDatabase>(FirebaseDatabase());
 
   // Repository
   getIt.registerSingleton<AuthRepository>(AuthRepositoryImpl(getIt()));
   getIt.registerSingleton<SendbirdAuthRepository>(
       SendbirdAuthRepositoryImpl(getIt()));
   getIt.registerSingleton<SendbirdMessageRepository>(
-      SendbirdMessageRepositoryImpl(getIt()));
+      SendbirdMessageRepositoryImpl());
   getIt.registerFactory<UserRepository>(() => UserRepositoryImpl(getIt()));
 
   // Usecases
