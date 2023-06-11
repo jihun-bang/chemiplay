@@ -63,6 +63,7 @@ class _SignupProfilePageState extends State<SignupProfilePage> {
           },
           contents: PageView(
             controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               const SignupProfileGenderContent(),
               const SignupProfileNicknameContent(),
