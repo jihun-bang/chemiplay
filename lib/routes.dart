@@ -1,4 +1,5 @@
 import 'package:chemiplay/presentation/views/chat_list_page.dart';
+import 'package:chemiplay/presentation/views/chat_page.dart';
 import 'package:chemiplay/presentation/views/feed/feed_page.dart';
 import 'package:chemiplay/presentation/views/home_page.dart';
 import 'package:chemiplay/presentation/views/login_page.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'data/models/mate.dart';
-import 'presentation/views/signup/profile/signup_profile.page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -82,6 +82,15 @@ final routes = GoRouter(
               name: 'chats',
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: ChatListPage()),
+              routes: [
+                GoRoute(
+                    path: 'chat/:userId',
+                    name: 'chat',
+                    builder: (context, state) {
+                      final userId = state.pathParameters['userId'] ?? 'unknown';
+                      return ChatPage(userId: userId);
+                    }),
+              ]
             ),
           ],
         ),
