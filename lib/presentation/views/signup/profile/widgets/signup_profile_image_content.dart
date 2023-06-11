@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/viewmodels/signup_profile_viewmodel.dart';
 import 'package:chemiplay/presentation/views/signup/profile/widgets/signup_profile_title.dart';
@@ -26,7 +24,7 @@ class _SignupProfileImageContentState extends State<SignupProfileImageContent> {
     if (image == null) {
       return;
     }
-    _signupProfileViewModel.setProfileImage(image);
+    _signupProfileViewModel.setProfileImage(await image.readAsBytes());
     _signupProfileViewModel.setNextButtonDisabled(false);
   }
 
@@ -53,8 +51,8 @@ class _SignupProfileImageContentState extends State<SignupProfileImageContent> {
                       radius: 65,
                       foregroundImage: _signupProfileViewModel.profileImage !=
                               null
-                          ? FileImage(
-                              File(_signupProfileViewModel.profileImage!.path))
+                          ? Image.memory(_signupProfileViewModel.profileImage!)
+                              .image
                           : null,
                       backgroundColor: Colors.transparent,
                       child: Container(

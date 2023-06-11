@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'data/models/mate.dart';
-import 'presentation/views/signup/profile/signup_profile.page.dart';
+import 'presentation/views/signup/profile/signup_profile_page.dart';
 
 final routes = GoRouter(
   routes: [

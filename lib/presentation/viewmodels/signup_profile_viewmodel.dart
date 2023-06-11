@@ -1,8 +1,7 @@
 import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/domain/usecases/user_usecase.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart';
 
 class SignupProfileViewModel extends ChangeNotifier {
   final UserUseCase _userUseCase;
@@ -14,14 +13,14 @@ class SignupProfileViewModel extends ChangeNotifier {
 
   Gender? _gender;
   String? _nickname;
-  XFile? _profileImage;
+  Uint8List? _profileImage;
 
   int get page => _page;
   bool get nextButtonDisabled => _nextButtonDisabled;
 
   Gender? get gender => _gender;
   String? get nickname => _nickname;
-  XFile? get profileImage => _profileImage;
+  Uint8List? get profileImage => _profileImage;
 
   void setGender(Gender gender) {
     _gender = gender;
@@ -41,7 +40,7 @@ class SignupProfileViewModel extends ChangeNotifier {
     return true;
   }
 
-  void setProfileImage(XFile profileImage) {
+  void setProfileImage(Uint8List profileImage) {
     _profileImage = profileImage;
     notifyListeners();
   }
@@ -54,7 +53,11 @@ class SignupProfileViewModel extends ChangeNotifier {
     await _userUseCase.updateUser(user: user);
   }
 
-  Future<void> uploadProfileImage() async {}
+  Future<void> uploadProfileImage() async {
+    if (_profileImage != null) {
+      await _userViewModel.updateProfileImage(_profileImage!);
+    }
+  }
 
   setNextButtonDisabled(bool value) {
     _nextButtonDisabled = value;
