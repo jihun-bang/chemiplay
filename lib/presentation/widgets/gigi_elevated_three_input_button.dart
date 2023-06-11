@@ -50,15 +50,38 @@ class GigiElevatedThreeInputButton extends StatelessWidget {
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: Stack(
+                  fit: StackFit.expand,
                   children: [
-                    prefixWidget,
-                    widget,
-                    suffixWidget,
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: prefixWidget,
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: widget,
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: suffixWidget,
+                      ),
+                    ),
                   ],
                 ),
+                // child: Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     prefixWidget,
+                //     widget,
+                //     suffixWidget,
+                //   ],
+                // ),
               ),
             ),
           ),
