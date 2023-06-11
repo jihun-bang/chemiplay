@@ -6,6 +6,7 @@ import 'package:chemiplay/presentation/views/mate/mate_page.dart';
 import 'package:chemiplay/presentation/views/mate/mate_request_together_page.dart';
 import 'package:chemiplay/presentation/views/mate/mates_page.dart';
 import 'package:chemiplay/presentation/views/my/my_page.dart';
+import 'package:chemiplay/presentation/views/my/my_profile_image_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -85,11 +86,16 @@ final routes = GoRouter(
         StatefulShellBranch(
           routes: <RouteBase>[
             GoRoute(
-              path: '/my',
-              name: 'my',
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: MyPage()),
-            ),
+                path: '/my',
+                name: 'my',
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: MyPage()),
+                routes: [
+                  GoRoute(
+                      path: 'edit',
+                      name: 'myEdit',
+                      builder: (context, state) => const MyProfileImagePage()),
+                ]),
           ],
         ),
       ],

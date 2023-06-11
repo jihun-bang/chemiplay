@@ -22,7 +22,7 @@ class MyProfile extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            context.pushNamed('profileEdit');
+            context.pushNamed('myEdit');
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,7 +44,7 @@ class MyProfile extends StatelessWidget {
           width: 80,
           height: 80,
           onTap: () {
-            context.pushNamed('profileEdit');
+            context.pushNamed('myEdit');
           },
         ));
   }
