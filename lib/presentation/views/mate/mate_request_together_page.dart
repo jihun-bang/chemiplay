@@ -1,5 +1,7 @@
+import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/viewmodels/mate_together_viewmodel.dart';
+import 'package:chemiplay/presentation/viewmodels/mate_viewmodel.dart';
 import 'package:chemiplay/presentation/widgets/app_bar_lead_icon.dart';
 import 'package:chemiplay/presentation/widgets/game_cost.dart';
 import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class MateRequestTogetherPage extends StatefulWidget {
+  final String mateId = 'F5s7bETsxIfQImOfPvE5OcCXuts2';
   const MateRequestTogetherPage({super.key});
 
   @override
@@ -18,13 +21,20 @@ class MateRequestTogetherPage extends StatefulWidget {
 
 class _MateRequestTogetherPageState extends State<MateRequestTogetherPage> {
   final Color backgroundColor = const Color(0xffF5F7FA);
+  final _mateViewModel = getIt<MateViewModel>();
   MateTogetherViewModel _mateTogetherViewModel = getIt<MateTogetherViewModel>();
+
   @override
   void initState() {
     super.initState();
     _mateTogetherViewModel.init(
       costPerMatch: 1100,
     );
+  }
+
+  Future initMateState() async {
+    await _mateViewModel.init(widget.mateId);
+    return _mateViewModel.user!;
   }
 
   @override
@@ -41,23 +51,20 @@ class _MateRequestTogetherPageState extends State<MateRequestTogetherPage> {
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                const MateInformationCard(),
-                const SizedBox(
-                  height: 10,
-                ),
-                GameCard(
-                  costPerMatch: _mateTogetherViewModel.costPerMatch,
-                  theNumberOfTime: _mateTogetherViewModel.theNumberOfTime,
-                  increseTime: _mateTogetherViewModel.increseTime,
-                  decreseTime: _mateTogetherViewModel.decreseTime,
-                  isMinimumTime: _mateTogetherViewModel.isMinimumTime,
-                  isMaximumTime: _mateTogetherViewModel.isMaximumTime,
-                ),
-              ],
-            ),
+            child: FutureBuilder(
+                future: initMateState(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return MateRequestTogeterContent(
+                      mateTogetherViewModel: _mateTogetherViewModel,
+                      mateUser: snapshot.data,
+                    );
+                  } else if (snapshot.hasError) {
+                    return const SizedBox();
+                  } else {
+                    return const Center(child: Text('loading'));
+                  }
+                }),
           ),
           backgroundColor: backgroundColor,
           bottomSheet: Padding(
@@ -104,6 +111,40 @@ class _MateRequestTogetherPageState extends State<MateRequestTogetherPage> {
           ),
         );
       }),
+    );
+  }
+}
+
+class MateRequestTogeterContent extends StatelessWidget {
+  const MateRequestTogeterContent({
+    super.key,
+    required MateTogetherViewModel mateTogetherViewModel,
+    required this.mateUser,
+  }) : _mateTogetherViewModel = mateTogetherViewModel;
+
+  final MateTogetherViewModel _mateTogetherViewModel;
+  final UserModel mateUser;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        MateInformationCard(
+          mateUser: mateUser,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        GameCard(
+          costPerMatch: _mateTogetherViewModel.costPerMatch,
+          theNumberOfTime: _mateTogetherViewModel.theNumberOfTime,
+          increseTime: _mateTogetherViewModel.increseTime,
+          decreseTime: _mateTogetherViewModel.decreseTime,
+          isMinimumTime: _mateTogetherViewModel.isMinimumTime,
+          isMaximumTime: _mateTogetherViewModel.isMaximumTime,
+        ),
+      ],
     );
   }
 }
@@ -291,7 +332,9 @@ class GameCard extends StatelessWidget {
 class MateInformationCard extends StatelessWidget {
   const MateInformationCard({
     super.key,
+    required this.mateUser,
   });
+  final UserModel mateUser;
 
   @override
   Widget build(BuildContext context) {
@@ -310,15 +353,17 @@ class MateInformationCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const CircleAvatar(),
+            CircleAvatar(
+              foregroundImage: NetworkImage(mateUser.profileImageUrl!),
+            ),
             const SizedBox(
               width: 8,
             ),
             Column(
               children: [
-                const Text(
-                  '메이트 닉네임',
-                  style: TextStyle(
+                Text(
+                  mateUser.name,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
