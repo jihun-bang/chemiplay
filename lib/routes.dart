@@ -8,7 +8,7 @@ import 'package:chemiplay/presentation/views/mate/mate_request_together_page.dar
 import 'package:chemiplay/presentation/views/mate/mates_page.dart';
 import 'package:chemiplay/presentation/views/my/my_page.dart';
 import 'package:chemiplay/presentation/views/my/my_profile_image_page.dart';
-import 'package:chemiplay/presentation/views/signup/profile/signup_profile.page.dart';
+import 'package:chemiplay/presentation/views/signup/profile/signup_profile_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -78,20 +78,20 @@ final routes = GoRouter(
         StatefulShellBranch(
           routes: <RouteBase>[
             GoRoute(
-              path: '/chats',
-              name: 'chats',
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: ChatListPage()),
-              routes: [
-                GoRoute(
-                    path: 'chat/:userId',
-                    name: 'chat',
-                    builder: (context, state) {
-                      final userId = state.pathParameters['userId'] ?? 'unknown';
-                      return ChatPage(userId: userId);
-                    }),
-              ]
-            ),
+                path: '/chats',
+                name: 'chats',
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: ChatListPage()),
+                routes: [
+                  GoRoute(
+                      path: 'chat/:userId',
+                      name: 'chat',
+                      builder: (context, state) {
+                        final userId =
+                            state.pathParameters['userId'] ?? 'unknown';
+                        return ChatPage(userId: userId);
+                      }),
+                ]),
           ],
         ),
         StatefulShellBranch(
