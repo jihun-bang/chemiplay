@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 
 class GigiTextField extends StatefulWidget {
-  final String labelText, hintText;
+  String labelText, hintText;
+  Icon suffixIcon;
+  VoidCallback? onSuffixIconTap;
+  bool? enabled;
   final void Function(String) onChanged;
   final TextInputType keyboardType;
 
-  const GigiTextField({
+  GigiTextField({
     super.key,
-    required this.labelText,
-    required this.hintText,
+    this.labelText = '',
+    this.hintText = '',
+    this.enabled = true,
+    this.suffixIcon = const Icon(
+      Icons.cancel,
+      color: Color(0xffaeb4bd),
+      size: 24,
+    ),
+    this.onSuffixIconTap,
     required this.onChanged,
     this.keyboardType = TextInputType.text,
   });
@@ -40,33 +50,30 @@ class _GigiTextFieldState extends State<GigiTextField> {
       keyboardType: widget.keyboardType,
       cursorColor: primaryColor,
       decoration: InputDecoration(
-        hintText: widget.hintText,
-        labelText: widget.labelText,
-        labelStyle: TextStyle(
-          color: labelTextColor,
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: primaryColor,
-            width: 3,
+          hintText: widget.hintText,
+          labelText: widget.labelText,
+          labelStyle: TextStyle(
+            color: labelTextColor,
           ),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: primaryColor,
-            width: 3,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xffCED3D9),
+              width: 3,
+            ),
           ),
-        ),
-        suffix: GestureDetector(
-          onTap: _onClearTap,
-          child: const Icon(
-            Icons.cancel,
-            color: Color(0xffaeb4bd),
-            size: 24,
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: primaryColor,
+              width: 3,
+            ),
           ),
-        ),
-      ),
+          suffixIcon: GestureDetector(
+            onTap: widget.onSuffixIconTap ?? _onClearTap,
+            child: widget.suffixIcon,
+          ),
+          contentPadding: const EdgeInsets.only(bottom: 10)),
       onChanged: widget.onChanged,
+      enabled: widget.enabled,
     );
   }
 }
