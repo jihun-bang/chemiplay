@@ -28,7 +28,7 @@ class _MateProfileSettingPageState extends State<MateProfileSettingPage> {
     color: Color(0xff2B2B2B),
   );
 
-  final subTitleTextStyle = const TextStyle(
+  final descriptionTextStyle = const TextStyle(
     fontSize: 16,
     color: Color(0xff8A9099),
   );
@@ -50,6 +50,19 @@ class _MateProfileSettingPageState extends State<MateProfileSettingPage> {
     setState(() {
       _birthdayController.value = TextEditingValue(text: textDate);
     });
+  }
+
+  void _onBirthdayTextFieldTap() {
+    if (_birthdayController.text == '') {
+      _setBirthdayText(initialDate);
+    }
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return _bottomDatePicker;
+      },
+    );
   }
 
   @override
@@ -76,186 +89,117 @@ class _MateProfileSettingPageState extends State<MateProfileSettingPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                '닉네임',
-                style: titleTextStyle,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                '매주 한 번씩만 변경 가능해요.',
-                style: subTitleTextStyle,
-              ),
-              GigiTextField(
-                readOnly: true,
-                onChanged: (value) {},
-                textController: _nicknameController,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                '성별',
-                style: titleTextStyle,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                '선택 후, 성별은 변경할 수 없어요.',
-                style: subTitleTextStyle,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: GigiElevatedButton(
-                      text: '남성',
-                      backgroundColor: inActiveBackgroundColor,
-                      shadowColor: inActiveShadowColor,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    child: GigiElevatedButton(
-                      text: '여성',
-                      backgroundColor: inActiveBackgroundColor,
-                      shadowColor: inActiveShadowColor,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                '생일',
-                style: titleTextStyle,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                '만 19세 이상만 신청할 수 있어요.',
-                style: subTitleTextStyle,
-              ),
-              GigiTextField(
-                readOnly: true,
-                textController: _birthdayController,
-                labelText: '생년월일을 선택해주세요',
-                labelStyle: const TextStyle(
-                  color: Color(0xffCED3D9),
+              ..._getMateProfileSettingRow(
+                title: '닉네임',
+                description: '매주 한 번씩만 변경 가능해요.',
+                widget: GigiTextField(
+                  enabled: false,
+                  onChanged: (value) {},
+                  textController: _nicknameController,
                 ),
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                suffixIcon: const Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: Color(0xff404040),
-                  size: 24,
+              ),
+              ..._getMateProfileSettingRow(
+                title: '성별',
+                description: '선택 후, 성별은 변경할 수 없어요.',
+                widget: Row(
+                  children: [
+                    Expanded(
+                      child: GigiElevatedButton(
+                        text: '남성',
+                        backgroundColor: inActiveBackgroundColor,
+                        shadowColor: inActiveShadowColor,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: GigiElevatedButton(
+                        text: '여성',
+                        backgroundColor: inActiveBackgroundColor,
+                        shadowColor: inActiveShadowColor,
+                      ),
+                    ),
+                  ],
                 ),
-                onTap: () {
-                  if (_birthdayController.text == '') {
-                    _setBirthdayText(initialDate);
-                  }
-                  showModalBottomSheet(
-                    context: context,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return Container(
-                        clipBehavior: Clip.hardEdge,
-                        height: 300,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(14),
-                            topRight: Radius.circular(14),
-                          ),
+                middlePadding: 20,
+              ),
+              ..._getMateProfileSettingRow(
+                title: '생일',
+                description: '만 19세 이상만 신청할 수 있어요.',
+                widget: GigiTextField(
+                  readOnly: true,
+                  textController: _birthdayController,
+                  labelText: '생년월일을 선택해주세요',
+                  labelStyle: const TextStyle(
+                    color: Color(0xffCED3D9),
+                  ),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  suffixIcon: const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: Color(0xff404040),
+                    size: 24,
+                  ),
+                  onTap: _onBirthdayTextFieldTap,
+                ),
+              ),
+              ..._getMateProfileSettingRow(
+                title: '자기소개',
+                description:
+                    '자세히 적을 수록 매치 가능성이 높아져요.\n예시) 취미, 최애게임, 플레이 스타일, 편한 시간대 등',
+                widget: Stack(
+                  children: [
+                    Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: const BoxDecoration(
+                        color: Color(0xffF5F7FA),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
                         ),
-                        child: CupertinoDatePicker(
-                          maximumDate: initialDate,
-                          initialDateTime: initialDate,
-                          mode: CupertinoDatePickerMode.date,
-                          onDateTimeChanged: _setBirthdayText,
+                      ),
+                      child: TextField(
+                        controller: _introductionController,
+                        decoration: const InputDecoration(
+                          counterText: '',
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.all(20),
                         ),
-                      );
-                    },
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                '자기소개',
-                style: titleTextStyle,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                '자세히 적을 수록 매치 가능성이 높아져요.\n예시) 취미, 최애게임, 플레이 스타일, 편한 시간대 등',
-                style: subTitleTextStyle,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Stack(
-                children: [
-                  Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: const BoxDecoration(
-                      color: Color(0xffF5F7FA),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
+                        keyboardType: TextInputType.multiline,
+                        cursorColor: primaryColor,
+                        minLines: 10,
+                        maxLines: 10,
+                        maxLength: 200,
+                        onTap: () =>
+                            _setIsNeedToShowIntroductionLableText(false),
                       ),
                     ),
-                    child: TextField(
-                      controller: _introductionController,
-                      decoration: const InputDecoration(
-                        counterText: '',
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(20),
-                      ),
-                      keyboardType: TextInputType.multiline,
-                      cursorColor: primaryColor,
-                      minLines: 10,
-                      maxLines: 10,
-                      maxLength: 200,
-                      onTap: () => _setIsNeedToShowIntroductionLableText(false),
-                    ),
-                  ),
-                  Positioned(
-                    top: 20,
-                    left: 20,
-                    child: Text(
-                      '자기소개를 써주세요.',
-                      style: TextStyle(
-                        color: isNeedToShowIntroductionLableText == false
-                            ? Colors.transparent
-                            : const Color(0xffCED3D9),
+                    Positioned(
+                      top: 20,
+                      left: 20,
+                      child: Text(
+                        '자기소개를 써주세요.',
+                        style: TextStyle(
+                          color: isNeedToShowIntroductionLableText == false
+                              ? Colors.transparent
+                              : const Color(0xffCED3D9),
+                        ),
                       ),
                     ),
-                  ),
-                  const Positioned(
-                    right: 20,
-                    bottom: 20,
-                    child: Text(
-                      '200/200',
-                      style: TextStyle(
-                        color: Color(0xffAEB4BD),
+                    const Positioned(
+                      right: 20,
+                      bottom: 20,
+                      child: Text(
+                        '200/200',
+                        style: TextStyle(
+                          color: Color(0xffAEB4BD),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              )
+                  ],
+                ),
+                middlePadding: 10,
+              ),
             ],
           ),
         ),
@@ -272,4 +216,51 @@ class _MateProfileSettingPageState extends State<MateProfileSettingPage> {
       ),
     );
   }
+
+  List<Widget> _getMateProfileSettingRow({
+    double topPadding = 20,
+    double middlePadding = 0,
+    required String title,
+    required String description,
+    required Widget widget,
+  }) {
+    return [
+      SizedBox(
+        height: topPadding,
+      ),
+      Text(
+        title,
+        style: titleTextStyle,
+      ),
+      const SizedBox(
+        height: 5,
+      ),
+      Text(
+        description,
+        style: descriptionTextStyle,
+      ),
+      SizedBox(
+        height: middlePadding,
+      ),
+      widget
+    ];
+  }
+
+  Widget get _bottomDatePicker => Container(
+        clipBehavior: Clip.hardEdge,
+        height: 300,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(14),
+            topRight: Radius.circular(14),
+          ),
+        ),
+        child: CupertinoDatePicker(
+          maximumDate: initialDate,
+          initialDateTime: initialDate,
+          mode: CupertinoDatePickerMode.date,
+          onDateTimeChanged: _setBirthdayText,
+        ),
+      );
 }
