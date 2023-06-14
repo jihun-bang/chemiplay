@@ -112,11 +112,7 @@ class _MatesPageState extends State<MatesPage> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: AspectRatio(
-              aspectRatio: 320 / 100,
-              child: Image.asset(
-                'assets/images/img_banner.png',
-                fit: BoxFit.cover,
-              )),
+              aspectRatio: 320 / 100, child: Container(color: Colors.grey)),
         ),
       ),
     );
