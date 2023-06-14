@@ -8,6 +8,7 @@ class GigiElevatedButton extends StatefulWidget {
   final VoidCallback? onPressed;
   final Color backgroundColor;
   final Color shadowColor;
+  final bool disabled;
 
   const GigiElevatedButton({
     super.key,
@@ -19,6 +20,7 @@ class GigiElevatedButton extends StatefulWidget {
     this.onPressed,
     this.backgroundColor = const Color(0xFFFF8066),
     this.shadowColor = const Color(0xFF4D4D4D),
+    this.disabled = false,
   });
 
   @override
@@ -55,16 +57,20 @@ class _GigiElevatedButtonState extends State<GigiElevatedButton> {
           ),
           child: InkWell(
             borderRadius: BorderRadius.circular(12.0),
-            onTap: widget.onPressed,
+            onTap: widget.disabled != true ? widget.onPressed : () {},
             onTapDown: (_) {
-              setState(() {
-                isDown = true;
-              });
+              if (widget.disabled != true) {
+                setState(() {
+                  isDown = true;
+                });
+              }
             },
             onTapUp: (_) {
-              setState(() {
-                isDown = false;
-              });
+              if (widget.disabled != true) {
+                setState(() {
+                  isDown = false;
+                });
+              }
             },
             child: Center(
               child: Text(

@@ -212,6 +212,7 @@ class _MateProfileSettingPageState extends State<MateProfileSettingPage> {
           text: '다음',
           backgroundColor: inActiveBackgroundColor,
           shadowColor: inActiveShadowColor,
+          disabled: true,
         ),
       ),
     );
