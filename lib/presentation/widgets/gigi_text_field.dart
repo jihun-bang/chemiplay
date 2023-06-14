@@ -1,26 +1,41 @@
 import 'package:flutter/material.dart';
 
 class GigiTextField extends StatefulWidget {
-  String labelText, hintText;
+  String? labelText, hintText;
+  TextStyle? hintStyle;
+  TextStyle? labelStyle;
   Icon suffixIcon;
   VoidCallback? onSuffixIconTap;
   bool? enabled;
-  final void Function(String) onChanged;
+  bool readOnly;
+  TextEditingController textController;
+  FloatingLabelBehavior? floatingLabelBehavior;
+
+  final void Function()? onTap;
+  final void Function(String)? onChanged;
   final TextInputType keyboardType;
 
   GigiTextField({
     super.key,
-    this.labelText = '',
-    this.hintText = '',
+    required this.textController,
+    this.labelText,
+    this.labelStyle = const TextStyle(
+      color: Color.fromARGB(255, 70, 70, 70),
+    ),
+    this.hintText,
+    this.hintStyle,
     this.enabled = true,
+    this.readOnly = false,
     this.suffixIcon = const Icon(
       Icons.cancel,
       color: Color(0xffaeb4bd),
       size: 24,
     ),
     this.onSuffixIconTap,
-    required this.onChanged,
+    this.onChanged,
+    this.onTap,
     this.keyboardType = TextInputType.text,
+    this.floatingLabelBehavior,
   });
 
   @override
@@ -28,51 +43,45 @@ class GigiTextField extends StatefulWidget {
 }
 
 class _GigiTextFieldState extends State<GigiTextField> {
-  final Color primaryColor = const Color(0xFFFF8066);
-  final Color labelTextColor = const Color.fromARGB(255, 70, 70, 70);
-
-  final TextEditingController textController = TextEditingController();
-
-  @override
-  void dispose() {
-    textController.dispose();
-    super.dispose();
-  }
-
   void _onClearTap() {
-    textController.clear();
+    widget.textController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
+    const Color primaryColor = Color(0xFFFF8066);
+
     return TextField(
-      controller: textController,
+      readOnly: widget.readOnly,
+      controller: widget.textController,
       keyboardType: widget.keyboardType,
       cursorColor: primaryColor,
       decoration: InputDecoration(
-          hintText: widget.hintText,
-          labelText: widget.labelText,
-          labelStyle: TextStyle(
-            color: labelTextColor,
+        hintText: widget.hintText,
+        hintStyle: widget.hintStyle,
+        labelText: widget.labelText,
+        labelStyle: widget.labelStyle,
+        floatingLabelBehavior: widget.floatingLabelBehavior,
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffCED3D9),
+            width: 3,
           ),
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0xffCED3D9),
-              width: 3,
-            ),
+        ),
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: primaryColor,
+            width: 3,
           ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: primaryColor,
-              width: 3,
-            ),
-          ),
-          suffixIcon: GestureDetector(
-            onTap: widget.onSuffixIconTap ?? _onClearTap,
-            child: widget.suffixIcon,
-          ),
-          contentPadding: const EdgeInsets.only(bottom: 10)),
+        ),
+        suffixIcon: GestureDetector(
+          onTap: widget.onSuffixIconTap ?? _onClearTap,
+          child: widget.suffixIcon,
+        ),
+        // contentPadding: const EdgeInsets.only(bottom: 10),
+      ),
       onChanged: widget.onChanged,
+      onTap: widget.onTap,
       enabled: widget.enabled,
     );
   }

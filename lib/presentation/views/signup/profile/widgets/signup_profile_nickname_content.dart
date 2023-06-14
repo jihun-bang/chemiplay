@@ -18,6 +18,13 @@ class SignupProfileNicknameContent extends StatefulWidget {
 class _SignupProfileNicknameContentState
     extends State<SignupProfileNicknameContent> {
   var _signupProfileViewModel = getIt<SignupProfileViewModel>();
+  final TextEditingController _textController = TextEditingController();
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +41,7 @@ class _SignupProfileNicknameContentState
             GigiTextField(
               labelText: '닉네임',
               hintText: '닉네임',
+              textController: _textController,
               onChanged: (nickname) =>
                   _signupProfileViewModel.setNickname(nickname),
             ),

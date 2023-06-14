@@ -5,7 +5,7 @@ import 'package:chemiplay/presentation/views/home_page.dart';
 import 'package:chemiplay/presentation/views/login_page.dart';
 import 'package:chemiplay/presentation/views/mate/mate_page.dart';
 import 'package:chemiplay/presentation/views/mate/mate_request_together_page.dart';
-import 'package:chemiplay/presentation/views/mate/mate_profile_page.dart';
+import 'package:chemiplay/presentation/views/mate/mate_profile_setting_page.dart';
 import 'package:chemiplay/presentation/views/mate/mates_page.dart';
 import 'package:chemiplay/presentation/views/my/my_page.dart';
 import 'package:chemiplay/presentation/views/my/my_profile_image_page.dart';
