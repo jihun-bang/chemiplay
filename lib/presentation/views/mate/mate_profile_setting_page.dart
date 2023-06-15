@@ -1,3 +1,5 @@
+import 'package:chemiplay/injection.dart';
+import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
 import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:chemiplay/presentation/widgets/gigi_elevated_button.dart';
 import 'package:chemiplay/presentation/widgets/gigi_text_field.dart';
@@ -17,8 +19,9 @@ class _MateProfileSettingPageState extends State<MateProfileSettingPage> {
   final activeBackgroundColor = const Color(0xffFFF0ED);
   final Color primaryColor = const Color(0xFFFF8066);
   final activeShadowColor = const Color(0xffFF8066);
-  final TextEditingController _nicknameController =
-      TextEditingController(text: '유저의닉네임');
+  final _userViewModel = getIt<UserViewModel>();
+
+  final TextEditingController _nicknameController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
   final TextEditingController _introductionController = TextEditingController();
 
@@ -63,6 +66,15 @@ class _MateProfileSettingPageState extends State<MateProfileSettingPage> {
         return _bottomDatePicker;
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (_userViewModel.user != null) {
+      _nicknameController.value =
+          TextEditingValue(text: _userViewModel.user!.name);
+    }
   }
 
   @override
