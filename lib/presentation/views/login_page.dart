@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
           final isRequiredProfileDataMissing = requiredProfileField
               .any((element) => result.toJson()[element] == null);
           if (isRequiredProfileDataMissing) {
-            context.goNamed('signup/profile');
+            context.goNamed('signupProfile');
           } else {
             if (context.canPop()) {
               showToast(context: context, message: '환영합니다!');

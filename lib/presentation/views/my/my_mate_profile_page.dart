@@ -6,14 +6,14 @@ import 'package:chemiplay/presentation/widgets/gigi_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MateProfileSettingPage extends StatefulWidget {
-  const MateProfileSettingPage({super.key});
+class MyMateProfilePage extends StatefulWidget {
+  const MyMateProfilePage({super.key});
 
   @override
-  State<MateProfileSettingPage> createState() => _MateProfileSettingPageState();
+  State<MyMateProfilePage> createState() => _MyMateProfilePageState();
 }
 
-class _MateProfileSettingPageState extends State<MateProfileSettingPage> {
+class _MyMateProfilePageState extends State<MyMateProfilePage> {
   final inActiveBackgroundColor = Colors.white;
   final inActiveShadowColor = const Color(0xffe3e6eb);
   final activeBackgroundColor = const Color(0xffFFF0ED);
@@ -71,10 +71,8 @@ class _MateProfileSettingPageState extends State<MateProfileSettingPage> {
   @override
   void initState() {
     super.initState();
-    if (_userViewModel.user != null) {
-      _nicknameController.value =
-          TextEditingValue(text: _userViewModel.user!.name);
-    }
+    _nicknameController.value =
+        TextEditingValue(text: _userViewModel.user!.name);
   }
 
   @override
