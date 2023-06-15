@@ -8,18 +8,20 @@ class SignupProfileViewModel extends ChangeNotifier {
   final UserViewModel _userViewModel;
 
   SignupProfileViewModel(this._userUseCase, this._userViewModel);
+
   int _page = 0;
-  bool _nextButtonDisabled = true;
-
-  Gender? _gender;
-  String? _nickname;
-  Uint8List? _profileImage;
-
   int get page => _page;
+
+  bool _nextButtonDisabled = true;
   bool get nextButtonDisabled => _nextButtonDisabled;
 
+  Gender? _gender;
   Gender? get gender => _gender;
+
+  String? _nickname;
   String? get nickname => _nickname;
+
+  Uint8List? _profileImage;
   Uint8List? get profileImage => _profileImage;
 
   void setGender(Gender gender) {
