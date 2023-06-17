@@ -4,6 +4,7 @@ import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:chemiplay/presentation/widgets/gigi_elevated_button.dart';
 import 'package:chemiplay/presentation/widgets/gigi_elevated_square_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class MyMateBecomePage extends StatefulWidget {
@@ -34,6 +35,17 @@ class _MyMateBecomePageState extends State<MyMateBecomePage> {
 
   @override
   Widget build(BuildContext context) {
+    const double horizontalPadding = 20;
+    const double spaceBetweenButton = 10;
+    final double monitorWidth = MediaQuery.of(context).size.width;
+    final double usableWidth =
+        monitorWidth - (horizontalPadding * 2 + spaceBetweenButton);
+    const double maxWidth = 300;
+    const double minWidth = 150;
+    double width = (usableWidth / 2) > maxWidth
+        ? maxWidth
+        : ((usableWidth / 2) < minWidth ? minWidth : (usableWidth / 2));
+    double height = width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const GigiAppBar(
@@ -42,29 +54,35 @@ class _MyMateBecomePageState extends State<MyMateBecomePage> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               stepButton(
-                icon: const Icon(Icons.ac_unit_outlined),
+                svgFileName: 'icon_phone',
                 stepText: '1단계',
                 titleText: '휴대폰 번호 연동',
                 onPressed: () {
                   context.pushNamed('myMateVerifyPhoneNumber');
                 },
+                height: height,
+                width: width,
+                showChecked: true,
               ),
               const SizedBox(
-                width: 10,
+                width: spaceBetweenButton,
               ),
               stepButton(
-                icon: const Icon(Icons.ac_unit_outlined),
+                svgFileName: 'icon_profile_light',
                 stepText: '2단계',
                 titleText: '게임 메이트 프로필',
                 onPressed: () {
                   context.pushNamed('myMateProfile');
                 },
+                height: height,
+                width: width,
+                showChecked: false,
               ),
             ],
           ),
@@ -85,36 +103,54 @@ class _MyMateBecomePageState extends State<MyMateBecomePage> {
   }
 
   stepButton({
-    required Icon icon,
+    required String svgFileName,
     required String stepText,
     required String titleText,
+    bool showChecked = false,
+    double height = 200,
+    double? width,
     VoidCallback? onPressed,
   }) {
-    return Expanded(
-      child: GigiElevatedSquareButton(
-        widget: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            icon,
-            const SizedBox(
-              height: 10,
+    return GigiElevatedSquareButton(
+      widget: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/icons/my/$svgFileName.svg',
+            height: 30,
+            width: 30,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            stepText,
+            style: stepTextStyle,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            titleText,
+            style: titleTextStyle,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Opacity(
+            opacity: showChecked ? 1 : 0,
+            child: SvgPicture.asset(
+              'assets/icons/icon_check.svg',
+              height: 18,
+              width: 18,
+              color: const Color(0xff69E550),
             ),
-            Text(
-              stepText,
-              style: stepTextStyle,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(
-              titleText,
-              style: titleTextStyle,
-            ),
-          ],
-        ),
-        height: 200,
-        onPressed: onPressed,
+          ),
+        ],
       ),
+      height: height,
+      width: width,
+      onPressed: onPressed,
     );
   }
 }
