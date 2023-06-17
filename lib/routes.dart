@@ -8,6 +8,7 @@ import 'package:chemiplay/presentation/views/mate/mate_request_together_page.dar
 import 'package:chemiplay/presentation/views/mate/mates_page.dart';
 import 'package:chemiplay/presentation/views/my/my_mate_become_page.dart';
 import 'package:chemiplay/presentation/views/my/my_mate_profile_page.dart';
+import 'package:chemiplay/presentation/views/my/my_mate_verify_phone_number_page.dart';
 import 'package:chemiplay/presentation/views/my/my_page.dart';
 import 'package:chemiplay/presentation/views/my/my_profile_image_page.dart';
 import 'package:chemiplay/presentation/views/signup/profile/signup_profile_page.dart';
@@ -114,6 +115,13 @@ final routes = GoRouter(
                   name: 'myMateBecome',
                   builder: (context, state) {
                     return const MyMateBecomePage();
+                  },
+                ),
+                GoRoute(
+                  path: 'mate/verify',
+                  name: 'myMateVerifyPhoneNumber',
+                  builder: (context, state) {
+                    return const MyMateVerifyPhoneNumberPage();
                   },
                 ),
                 GoRoute(

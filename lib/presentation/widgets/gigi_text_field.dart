@@ -20,7 +20,7 @@ class GigiTextField extends StatefulWidget {
     required this.textController,
     this.labelText,
     this.labelStyle = const TextStyle(
-      color: Color.fromARGB(255, 70, 70, 70),
+      color: Color(0xffAEB4BD),
     ),
     this.hintText,
     this.hintStyle,

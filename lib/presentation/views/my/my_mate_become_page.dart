@@ -51,6 +51,9 @@ class _MyMateBecomePageState extends State<MyMateBecomePage> {
                 icon: const Icon(Icons.ac_unit_outlined),
                 stepText: '1단계',
                 titleText: '휴대폰 번호 연동',
+                onPressed: () {
+                  context.pushNamed('myMateVerifyPhoneNumber');
+                },
               ),
               const SizedBox(
                 width: 10,
@@ -60,7 +63,7 @@ class _MyMateBecomePageState extends State<MyMateBecomePage> {
                 stepText: '2단계',
                 titleText: '게임 메이트 프로필',
                 onPressed: () {
-                  context.goNamed('myMateProfile');
+                  context.pushNamed('myMateProfile');
                 },
               ),
             ],

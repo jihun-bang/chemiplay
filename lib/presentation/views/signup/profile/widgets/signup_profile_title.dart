@@ -22,7 +22,7 @@ class SignupProfileTitle extends StatelessWidget {
         Text(
           title,
           style: const TextStyle(
-            fontSize: 40,
+            fontSize: 32,
             fontWeight: FontWeight.w700,
           ),
         ),

@@ -1,5 +1,5 @@
 import 'package:chemiplay/presentation/widgets/app_bar_lead_icon.dart';
-import 'package:chemiplay/presentation/views/signup/widgets/bottom_next_button.dart';
+import 'package:chemiplay/presentation/widgets/bottom_next_button.dart';
 import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:flutter/material.dart';
 
