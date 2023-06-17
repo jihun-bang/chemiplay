@@ -2,6 +2,7 @@ import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/viewmodels/my_mate_profile_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
+import 'package:chemiplay/presentation/widgets/gigi_alert_dialog.dart';
 import 'package:chemiplay/presentation/widgets/gigi_toast_dialog.dart';
 import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:chemiplay/presentation/widgets/gigi_elevated_button.dart';
@@ -30,6 +31,7 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
   final TextEditingController _nicknameController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
   final TextEditingController _introductionController = TextEditingController();
+  final FocusNode _birthdayTextFieldFocusNode = FocusNode();
 
   final titleTextStyle = const TextStyle(
     fontSize: 20,
@@ -73,17 +75,38 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
     _myMateProfileViewModel.setGender(gender);
   }
 
-  void _onBirthdayTextFieldTap() {
+  void _onBirthdayTextFieldTap() async {
     if (_birthdayController.text == '') {
       _setBirthdayText(initialDate);
     }
-    showModalBottomSheet(
+    await showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) {
         return _bottomDatePicker;
       },
     );
+    _birthdayTextFieldFocusNode.unfocus();
+    final now = DateTime.now();
+    if (_myMateProfileViewModel.validateBirthday() == false) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return GigiAlertDialog(
+            description: '만 19세 미만은 게임 메이트를 신청할 수 없어요.',
+            actions: [
+              GigiElevatedButton(
+                text: '알겠어요',
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -101,6 +124,7 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
     _nicknameController.dispose();
     _birthdayController.dispose();
     _introductionController.dispose();
+    _birthdayTextFieldFocusNode.dispose();
     super.dispose();
   }
 
@@ -110,6 +134,8 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
       create: (context) => getIt(),
       child: Consumer<MyMateProfileViewModel>(builder: (context, viewModel, _) {
         _myMateProfileViewModel = viewModel;
+        final bool isNextButtonDisabled =
+            !_myMateProfileViewModel.isReadyToUpdate();
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: const GigiAppBar(
@@ -190,6 +216,7 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
                         size: 24,
                       ),
                       onTap: _onBirthdayTextFieldTap,
+                      focusNode: _birthdayTextFieldFocusNode,
                     ),
                   ),
                   ..._getMateProfileSettingRow(
@@ -213,11 +240,20 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
             decoration: const BoxDecoration(color: Colors.white),
             padding:
                 const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 40),
-            child: const GigiElevatedButton(
+            child: GigiElevatedButton(
               text: '다음',
-              backgroundColor: Color(0xffFFBFB2),
-              shadowColor: Color(0xff9F9F9F),
-              disabled: true,
+              textStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: isNextButtonDisabled
+                      ? const Color(0xff9F9F9F)
+                      : const Color(0xFF2B2B2B)),
+              backgroundColor:
+                  isNextButtonDisabled ? const Color(0xffFFBFB2) : primaryColor,
+              shadowColor: isNextButtonDisabled
+                  ? const Color(0xff9F9F9F)
+                  : const Color(0xFF2B2B2B),
+              disabled: isNextButtonDisabled,
             ),
           ),
         );
@@ -266,7 +302,9 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
         ),
         child: CupertinoDatePicker(
           maximumDate: initialDate,
-          initialDateTime: initialDate,
+          initialDateTime: _myMateProfileViewModel.birthday == null
+              ? _myMateProfileViewModel.minBirthDay
+              : DateTime.parse(_myMateProfileViewModel.birthday!),
           mode: CupertinoDatePickerMode.date,
           onDateTimeChanged: _setBirthdayText,
         ),

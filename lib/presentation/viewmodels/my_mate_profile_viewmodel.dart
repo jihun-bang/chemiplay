@@ -5,6 +5,8 @@ import '../../data/models/user.dart';
 
 class MyMateProfileViewModel extends ChangeNotifier {
   final UserViewModel _userViewModel;
+  final DateTime now = DateTime.now();
+  late final DateTime minBirthDay = DateTime(now.year - 19, now.month, now.day);
 
   UserModel? get user => _userViewModel.user;
 
@@ -21,23 +23,40 @@ class MyMateProfileViewModel extends ChangeNotifier {
   late String? _introduction = user?.birthday;
   String? get introduction => _introduction;
 
-  setNickname(String newNickname) {
+  void setNickname(String newNickname) {
     _nickname = newNickname;
     notifyListeners();
   }
 
-  setGender(Gender newGender) {
+  void setGender(Gender newGender) {
     _gender = newGender;
     notifyListeners();
   }
 
-  setBirthday(String newBirthday) {
+  void setBirthday(String newBirthday) {
     _birthday = newBirthday;
     notifyListeners();
   }
 
-  setIntroduction(String newIntroduction) {
+  void setIntroduction(String newIntroduction) {
     _introduction = newIntroduction;
     notifyListeners();
+  }
+
+  bool validateBirthday() {
+    if (_birthday != null) {
+      final result = DateTime.parse(_birthday!).isBefore(minBirthDay);
+      return result;
+    }
+    return false;
+  }
+
+  bool isReadyToUpdate() {
+    if (_nickname == null || _nickname!.isEmpty) return false;
+    if (_gender == null) return false;
+    if (_birthday == null) return false;
+    if (validateBirthday() == false) return false;
+    if (_introduction == null || _introduction!.isEmpty) return false;
+    return true;
   }
 }
