@@ -10,6 +10,7 @@ class GigiTextField extends StatefulWidget {
   bool readOnly;
   TextEditingController textController;
   FloatingLabelBehavior? floatingLabelBehavior;
+  FocusNode? focusNode;
 
   final void Function()? onTap;
   final void Function(String)? onChanged;
@@ -36,6 +37,7 @@ class GigiTextField extends StatefulWidget {
     this.onTap,
     this.keyboardType = TextInputType.text,
     this.floatingLabelBehavior,
+    this.focusNode,
   });
 
   @override
@@ -83,6 +85,7 @@ class _GigiTextFieldState extends State<GigiTextField> {
       onChanged: widget.onChanged,
       onTap: widget.onTap,
       enabled: widget.enabled,
+      focusNode: widget.focusNode,
     );
   }
 }
