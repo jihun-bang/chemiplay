@@ -46,6 +46,9 @@ class _MyMateBecomePageState extends State<MyMateBecomePage> {
         ? maxWidth
         : ((usableWidth / 2) < minWidth ? minWidth : (usableWidth / 2));
     double height = width;
+
+    final isPhoneNumberSet = _userViewModel.user?.phoneNumber != null;
+    final isMateProfileSet = _userViewModel.user?.birthday != null;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const GigiAppBar(
@@ -64,11 +67,13 @@ class _MyMateBecomePageState extends State<MyMateBecomePage> {
                 stepText: '1단계',
                 titleText: '휴대폰 번호 연동',
                 onPressed: () {
-                  context.pushNamed('myMateVerifyPhoneNumber');
+                  if (!isPhoneNumberSet) {
+                    context.pushNamed('myMateVerifyPhoneNumber');
+                  }
                 },
                 height: height,
                 width: width,
-                showChecked: true,
+                showChecked: isPhoneNumberSet,
               ),
               const SizedBox(
                 width: spaceBetweenButton,
@@ -82,7 +87,7 @@ class _MyMateBecomePageState extends State<MyMateBecomePage> {
                 },
                 height: height,
                 width: width,
-                showChecked: false,
+                showChecked: isMateProfileSet,
               ),
             ],
           ),
