@@ -29,7 +29,7 @@ class _SignupProfileNicknameContentState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SignupProfileTitle(
-              title: '닉네임:',
+              title: '내 닉네임:',
             ),
             GigiTextField(
               labelText: '닉네임',
