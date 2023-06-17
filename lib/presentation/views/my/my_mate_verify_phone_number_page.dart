@@ -15,9 +15,11 @@ class MyMateVerifyPhoneNumberPage extends StatefulWidget {
 class _MyMateVerifyPhoneNumberPageState
     extends State<MyMateVerifyPhoneNumberPage> {
   final TextEditingController _textController = TextEditingController();
+  final FocusNode _verificationCodeTextFieldFocusNode = FocusNode();
   @override
   void dispose() {
     _textController.dispose();
+    _verificationCodeTextFieldFocusNode.dispose();
     super.dispose();
   }
 
@@ -61,15 +63,18 @@ class _MyMateVerifyPhoneNumberPageState
       bottomSheet: BottomNextButton(
         text: '인증번호 발송',
         disabled: false,
-        onPressed: () => showModalBottomSheet(
-          context: context,
-          backgroundColor: Colors.transparent,
-          builder: (context) {
-            return getVerifyPhoneNumberBottomWidget(
-              phoneNumber: '010-3177-3391',
-            );
-          },
-        ),
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            backgroundColor: Colors.transparent,
+            builder: (context) {
+              return getVerifyPhoneNumberBottomWidget(
+                phoneNumber: '010-3177-3391',
+              );
+            },
+          );
+          _verificationCodeTextFieldFocusNode.requestFocus();
+        },
       ),
     );
   }
@@ -130,15 +135,16 @@ class _MyMateVerifyPhoneNumberPageState
                 ),
               ),
               const SizedBox(height: 50),
-              const TextField(
+              TextField(
+                focusNode: _verificationCodeTextFieldFocusNode,
                 textAlign: TextAlign.center,
                 cursorColor: Colors.black,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   counterText: '',
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w800,
                 ),
