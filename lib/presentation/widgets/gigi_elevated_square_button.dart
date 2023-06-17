@@ -33,6 +33,7 @@ class _GigiElevatedSquareButtonState extends State<GigiElevatedSquareButton> {
     return Container(
       alignment: Alignment.bottomCenter,
       height: widget.height,
+      width: widget.width,
       child: SizedBox(
         height: widget.height - (isDown ? 4 : 0),
         child: DecoratedBox(
