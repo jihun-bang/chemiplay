@@ -4,6 +4,7 @@ import 'package:chemiplay/presentation/views/my/widgets/my_coin.dart';
 import 'package:chemiplay/presentation/views/my/widgets/my_list_button.dart';
 import 'package:chemiplay/presentation/views/my/widgets/my_user_interaction.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../viewmodels/user_viewmodel.dart';
@@ -21,11 +22,6 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
   final _userViewModel = getIt<UserViewModel>();
 
   UserModel get _user => _userViewModel.user!;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -58,12 +54,14 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
               ),
             ),
             MyListButton(
-                label: '게임 메이트 되기',
-                icon: 'bottom_navigation/icon_logo_off',
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16)),
-                onPressed: () {}),
+              label: '게임 메이트 되기',
+              icon: 'bottom_navigation/icon_logo_off',
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+              onPressed: () {
+                context.goNamed('myMateBecome');
+              },
+            ),
             MyListButton(
                 label: '지난 플레이', icon: 'my/icon_history', onPressed: () {}),
             MyListButton(

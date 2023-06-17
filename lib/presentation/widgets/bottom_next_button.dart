@@ -22,8 +22,8 @@ class BottomNextButton extends StatelessWidget {
         // margin: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
         child: Padding(
           padding: const EdgeInsets.only(
-            top: 16,
-            bottom: 48,
+            top: 20,
+            bottom: 20,
           ),
           child: Row(
             children: [

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-class GigiElevatedButton extends StatefulWidget {
-  final String text;
-  final TextStyle textStyle;
+class GigiElevatedSquareButton extends StatefulWidget {
+  final Widget widget;
   final double height;
   final double? width;
   final VoidCallback? onPressed;
@@ -10,24 +9,23 @@ class GigiElevatedButton extends StatefulWidget {
   final Color shadowColor;
   final bool disabled;
 
-  const GigiElevatedButton({
+  const GigiElevatedSquareButton({
     super.key,
-    required this.text,
-    this.textStyle = const TextStyle(
-        fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF2B2B2B)),
+    required this.widget,
     this.height = 54,
     this.width,
     this.onPressed,
-    this.backgroundColor = const Color(0xFFFF8066),
+    this.backgroundColor = Colors.white,
     this.shadowColor = const Color(0xFF4D4D4D),
     this.disabled = false,
   });
 
   @override
-  State<GigiElevatedButton> createState() => _GigiElevatedButtonState();
+  State<GigiElevatedSquareButton> createState() =>
+      _GigiElevatedSquareButtonState();
 }
 
-class _GigiElevatedButtonState extends State<GigiElevatedButton> {
+class _GigiElevatedSquareButtonState extends State<GigiElevatedSquareButton> {
   bool isDown = false;
 
   @override
@@ -73,9 +71,8 @@ class _GigiElevatedButtonState extends State<GigiElevatedButton> {
               }
             },
             child: Center(
-              child: Text(
-                widget.text,
-                style: widget.textStyle,
+              child: Center(
+                child: widget.widget,
               ),
             ),
           ),

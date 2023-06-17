@@ -6,6 +6,9 @@ import 'package:chemiplay/presentation/views/login_page.dart';
 import 'package:chemiplay/presentation/views/mate/mate_page.dart';
 import 'package:chemiplay/presentation/views/mate/mate_request_together_page.dart';
 import 'package:chemiplay/presentation/views/mate/mates_page.dart';
+import 'package:chemiplay/presentation/views/my/my_mate_become_page.dart';
+import 'package:chemiplay/presentation/views/my/my_mate_profile_page.dart';
+import 'package:chemiplay/presentation/views/my/my_mate_verify_phone_number_page.dart';
 import 'package:chemiplay/presentation/views/my/my_page.dart';
 import 'package:chemiplay/presentation/views/my/my_profile_image_page.dart';
 import 'package:chemiplay/presentation/views/signup/profile/signup_profile_page.dart';
@@ -60,7 +63,7 @@ final routes = GoRouter(
                       ),
                     );
                   },
-                )
+                ),
               ],
             ),
           ],
@@ -97,16 +100,39 @@ final routes = GoRouter(
         StatefulShellBranch(
           routes: <RouteBase>[
             GoRoute(
-                path: '/my',
-                name: 'my',
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: MyPage()),
-                routes: [
-                  GoRoute(
-                      path: 'edit',
-                      name: 'myEdit',
-                      builder: (context, state) => const MyProfileImagePage()),
-                ]),
+              path: '/my',
+              name: 'my',
+              pageBuilder: (context, state) =>
+                  const NoTransitionPage(child: MyPage()),
+              routes: [
+                GoRoute(
+                  path: 'edit',
+                  name: 'myEdit',
+                  builder: (context, state) => const MyProfileImagePage(),
+                ),
+                GoRoute(
+                  path: 'mate/become',
+                  name: 'myMateBecome',
+                  builder: (context, state) {
+                    return const MyMateBecomePage();
+                  },
+                ),
+                GoRoute(
+                  path: 'mate/verify',
+                  name: 'myMateVerifyPhoneNumber',
+                  builder: (context, state) {
+                    return const MyMateVerifyPhoneNumberPage();
+                  },
+                ),
+                GoRoute(
+                  path: 'mate/profile',
+                  name: 'myMateProfile',
+                  builder: (context, state) {
+                    return const MyMateProfilePage();
+                  },
+                ),
+              ],
+            ),
           ],
         ),
       ],
@@ -127,7 +153,7 @@ final routes = GoRouter(
       routes: [
         GoRoute(
           path: 'profile',
-          name: 'signup/profile',
+          name: 'signupProfile',
           pageBuilder: (context, state) {
             return const MaterialPage(child: SignupProfilePage());
           },
