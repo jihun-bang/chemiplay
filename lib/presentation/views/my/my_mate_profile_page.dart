@@ -2,7 +2,7 @@ import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/viewmodels/my_mate_profile_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
-import 'package:chemiplay/presentation/widgets/gigi_alert_dialog.dart';
+import 'package:chemiplay/presentation/widgets/gigi_toast_dialog.dart';
 import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:chemiplay/presentation/widgets/gigi_elevated_button.dart';
 import 'package:chemiplay/presentation/widgets/gigi_multiline_textfield.dart';
@@ -54,7 +54,7 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
           //   Navigator.pop(context);
           // });
           // return object of type Dialog
-          return const GigiAlertDialog(
+          return const GigiToastDialog(
             text: '200자 이내로 적어주세요.',
           );
         },
