@@ -3,13 +3,15 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 class TimerViewModel extends ChangeNotifier {
-  late final int totalSeconds;
+  late final int _totalSeconds;
+  late final VoidCallback? _onFinished;
 
-  init({required int totalSeconds}) {
-    this.totalSeconds = totalSeconds;
+  init({required int totalSeconds, VoidCallback? onFinished}) {
+    _totalSeconds = totalSeconds;
+    _onFinished = onFinished;
   }
 
-  late int _timerSecond = totalSeconds;
+  late int _timerSecond = _totalSeconds;
   int get timerSecond => _timerSecond;
 
   Timer? _timer;
@@ -41,13 +43,19 @@ class TimerViewModel extends ChangeNotifier {
     if (_timer != null && _timer!.isActive) {
       throw Exception('Timer is still in running');
     }
-    _timerSecond = totalSeconds;
+    _timerSecond = _totalSeconds;
     notifyListeners();
   }
 
   void _onTick(Timer timer) {
     _timerSecond -= 1;
     notifyListeners();
+    if (_timerSecond == 0) {
+      timer.cancel();
+      if (_onFinished != null) {
+        _onFinished!();
+      }
+    }
   }
 
   @override

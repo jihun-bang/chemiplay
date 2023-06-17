@@ -30,15 +30,20 @@ class _MyMateVerifyPhoneNumberModalState
     extends State<MyMateVerifyPhoneNumberModal> {
   final int totalSeconds = 60 * 3;
 
-  _onResendVerificationCode() async {
+  Future<void> _onResendVerificationCode() async {
     await widget.sendVerificationCode(widget.phoneNumber);
     widget._timerViewModel.resetAndStartTimer();
+  }
+
+  void _onTimerFinished() {
+    // 타이머 끝났을 때
   }
 
   @override
   void initState() {
     super.initState();
-    widget._timerViewModel.init(totalSeconds: totalSeconds);
+    widget._timerViewModel
+        .init(totalSeconds: totalSeconds, onFinished: _onTimerFinished);
     widget._timerViewModel.resetAndStartTimer();
   }
 
