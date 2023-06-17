@@ -8,6 +8,7 @@ import 'package:chemiplay/presentation/viewmodels/mate_together_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/mate_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/my_mate_profile_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/signup_profile_viewmodel.dart';
+import 'package:chemiplay/presentation/viewmodels/timer_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -58,6 +59,7 @@ void setupDependencies() {
   getIt.registerSingleton<ChatViewModel>(ChatViewModel(getIt()));
   getIt.registerFactory<MateViewModel>(() => MateViewModel(getIt()));
   getIt.registerFactory<MateTogetherViewModel>(() => MateTogetherViewModel());
+  getIt.registerFactory<TimerViewModel>(() => TimerViewModel());
   getIt.registerSingleton<SignupProfileViewModel>(
       SignupProfileViewModel(getIt(), getIt()));
   getIt.registerFactory<MyMateProfileViewModel>(

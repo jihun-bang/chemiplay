@@ -109,6 +109,10 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
     }
   }
 
+  Future<void> _onNextButtonPressed() async {
+    // _myMateProfileViewModel
+  }
+
   @override
   void initState() {
     super.initState();
@@ -254,6 +258,7 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
                   ? const Color(0xff9F9F9F)
                   : const Color(0xFF2B2B2B),
               disabled: isNextButtonDisabled,
+              onPressed: _onNextButtonPressed,
             ),
           ),
         );

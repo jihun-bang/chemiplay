@@ -59,4 +59,17 @@ class MyMateProfileViewModel extends ChangeNotifier {
     if (_introduction == null || _introduction!.isEmpty) return false;
     return true;
   }
+
+  Future updateModificationOnDB() async {
+    if (_userViewModel.user == null) {
+      throw Exception('User is not loged in');
+    }
+    // final user = _userViewModel.user!.copyWith(
+    //   name: _nickname,
+    //   gender: _gender,
+    //   birthday: _birthday,
+    //   // introduction: _introduction,
+    // );
+    // await _userViewModel.updateUser(user);
+  }
 }
