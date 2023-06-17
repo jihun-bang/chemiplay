@@ -1,5 +1,6 @@
 import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
+import 'package:chemiplay/presentation/widgets/gigi_alert_dialog.dart';
 import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:chemiplay/presentation/widgets/gigi_elevated_button.dart';
 import 'package:chemiplay/presentation/widgets/gigi_elevated_square_button.dart';
@@ -83,7 +84,30 @@ class _MyMateBecomePageState extends State<MyMateBecomePage> {
                 stepText: '2단계',
                 titleText: '게임 메이트 프로필',
                 onPressed: () {
-                  context.pushNamed('myMateProfile');
+                  if (isPhoneNumberSet == false) {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return GigiAlertDialog(
+                          description:
+                              '계속 진행하려면 휴대폰 번호 연동이 필요해요.\n[개발중!!]임시로 핸드폰 인증 구현되는동안 게임 메이트 프로필 변경 페이지로 이동.',
+                          actions: [
+                            GigiElevatedButton(
+                              text: '연동하기',
+                              onPressed: () {
+                                Navigator.pop(context);
+                                // context.pushNamed('myMateVerifyPhoneNumber');
+                                context.pushNamed('myMateProfile');
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    context.pushNamed('myMateProfile');
+                  }
                 },
                 height: height,
                 width: width,
