@@ -41,21 +41,26 @@ class MyApp extends StatelessWidget {
           create: (_) => getIt(),
         ),
       ],
-      child: MaterialApp.router(
-        title: '캐미플레이',
-        theme: lightTheme,
-        scrollBehavior: const MaterialScrollBehavior().copyWith(
-          dragDevices: {
-            PointerDeviceKind.mouse,
-            PointerDeviceKind.touch,
-            PointerDeviceKind.stylus,
-            PointerDeviceKind.unknown
-          },
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints.tightFor(width: 640),
+          child: MaterialApp.router(
+            title: '캐미플레이',
+            theme: lightTheme,
+            scrollBehavior: const MaterialScrollBehavior().copyWith(
+              dragDevices: {
+                PointerDeviceKind.mouse,
+                PointerDeviceKind.touch,
+                PointerDeviceKind.stylus,
+                PointerDeviceKind.unknown
+              },
+            ),
+            routeInformationProvider: routes.routeInformationProvider,
+            routeInformationParser: routes.routeInformationParser,
+            routerDelegate: routes.routerDelegate,
+            debugShowCheckedModeBanner: false,
+          ),
         ),
-        routeInformationProvider: routes.routeInformationProvider,
-        routeInformationParser: routes.routeInformationParser,
-        routerDelegate: routes.routerDelegate,
-        debugShowCheckedModeBanner: false,
       ),
     );
   }

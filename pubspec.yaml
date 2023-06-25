@@ -59,6 +59,7 @@ flutter:
     - assets/images/games/
     - assets/icons/
     - assets/icons/bottom_navigation/
+    - assets/icons/games/
     - assets/icons/my/
     - assets/fonts/
   fonts:
