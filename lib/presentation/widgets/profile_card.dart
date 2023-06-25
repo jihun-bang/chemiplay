@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chemiplay/presentation/widgets/rating.dart';
+import 'package:chemiplay/utils/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../utils/colors.dart';
 
-class ProfileCard extends StatelessWidget {
+class ProfileCard extends StatefulWidget {
   final bool isOnline;
   final String name;
   final double rating;
@@ -27,150 +29,133 @@ class ProfileCard extends StatelessWidget {
   });
 
   @override
+  State<ProfileCard> createState() => _ProfileCardState();
+}
+
+class _ProfileCardState extends State<ProfileCard> {
+  bool _isPlay = false;
+
+  @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      height: 156,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(14.5),
+        onTap: widget.onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Row(
+            children: [
+              _buildImage,
+              Expanded(child: _buildDescription),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget get _buildImage {
+    return Container(
+      alignment: Alignment.center,
+      width: 132,
+      height: 132,
+      child: Stack(
         children: [
-          Expanded(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  fit: BoxFit.cover,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: const [0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
-                      colors: [
-                        Colors.black.withOpacity(0.8),
-                        Colors.black.withOpacity(0.2),
-                        Colors.transparent,
-                        Colors.transparent,
-                        Colors.black.withOpacity(0.2),
-                        Colors.black.withOpacity(0.8),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 10,
-                  left: 10,
-                  child: _buildStatus,
-                ),
-                Positioned.fill(
-                  bottom: 12,
-                  left: 12,
-                  right: 12,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [_buildTitle, _buildDescription, _buildCost],
-                  ),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: onTap,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ],
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(14.5),
+              child: CachedNetworkImage(
+                  imageUrl: widget.imageUrl, fit: BoxFit.cover),
             ),
           ),
+          Positioned(
+            left: 8,
+            top: 8,
+            child: _buildStatus,
+          ),
+          Positioned(
+            left: 4,
+            bottom: 4,
+            child: Container(
+              width: 62,
+              height: 30,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.783),
+                color: Colors.white.withOpacity(0.9),
+              ),
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    _isPlay = !_isPlay;
+                  });
+                },
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/icon_${_isPlay ? 'pause' : 'play'}.svg',
+                      width: 33,
+                      height: 33,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
   }
 
-  Widget get _buildTitle {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          name,
-          style: const TextStyle(
-            color: Colors.white,
-            letterSpacing: -0.2,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        Row(
-          children: [
-            Icon(
-              Icons.star_rate_rounded,
-              color: MyColors.pri_05,
-              size: 16,
-            ),
-            Text(
-              rating.toStringAsFixed(1),
-              style: TextStyle(
-                color: MyColors.pri_05,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
-            )
-          ],
-        )
-      ],
-    );
-  }
-
   Widget get _buildStatus {
-    return Row(
-      children: [
-        Container(
-          width: 10,
-          height: 10,
-          margin: const EdgeInsets.only(right: 3),
-          decoration: BoxDecoration(
-              color: isOnline ? const Color(0xFF55F29D) : Colors.redAccent,
-              shape: BoxShape.circle,
-              border: Border.all(color: MyColors.gray_01)),
-        ),
-        Text(
-          isOnline ? '온라인' : '오프라인',
-          style: const TextStyle(
-              fontWeight: FontWeight.w600, color: Colors.white, fontSize: 8),
-        )
-      ],
-    );
+    return Container(
+        width: 16,
+        height: 16,
+        decoration: BoxDecoration(
+          color: widget.isOnline ? const Color(0xFF55F29D) : Colors.redAccent,
+          border: Border.all(
+            color: MyColors.gray_01,
+            width: 1.6,
+          ),
+          borderRadius: const BorderRadius.all(Radius.elliptical(16, 16)),
+        ));
   }
 
   Widget get _buildDescription {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+    return Container(
+      alignment: Alignment.centerLeft,
+      height: 118,
+      margin: const EdgeInsets.only(left: 14, right: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Container(
-                width: 16,
-                height: 16,
-                margin: const EdgeInsets.only(right: 4),
-                child: CircleAvatar(
-                  backgroundColor: MyColors.gray_04,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.name,
+                  style: MyTextStyle.sub2Semi(color: MyColors.black_02),
                 ),
-              ),
-              Text(
-                game,
-                style: TextStyle(
-                  color: MyColors.gray_04,
-                  fontSize: 10,
+                const SizedBox(height: 5),
+                Rating(
+                  rating: widget.rating,
+                  count: 100,
                 ),
-              )
-            ],
+                const SizedBox(height: 10),
+                Expanded(
+                  child: Text(
+                    widget.description,
+                    style: TextStyle(color: MyColors.gray_07, fontSize: 12),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
           ),
-          Text(
-            description,
-            style: TextStyle(color: MyColors.gray_05, fontSize: 12),
-          )
+          _buildCost
         ],
       ),
     );
@@ -178,25 +163,22 @@ class ProfileCard extends StatelessWidget {
 
   Widget get _buildCost {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         SvgPicture.asset('assets/icons/icon_coin.svg'),
-        RichText(
-            text: TextSpan(
-                text: cost.toString(),
-                style: const TextStyle(
-                  color: Color(0xFF53DCF0),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-                children: [
-              TextSpan(
-                  text: '/판',
-                  style: TextStyle(
-                      color: MyColors.gray_04,
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal))
-            ]))
+        Row(
+          children: [
+            Text(
+              widget.cost.toString(),
+              style: MyTextStyle.h3Semi(color: MyColors.black_02),
+            ),
+            const SizedBox(width: 2),
+            Text(
+              '/판',
+              style: MyTextStyle.sub2Reg(
+                  color: MyColors.gray_06, letterSpacing: -0.36),
+            )
+          ],
+        ),
       ],
     );
   }

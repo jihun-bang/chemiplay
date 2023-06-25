@@ -27,11 +27,17 @@ class MyTextStyle {
         fontSize: 18,
       );
 
+  static TextStyle sub2Reg({Color? color, double? letterSpacing}) => TextStyle(
+      color: color,
+      fontSize: 18,
+      letterSpacing: letterSpacing,
+      fontWeight: FontWeight.normal);
+
   static TextStyle body1Med({Color? color}) =>
       TextStyle(color: color, fontSize: 16, fontWeight: FontWeight.w500);
 
-  static TextStyle body1Semi({Color? color}) =>
-      TextStyle(color: color, fontSize: 16, height: 1.5, fontWeight: FontWeight.w500);
+  static TextStyle body1Semi({Color? color}) => TextStyle(
+      color: color, fontSize: 16, height: 1.5, fontWeight: FontWeight.w500);
 
   static TextStyle body2Reg({Color? color}) => TextStyle(
         color: color,
@@ -41,7 +47,6 @@ class MyTextStyle {
   static TextStyle body2Med({Color? color}) =>
       TextStyle(color: color, fontSize: 14, fontWeight: FontWeight.w500);
 
-  static TextStyle body2Semi({Color? color}) =>
-      TextStyle(color: color, fontSize: 14, height: 1.5, fontWeight: FontWeight.w500);
-
+  static TextStyle body2Semi({Color? color}) => TextStyle(
+      color: color, fontSize: 14, height: 1.5, fontWeight: FontWeight.w500);
 }

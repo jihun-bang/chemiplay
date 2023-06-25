@@ -66,8 +66,7 @@ class _MatesPageState extends State<MatesPage> {
         margin: const EdgeInsets.only(left: 24, right: 24, bottom: 16),
         height: 60,
         child: ListView.separated(
-          physics: const BouncingScrollPhysics(
-              decelerationRate: ScrollDecelerationRate.fast),
+          physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           itemCount: _games.length,
           itemBuilder: (_, index) => MouseRegion(
@@ -97,7 +96,11 @@ class _MatesPageState extends State<MatesPage> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: AspectRatio(
-              aspectRatio: 320 / 100, child: Container(color: Colors.grey)),
+              aspectRatio: 320 / 100,
+              child: InkWell(
+                  borderRadius: BorderRadius.circular(8),
+                  onTap: () {},
+                  child: Container(color: Colors.grey.withOpacity(0.3)))),
         ),
       ),
     );
@@ -105,7 +108,7 @@ class _MatesPageState extends State<MatesPage> {
 
   Widget _buildTitle(String title) {
     return SliverPadding(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       sliver: SliverToBoxAdapter(
         child: Text(
           title,
@@ -118,54 +121,46 @@ class _MatesPageState extends State<MatesPage> {
 
   Widget get _buildMateCards {
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 250,
-          childAspectRatio: 170 / 250,
-          mainAxisSpacing: 5,
-          crossAxisSpacing: 5,
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (_, int index) {
             Random random = Random();
             bool randomBoolean = random.nextBool();
             bool status = random.nextBool();
+            final user = _users[index];
             if (randomBoolean) {
-              int nextIndex = random.nextInt(6);
               return ProfileCard(
                 isOnline: status,
-                name: _users[nextIndex].name,
+                name: user.name,
                 rating: 4.9,
                 game: '리그오브레전드',
-                description: '탑의신입니다.',
+                description:
+                    '원딜 주력 올라이버/3+1서비스중 칼바람 협곡 다 좋아해요!💙🫶🏾 재밌게 겜 하실분 신청해주세요!',
                 cost: 1000,
-                imageUrl:
-                    'https://firebasestorage.googleapis.com/v0/b/gigi-chemiplay.appspot.com/o/profile_image%2Fuser_1.jpg?alt=media&token=fa6b5113-9b03-45ca-9c0d-b0871cf98f0b',
+                imageUrl: user.profileImageUrl ?? '',
                 onTap: () {
                   context.pushNamed('mate',
-                      pathParameters: {'id': _users[nextIndex].id});
+                      pathParameters: {'id': _users[index].id});
                 },
               );
             } else {
-              int nextIndex = random.nextInt(6);
               return ProfileCard(
                 isOnline: status,
-                name: _users[nextIndex].name,
+                name: _users[index].name,
                 rating: 4.6,
                 game: '리그오브레전드',
                 description: '브론즈 소농민 대기중',
                 cost: 1100,
-                imageUrl:
-                    'https://firebasestorage.googleapis.com/v0/b/gigi-chemiplay.appspot.com/o/profile_image%2Fuser_2.jpg?alt=media&token=2d827a1a-b61a-4902-a163-b35a9d545fe5',
+                imageUrl: user.profileImageUrl ?? '',
                 onTap: () {
                   context.pushNamed('mate',
-                      pathParameters: {'id': _users[nextIndex].id});
+                      pathParameters: {'id': _users[index].id});
                 },
               );
             }
           },
-          childCount: 20,
+          childCount: _users.length,
         ),
       ),
     );
