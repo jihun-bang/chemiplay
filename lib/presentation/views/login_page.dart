@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
               showToast(context: context, message: '환영합니다!');
               context.pop();
             } else {
-              context.goNamed('home');
+              context.goNamed('mates');
             }
           }
         } else {

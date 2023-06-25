@@ -39,6 +39,7 @@ class _MatesPageState extends State<MatesPage> {
           .then((value) => value.docs.map((e) => e.data).toList());
       if (mounted) {
         setState(() {
+          users.shuffle();
           _users = users;
         });
       }
@@ -140,7 +141,7 @@ class _MatesPageState extends State<MatesPage> {
                 cost: 1000,
                 imageUrl: user.profileImageUrl ?? '',
                 onTap: () {
-                  context.pushNamed('mate',
+                  context.goNamed('mate',
                       pathParameters: {'id': _users[index].id});
                 },
               );
@@ -154,7 +155,7 @@ class _MatesPageState extends State<MatesPage> {
                 cost: 1100,
                 imageUrl: user.profileImageUrl ?? '',
                 onTap: () {
-                  context.pushNamed('mate',
+                  context.goNamed('mate',
                       pathParameters: {'id': _users[index].id});
                 },
               );

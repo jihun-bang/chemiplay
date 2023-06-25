@@ -12,7 +12,6 @@ import 'package:chemiplay/presentation/views/my/my_mate_verify_phone_number_page
 import 'package:chemiplay/presentation/views/my/my_page.dart';
 import 'package:chemiplay/presentation/views/my/my_profile_image_page.dart';
 import 'package:chemiplay/presentation/views/signup/profile/signup_profile_page.dart';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,7 +22,7 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 final routes = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/',
+  initialLocation: '/mates',
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (
@@ -38,13 +37,13 @@ final routes = GoRouter(
           navigatorKey: _shellNavigatorKey,
           routes: <RouteBase>[
             GoRoute(
-              path: '/',
+              path: '/mates',
               name: 'mates',
               builder: (BuildContext context, GoRouterState state) =>
                   const MatesPage(),
               routes: [
                 GoRoute(
-                  path: 'mate/:id',
+                  path: ':id',
                   name: 'mate',
                   builder: (context, state) {
                     final id = state.pathParameters['id'] ?? 'unknown';
@@ -87,7 +86,7 @@ final routes = GoRouter(
                     const NoTransitionPage(child: ChatListPage()),
                 routes: [
                   GoRoute(
-                      path: 'chat/:userId',
+                      path: ':userId',
                       name: 'chat',
                       builder: (context, state) {
                         final userId =
