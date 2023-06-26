@@ -74,6 +74,7 @@ class _MyMateVerifyPhoneNumberPageState
               textController: _phoneNumberTextController,
               keyboardType: TextInputType.phone,
               floatingLabelBehavior: FloatingLabelBehavior.always,
+              autocorrect: false,
               // onChanged: (nickname) =>
               //     _signupProfileViewModel.setNickname(nickname),
             ),

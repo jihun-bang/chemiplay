@@ -128,6 +128,7 @@ class _MyMateVerifyPhoneNumberModalState
                   keyboardType: TextInputType.number,
                   maxLength: 6,
                   onChanged: widget.onChanged,
+                  autocorrect: false,
                 ),
                 const SizedBox(
                   height: 15,

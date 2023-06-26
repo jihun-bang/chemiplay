@@ -11,6 +11,7 @@ class GigiTextField extends StatefulWidget {
   TextEditingController textController;
   FloatingLabelBehavior? floatingLabelBehavior;
   FocusNode? focusNode;
+  bool autocorrect;
 
   final void Function()? onTap;
   final void Function(String)? onChanged;
@@ -38,6 +39,7 @@ class GigiTextField extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.floatingLabelBehavior,
     this.focusNode,
+    this.autocorrect = true,
   });
 
   @override
@@ -54,6 +56,7 @@ class _GigiTextFieldState extends State<GigiTextField> {
     const Color primaryColor = Color(0xFFFF8066);
 
     return TextField(
+      autocorrect: widget.autocorrect,
       readOnly: widget.readOnly,
       controller: widget.textController,
       keyboardType: widget.keyboardType,
