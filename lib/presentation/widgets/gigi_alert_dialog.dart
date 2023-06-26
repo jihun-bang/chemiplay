@@ -13,10 +13,23 @@ class GigiAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+
+    double paddingValue;
+    if (deviceWidth < 360) {
+      // 가장 작은 모바일 디바이스
+      paddingValue = 10;
+    } else if (deviceWidth < 600) {
+      // 중간 크기의 모바일 디바이스
+      paddingValue = 20;
+    } else {
+      // 대형 디바이스 (PC, 태블릿 등)
+      paddingValue = 40;
+    }
     return Align(
       alignment: Alignment.center,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 60),
+        padding: EdgeInsets.symmetric(horizontal: paddingValue),
         child: Dialog(
           child: Container(
             width: MediaQuery.of(context).size.width,
