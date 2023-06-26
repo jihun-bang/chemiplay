@@ -102,14 +102,6 @@ class _MyMateVerifyPhoneNumberModalState
                     ],
                   ),
                 ),
-                const SizedBox(height: 5),
-                Text(
-                  widget.phoneNumber,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: Color(0xffAEB4BD),
-                  ),
-                ),
                 const SizedBox(height: 50),
                 TextField(
                   controller: widget.textController,
