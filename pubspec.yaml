@@ -49,7 +49,7 @@ dev_dependencies:
   json_serializable: ^6.6.1
   copy_with_extension_gen: ^5.0.0
   copy_with_extension: ^5.0.0
-  cloud_firestore_odm_generator: ^1.0.0-dev.33
+  cloud_firestore_odm_generator: ^1.0.0-dev.62
   build_runner: ^2.3.3
 
 flutter:
