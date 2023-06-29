@@ -55,6 +55,18 @@ class UserViewModel extends ChangeNotifier {
     return false;
   }
 
+  Future<bool> updatePhoneNumber(String phoneNumber) async {
+    if (user != null) {
+      final result = await updateUser(user!.copyWith(phoneNumber: phoneNumber));
+      if (result) {
+        _user = user;
+        notifyListeners();
+      }
+    }
+
+    return false;
+  }
+
   Future<bool> updateUser(UserModel user) async {
     final result = await _usecase.updateUser(user: user);
     if (result) {

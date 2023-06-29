@@ -10,6 +10,7 @@ import 'package:chemiplay/presentation/viewmodels/my_mate_profile_viewmodel.dart
 import 'package:chemiplay/presentation/viewmodels/signup_profile_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/timer_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
+import 'package:chemiplay/presentation/viewmodels/verify_phone_number_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sendbird_sdk/sdk/sendbird_sdk_api.dart';
@@ -64,4 +65,6 @@ void setupDependencies() {
       SignupProfileViewModel(getIt(), getIt()));
   getIt.registerFactory<MyMateProfileViewModel>(
       () => MyMateProfileViewModel(getIt()));
+  getIt.registerFactory<VerifyPhoneNumberViewModel>(
+      () => VerifyPhoneNumberViewModel(getIt()));
 }
