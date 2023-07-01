@@ -10,6 +10,7 @@ import 'package:chemiplay/presentation/widgets/gigi_multiline_textfield.dart';
 import 'package:chemiplay/presentation/widgets/gigi_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class MyMateProfilePage extends StatefulWidget {
@@ -102,6 +103,7 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
 
   Future<void> _onNextButtonPressed() async {
     await _myMateProfileViewModel.updateModificationOnDB();
+    context.goNamed('myMateBecome');
   }
 
   @override

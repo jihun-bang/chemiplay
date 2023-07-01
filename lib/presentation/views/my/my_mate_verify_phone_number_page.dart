@@ -7,7 +7,9 @@ import 'package:chemiplay/presentation/widgets/bottom_next_button.dart';
 import 'package:chemiplay/presentation/widgets/gigi_app_bar.dart';
 import 'package:chemiplay/presentation/widgets/gigi_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:sendbird_sdk/sendbird_sdk.dart';
 
 class MyMateVerifyPhoneNumberPage extends StatefulWidget {
   const MyMateVerifyPhoneNumberPage({super.key});
@@ -41,7 +43,9 @@ class _MyMateVerifyPhoneNumberPageState
     //Verification 전송 로직
     if (phoneNumber != null) {
       await _verifyPhoneNumberViewModel.sendSMS(
-          context, _showVerifyPhoneNumberModal);
+        context,
+        _showVerifyPhoneNumberModal,
+      );
     }
   }
 
@@ -67,13 +71,20 @@ class _MyMateVerifyPhoneNumberPageState
 
   void _onVerificationCodeInput(String code) async {
     if (code.length == 6) {
-      // Verification Code 검증
-      final result = await _verifyPhoneNumberViewModel.verifyCode(code);
-      // 게임 메이트 되기 페이지로 이동
-      if (result == true) {
-        showToast(context: context, message: '성공했습니다.');
-      } else {
-        showToast(context: context, message: '인증번호가 틀립니다.');
+      try {
+        // Verification Code 검증
+        final result = await _verifyPhoneNumberViewModel.verifyCode(code);
+        // 게임 메이트 되기 페이지로 이동
+        if (result == true) {
+          context.goNamed('myMateBecome');
+        } else {
+          showToast(context: context, message: '인증번호가 틀립니다.');
+        }
+      } catch (e) {
+        if (e is BadRequestError && e.message != null) {
+          showToast(context: context, message: e.message!);
+        }
+        rethrow;
       }
     }
   }

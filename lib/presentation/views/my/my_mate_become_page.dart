@@ -75,6 +75,7 @@ class _MyMateBecomePageState extends State<MyMateBecomePage> {
                 height: height,
                 width: width,
                 showChecked: isPhoneNumberSet,
+                disabled: isPhoneNumberSet,
               ),
               const SizedBox(
                 width: spaceBetweenButton,
@@ -139,6 +140,7 @@ class _MyMateBecomePageState extends State<MyMateBecomePage> {
     double height = 200,
     double? width,
     VoidCallback? onPressed,
+    bool disabled = false,
   }) {
     return GigiElevatedSquareButton(
       widget: Column(
@@ -180,6 +182,7 @@ class _MyMateBecomePageState extends State<MyMateBecomePage> {
       height: height,
       width: width,
       onPressed: onPressed,
+      disabled: disabled,
     );
   }
 }

@@ -9,13 +9,18 @@ class VerifyPhoneNumberViewModel extends ChangeNotifier {
 
   VerifyPhoneNumberViewModel(this._userViewModel);
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   String? _phoneNumber;
   String? get phoneNumber => _phoneNumber;
+
   String? _verificationId;
-  String status = 'ready';
+  DateTime? _last_sent_at;
+  int _failedCount = 0;
+
+  String _sendStatus = 'ready';
 
   void setPhoneNumber(String phoneNumber) {
-    status = 'ready';
+    _sendStatus = 'ready';
     _phoneNumber = phoneNumber;
     notifyListeners();
   }
@@ -24,8 +29,8 @@ class VerifyPhoneNumberViewModel extends ChangeNotifier {
     if (!isValidKoreanPhoneNumber(_phoneNumber)) {
       return showToast(context: context, message: '유효하지 않은 핸드폰 번호입니다.');
     }
-    if (status != 'pending') {
-      status = 'pending';
+    if (_sendStatus != 'pending') {
+      _sendStatus = 'pending';
       await _auth.verifyPhoneNumber(
         phoneNumber: formatPhoneNumber(_phoneNumber!),
         verificationCompleted: (PhoneAuthCredential credential) async {
@@ -33,13 +38,16 @@ class VerifyPhoneNumberViewModel extends ChangeNotifier {
           notifyListeners();
         },
         verificationFailed: (FirebaseAuthException e) {
-          status = 'failed';
-          showToast(context: context, message: '메시지 전송에 실패했습니다.');
+          _sendStatus = 'failed';
+          showToast(
+              context: context, message: '메시지 전송에 실패했습니다.(CODE: ${e.code})');
           notifyListeners();
         },
         codeSent: (String verificationId, int? resendToken) async {
           _verificationId = verificationId; // 인증 코드 확인때 필요한 값
-          status = 'sent';
+          _last_sent_at = DateTime.now();
+          _sendStatus = 'sent';
+          _failedCount = 0;
           if (showModal != null) {
             showModal();
           }
@@ -47,12 +55,19 @@ class VerifyPhoneNumberViewModel extends ChangeNotifier {
           notifyListeners();
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
+        timeout: const Duration(minutes: 3),
       );
     }
   }
 
   Future<bool> verifyCode(String code) async {
     if (_verificationId != null) {
+      if (_failedCount > 10) {
+        throw BadRequestError(
+          message: 'failed too many time',
+          code: 429,
+        );
+      }
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: _verificationId!,
         smsCode: code,
@@ -61,6 +76,7 @@ class VerifyPhoneNumberViewModel extends ChangeNotifier {
         // final UserCredential authCredential =
         await _auth.signInWithCredential(credential);
       } catch (e) {
+        _failedCount++;
         return false;
       }
 
