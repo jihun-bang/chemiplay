@@ -100,45 +100,42 @@ class _MyMateVerifyPhoneNumberPageState
       appBar: const GigiAppBar(
         title: '휴대폰 번호 연동',
       ),
-      body: ChangeNotifierProvider<VerifyPhoneNumberViewModel>(
-        create: (context) => _verifyPhoneNumberViewModel,
-        child: Consumer<VerifyPhoneNumberViewModel>(
-            builder: (context, viewModel, _) {
-          _verifyPhoneNumberViewModel = viewModel;
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 64,
+      body: Consumer<VerifyPhoneNumberViewModel>(
+          builder: (context, viewModel, _) {
+        _verifyPhoneNumberViewModel = viewModel;
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 64,
+              ),
+              const Text(
+                '휴대폰 번호를 입력해주세요.',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600,
                 ),
-                const Text(
-                  '휴대폰 번호를 입력해주세요.',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(
-                  height: 48,
-                ),
-                GigiTextField(
-                  labelText: '휴대폰 번호',
-                  textController: _phoneNumberTextController,
-                  keyboardType: TextInputType.phone,
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  autocorrect: false,
-                  onChanged: (String phoneNumber) =>
-                      _verifyPhoneNumberViewModel.setPhoneNumber(phoneNumber),
-                ),
-              ],
-            ),
-          );
-        }),
-      ),
+              ),
+              const SizedBox(
+                height: 48,
+              ),
+              GigiTextField(
+                labelText: '휴대폰 번호',
+                textController: _phoneNumberTextController,
+                keyboardType: TextInputType.phone,
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                autocorrect: false,
+                onChanged: (String phoneNumber) =>
+                    _verifyPhoneNumberViewModel.setPhoneNumber(phoneNumber),
+              ),
+            ],
+          ),
+        );
+      }),
       bottomSheet: BottomNextButton(
         text: '인증번호 발송',
         disabled: false,

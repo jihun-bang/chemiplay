@@ -65,6 +65,6 @@ void setupDependencies() {
       SignupProfileViewModel(getIt(), getIt()));
   getIt.registerFactory<MyMateProfileViewModel>(
       () => MyMateProfileViewModel(getIt()));
-  getIt.registerFactory<VerifyPhoneNumberViewModel>(
-      () => VerifyPhoneNumberViewModel(getIt()));
+  getIt.registerSingleton<VerifyPhoneNumberViewModel>(
+      VerifyPhoneNumberViewModel(getIt()));
 }

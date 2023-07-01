@@ -1,5 +1,6 @@
 import 'package:chemiplay/presentation/viewmodels/chat_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
+import 'package:chemiplay/presentation/viewmodels/verify_phone_number_viewmodel.dart';
 import 'package:chemiplay/routes.dart';
 import 'package:chemiplay/utils/thema.dart';
 import 'package:chemiplay/utils/web_plugins/web_plugin.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
           create: (_) => getIt(),
         ),
         ChangeNotifierProvider<ChatViewModel>(
+          create: (_) => getIt(),
+        ),
+        ChangeNotifierProvider<VerifyPhoneNumberViewModel>(
           create: (_) => getIt(),
         ),
       ],
