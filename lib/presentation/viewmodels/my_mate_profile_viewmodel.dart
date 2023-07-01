@@ -64,12 +64,12 @@ class MyMateProfileViewModel extends ChangeNotifier {
     if (_userViewModel.user == null) {
       throw Exception('User is not loged in');
     }
-    // final user = _userViewModel.user!.copyWith(
-    //   name: _nickname,
-    //   gender: _gender,
-    //   birthday: _birthday,
-    //   // introduction: _introduction,
-    // );
-    // await _userViewModel.updateUser(user);
+    final user = _userViewModel.user!.copyWith(
+      name: _nickname,
+      gender: _gender,
+      birthday: _birthday,
+      introduction: _introduction,
+    );
+    await _userViewModel.updateUser(user);
   }
 }

@@ -101,7 +101,7 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
   }
 
   Future<void> _onNextButtonPressed() async {
-    // _myMateProfileViewModel
+    await _myMateProfileViewModel.updateModificationOnDB();
   }
 
   @override
