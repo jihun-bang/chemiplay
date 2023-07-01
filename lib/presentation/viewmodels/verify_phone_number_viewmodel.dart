@@ -29,6 +29,14 @@ class VerifyPhoneNumberViewModel extends ChangeNotifier {
     if (!isValidKoreanPhoneNumber(_phoneNumber)) {
       return showToast(context: context, message: '유효하지 않은 핸드폰 번호입니다.');
     }
+    if (_last_sent_at != null) {
+      DateTime oneMinuteAgo =
+          DateTime.now().subtract(const Duration(minutes: 1));
+      if (oneMinuteAgo.isBefore(_last_sent_at!)) {
+        return showToast(
+            context: context, message: '메시지는 전송 후 1분간 재전송이 불가합니다.');
+      }
+    }
     if (_sendStatus != 'pending') {
       _sendStatus = 'pending';
       await _auth.verifyPhoneNumber(
