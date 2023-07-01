@@ -73,9 +73,9 @@ class VerifyPhoneNumberViewModel extends ChangeNotifier {
   Future<bool> verifyCode(String code) async {
     if (_verificationId != null) {
       if (_last_sent_at != null) {
-        DateTime oneMinuteAgo =
+        DateTime threeMinuteAgo =
             DateTime.now().subtract(const Duration(minutes: 3));
-        if (oneMinuteAgo.isBefore(_last_sent_at!)) {
+        if (_last_sent_at!.isBefore(threeMinuteAgo)) {
           throw TimeoutException('timeout');
         }
       }
