@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chemiplay/presentation/dialog/toast.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -70,6 +72,13 @@ class VerifyPhoneNumberViewModel extends ChangeNotifier {
 
   Future<bool> verifyCode(String code) async {
     if (_verificationId != null) {
+      if (_last_sent_at != null) {
+        DateTime oneMinuteAgo =
+            DateTime.now().subtract(const Duration(minutes: 3));
+        if (oneMinuteAgo.isBefore(_last_sent_at!)) {
+          throw TimeoutException('timeout');
+        }
+      }
       if (_failedCount > 10) {
         throw BadRequestError(
           message: 'failed too many time',

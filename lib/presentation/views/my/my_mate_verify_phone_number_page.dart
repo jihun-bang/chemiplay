@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/dialog/toast.dart';
 import 'package:chemiplay/presentation/viewmodels/user_viewmodel.dart';
@@ -83,6 +85,9 @@ class _MyMateVerifyPhoneNumberPageState
       } catch (e) {
         if (e is BadRequestError && e.message != null) {
           showToast(context: context, message: e.message!);
+        }
+        if (e is TimeoutException) {
+          showToast(context: context, message: '시간이 초과되었습니다.');
         }
         rethrow;
       }
