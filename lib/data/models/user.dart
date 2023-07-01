@@ -30,6 +30,9 @@ class UserModel {
   /// 생년월일
   final String? birthday;
 
+  /// 자기소개
+  final String? introduction;
+
   /// 사용자 상태
   final UserStatus status;
 
@@ -50,6 +53,7 @@ class UserModel {
     this.phoneNumber,
     this.gender,
     this.birthday,
+    this.introduction,
     this.status = UserStatus.normal,
     required this.createdAt,
     required this.modifiedAt,

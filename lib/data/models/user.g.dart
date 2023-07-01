@@ -23,6 +23,8 @@ abstract class _$UserModelCWProxy {
 
   UserModel birthday(String? birthday);
 
+  UserModel introduction(String? introduction);
+
   UserModel status(UserStatus status);
 
   UserModel createdAt(DateTime createdAt);
@@ -45,6 +47,7 @@ abstract class _$UserModelCWProxy {
     String? phoneNumber,
     Gender? gender,
     String? birthday,
+    String? introduction,
     UserStatus? status,
     DateTime? createdAt,
     DateTime? modifiedAt,
@@ -81,6 +84,10 @@ class _$UserModelCWProxyImpl implements _$UserModelCWProxy {
   UserModel birthday(String? birthday) => this(birthday: birthday);
 
   @override
+  UserModel introduction(String? introduction) =>
+      this(introduction: introduction);
+
+  @override
   UserModel status(UserStatus status) => this(status: status);
 
   @override
@@ -108,6 +115,7 @@ class _$UserModelCWProxyImpl implements _$UserModelCWProxy {
     Object? phoneNumber = const $CopyWithPlaceholder(),
     Object? gender = const $CopyWithPlaceholder(),
     Object? birthday = const $CopyWithPlaceholder(),
+    Object? introduction = const $CopyWithPlaceholder(),
     Object? status = const $CopyWithPlaceholder(),
     Object? createdAt = const $CopyWithPlaceholder(),
     Object? modifiedAt = const $CopyWithPlaceholder(),
@@ -142,6 +150,10 @@ class _$UserModelCWProxyImpl implements _$UserModelCWProxy {
           ? _value.birthday
           // ignore: cast_nullable_to_non_nullable
           : birthday as String?,
+      introduction: introduction == const $CopyWithPlaceholder()
+          ? _value.introduction
+          // ignore: cast_nullable_to_non_nullable
+          : introduction as String?,
       status: status == const $CopyWithPlaceholder() || status == null
           ? _value.status
           // ignore: cast_nullable_to_non_nullable
@@ -314,6 +326,8 @@ abstract class UserModelDocumentReference
     FieldValue phoneNumberFieldValue,
     String? birthday,
     FieldValue birthdayFieldValue,
+    String? introduction,
+    FieldValue introductionFieldValue,
     DateTime createdAt,
     FieldValue createdAtFieldValue,
     DateTime modifiedAt,
@@ -337,6 +351,8 @@ abstract class UserModelDocumentReference
     FieldValue phoneNumberFieldValue,
     String? birthday,
     FieldValue birthdayFieldValue,
+    String? introduction,
+    FieldValue introductionFieldValue,
     DateTime createdAt,
     FieldValue createdAtFieldValue,
     DateTime modifiedAt,
@@ -395,6 +411,8 @@ class _$UserModelDocumentReference
     FieldValue? phoneNumberFieldValue,
     Object? birthday = _sentinel,
     FieldValue? birthdayFieldValue,
+    Object? introduction = _sentinel,
+    FieldValue? introductionFieldValue,
     Object? createdAt = _sentinel,
     FieldValue? createdAtFieldValue,
     Object? modifiedAt = _sentinel,
@@ -421,6 +439,10 @@ class _$UserModelDocumentReference
     assert(
       birthday == _sentinel || birthdayFieldValue == null,
       "Cannot specify both birthday and birthdayFieldValue",
+    );
+    assert(
+      introduction == _sentinel || introductionFieldValue == null,
+      "Cannot specify both introduction and introductionFieldValue",
     );
     assert(
       createdAt == _sentinel || createdAtFieldValue == null,
@@ -452,6 +474,10 @@ class _$UserModelDocumentReference
         _$UserModelFieldMap['birthday']!: birthday as String?,
       if (birthdayFieldValue != null)
         _$UserModelFieldMap['birthday']!: birthdayFieldValue,
+      if (introduction != _sentinel)
+        _$UserModelFieldMap['introduction']!: introduction as String?,
+      if (introductionFieldValue != null)
+        _$UserModelFieldMap['introduction']!: introductionFieldValue,
       if (createdAt != _sentinel)
         _$UserModelFieldMap['createdAt']!: createdAt as DateTime,
       if (createdAtFieldValue != null)
@@ -481,6 +507,8 @@ class _$UserModelDocumentReference
     FieldValue? phoneNumberFieldValue,
     Object? birthday = _sentinel,
     FieldValue? birthdayFieldValue,
+    Object? introduction = _sentinel,
+    FieldValue? introductionFieldValue,
     Object? createdAt = _sentinel,
     FieldValue? createdAtFieldValue,
     Object? modifiedAt = _sentinel,
@@ -507,6 +535,10 @@ class _$UserModelDocumentReference
     assert(
       birthday == _sentinel || birthdayFieldValue == null,
       "Cannot specify both birthday and birthdayFieldValue",
+    );
+    assert(
+      introduction == _sentinel || introductionFieldValue == null,
+      "Cannot specify both introduction and introductionFieldValue",
     );
     assert(
       createdAt == _sentinel || createdAtFieldValue == null,
@@ -538,6 +570,10 @@ class _$UserModelDocumentReference
         _$UserModelFieldMap['birthday']!: birthday as String?,
       if (birthdayFieldValue != null)
         _$UserModelFieldMap['birthday']!: birthdayFieldValue,
+      if (introduction != _sentinel)
+        _$UserModelFieldMap['introduction']!: introduction as String?,
+      if (introductionFieldValue != null)
+        _$UserModelFieldMap['introduction']!: introductionFieldValue,
       if (createdAt != _sentinel)
         _$UserModelFieldMap['createdAt']!: createdAt as DateTime,
       if (createdAtFieldValue != null)
@@ -706,6 +742,17 @@ abstract class UserModelQuery
     List<String?>? whereIn,
     List<String?>? whereNotIn,
   });
+  UserModelQuery whereIntroduction({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  });
   UserModelQuery whereCreatedAt({
     DateTime? isEqualTo,
     DateTime? isNotEqualTo,
@@ -801,6 +848,18 @@ abstract class UserModelQuery
   });
 
   UserModelQuery orderByBirthday({
+    bool descending = false,
+    String? startAt,
+    String? startAfter,
+    String? endAt,
+    String? endBefore,
+    UserModelDocumentSnapshot? startAtDocument,
+    UserModelDocumentSnapshot? endAtDocument,
+    UserModelDocumentSnapshot? endBeforeDocument,
+    UserModelDocumentSnapshot? startAfterDocument,
+  });
+
+  UserModelQuery orderByIntroduction({
     bool descending = false,
     String? startAt,
     String? startAfter,
@@ -1158,6 +1217,35 @@ class _$UserModelQuery extends QueryReference<UserModel, UserModelQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$UserModelFieldMap['birthday']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  UserModelQuery whereIntroduction({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  }) {
+    return _$UserModelQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$UserModelFieldMap['introduction']!,
         isEqualTo: isEqualTo,
         isNotEqualTo: isNotEqualTo,
         isLessThan: isLessThan,
@@ -1633,6 +1721,78 @@ class _$UserModelQuery extends QueryReference<UserModel, UserModelQuerySnapshot>
   }) {
     final query = $referenceWithoutCursor
         .orderBy(_$UserModelFieldMap['birthday']!, descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$UserModelQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  UserModelQuery orderByIntroduction({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    UserModelDocumentSnapshot? startAtDocument,
+    UserModelDocumentSnapshot? endAtDocument,
+    UserModelDocumentSnapshot? endBeforeDocument,
+    UserModelDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$UserModelFieldMap['introduction']!, descending: descending);
     var queryCursor = $queryCursor;
 
     if (startAtDocument != null) {
@@ -3611,6 +3771,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       phoneNumber: json['phone_number'] as String?,
       gender: $enumDecodeNullable(_$GenderEnumMap, json['gender']),
       birthday: json['birthday'] as String?,
+      introduction: json['introduction'] as String?,
       status: $enumDecodeNullable(_$UserStatusEnumMap, json['status']) ??
           UserStatus.normal,
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -3628,6 +3789,7 @@ const _$UserModelFieldMap = <String, String>{
   'phoneNumber': 'phone_number',
   'gender': 'gender',
   'birthday': 'birthday',
+  'introduction': 'introduction',
   'status': 'status',
   'createdAt': 'created_at',
   'modifiedAt': 'modified_at',
@@ -3642,6 +3804,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'phone_number': instance.phoneNumber,
       'gender': _$GenderEnumMap[instance.gender],
       'birthday': instance.birthday,
+      'introduction': instance.introduction,
       'status': _$UserStatusEnumMap[instance.status]!,
       'created_at': instance.createdAt.toIso8601String(),
       'modified_at': instance.modifiedAt.toIso8601String(),
