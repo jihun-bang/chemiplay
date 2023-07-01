@@ -1,4 +1,3 @@
-import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/dialog/toast.dart';
 import 'package:chemiplay/presentation/viewmodels/my_mate_profile_viewmodel.dart';
@@ -61,10 +60,6 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
     final textDate = date.toString().split(" ").first;
     _birthdayController.value = TextEditingValue(text: textDate);
     _myMateProfileViewModel.setBirthday(textDate);
-  }
-
-  void _setGender(Gender gender) {
-    _myMateProfileViewModel.setGender(gender);
   }
 
   void _onBirthdayTextFieldTap() async {
@@ -155,46 +150,6 @@ class _MyMateProfilePageState extends State<MyMateProfilePage> {
                       onChanged: (value) {},
                       textController: _nicknameController,
                     ),
-                  ),
-                  ..._getMateProfileSettingRow(
-                    title: '성별',
-                    description: '선택 후, 성별은 변경할 수 없어요.',
-                    widget: Row(
-                      children: [
-                        Expanded(
-                          child: GigiElevatedButton(
-                            text: '남성',
-                            backgroundColor:
-                                _myMateProfileViewModel.gender == Gender.male
-                                    ? activeBackgroundColor
-                                    : inActiveBackgroundColor,
-                            shadowColor:
-                                _myMateProfileViewModel.gender == Gender.male
-                                    ? activeShadowColor
-                                    : inActiveShadowColor,
-                            onPressed: () => _setGender(Gender.male),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Expanded(
-                          child: GigiElevatedButton(
-                            text: '여성',
-                            backgroundColor:
-                                _myMateProfileViewModel.gender == Gender.female
-                                    ? activeBackgroundColor
-                                    : inActiveBackgroundColor,
-                            shadowColor:
-                                _myMateProfileViewModel.gender == Gender.female
-                                    ? activeShadowColor
-                                    : inActiveShadowColor,
-                            onPressed: () => _setGender(Gender.female),
-                          ),
-                        ),
-                      ],
-                    ),
-                    middlePadding: 20,
                   ),
                   ..._getMateProfileSettingRow(
                     title: '생일',

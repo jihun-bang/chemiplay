@@ -13,10 +13,6 @@ class MyMateProfileViewModel extends ChangeNotifier {
   MyMateProfileViewModel(this._userViewModel);
   late String? _nickname = user?.name;
   String? get nickname => _nickname;
-
-  late Gender? _gender = user?.gender;
-  Gender? get gender => _gender;
-
   late String? _birthday = user?.birthday;
   String? get birthday => _birthday;
 
@@ -25,11 +21,6 @@ class MyMateProfileViewModel extends ChangeNotifier {
 
   void setNickname(String newNickname) {
     _nickname = newNickname;
-    notifyListeners();
-  }
-
-  void setGender(Gender newGender) {
-    _gender = newGender;
     notifyListeners();
   }
 
@@ -53,7 +44,6 @@ class MyMateProfileViewModel extends ChangeNotifier {
 
   bool isReadyToUpdate() {
     if (_nickname == null || _nickname!.isEmpty) return false;
-    if (_gender == null) return false;
     if (_birthday == null) return false;
     if (validateBirthday() == false) return false;
     if (_introduction == null || _introduction!.isEmpty) return false;
@@ -66,7 +56,6 @@ class MyMateProfileViewModel extends ChangeNotifier {
     }
     final user = _userViewModel.user!.copyWith(
       name: _nickname,
-      gender: _gender,
       birthday: _birthday,
       introduction: _introduction,
     );
