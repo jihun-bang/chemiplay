@@ -52,7 +52,7 @@ class _GigiMultilineTextFieldState extends State<GigiMultilineTextField> {
             ),
             keyboardType: TextInputType.multiline,
             cursorColor: primaryColor,
-            minLines: 10,
+            minLines: 3,
             maxLines: 10,
             maxLength: widget.maxLength,
             onChanged: widget.onChanged,
