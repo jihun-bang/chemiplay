@@ -11,7 +11,7 @@ final lightTheme = ThemeData(
       showUnselectedLabels: false,
       type: BottomNavigationBarType.fixed,
     ),
-    scaffoldBackgroundColor: MyColors.gray_01,
+    scaffoldBackgroundColor: Colors.white,
     appBarTheme: AppBarTheme(
         color: MyColors.gray_01,
         toolbarHeight: 48,

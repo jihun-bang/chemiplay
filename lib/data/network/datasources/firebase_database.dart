@@ -1,4 +1,5 @@
 import '../../../utils/logger.dart';
+import '../../models/game/game.dart';
 import '../../models/user.dart';
 
 class FirebaseDatabase {
@@ -37,5 +38,12 @@ class FirebaseDatabase {
     });
 
     return result;
+  }
+
+  /// Mate
+  Future<List<GameModel>> getGames() async {
+    return await gamesRef
+        .get()
+        .then((value) => value.docs.map((e) => e.data).toList());
   }
 }
