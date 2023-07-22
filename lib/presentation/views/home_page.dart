@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
     return location == '/mates' ||
         location == '/chats' ||
         location.contains('/feed') ||
-        location.contains('/my');
+        location.contains('/my') && !location.contains('/my/mate');
   }
 
   @override
