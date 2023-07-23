@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chemiplay/data/models/user.dart';
 import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/viewmodels/chat_viewmodel.dart';
+import 'package:chemiplay/presentation/viewmodels/mate_audio_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/mate_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,6 +35,7 @@ class MateProfilePage extends StatefulWidget {
 class _MateProfilePageState extends State<MateProfilePage> {
   final _userViewModel = getIt<UserViewModel>();
   late final MateViewModel _mateViewModel;
+  late MateAudioViewModel _mateAudioViewModel;
   late PageController _gamInfoController;
   late final ChatViewModel _chatViewModel;
 
@@ -45,6 +47,8 @@ class _MateProfilePageState extends State<MateProfilePage> {
   @override
   void initState() {
     super.initState();
+    _mateAudioViewModel = getIt();
+    _mateAudioViewModel.init();
 
     _gamInfoController = PageController(viewportFraction: 0.9);
 
@@ -59,6 +63,7 @@ class _MateProfilePageState extends State<MateProfilePage> {
   @override
   void dispose() {
     _gamInfoController.dispose();
+    _mateViewModel.dispose();
 
     super.dispose();
   }
@@ -76,7 +81,8 @@ class _MateProfilePageState extends State<MateProfilePage> {
           return const SizedBox();
         }
         if (_chatViewModel.isLoggedIn == false && _userViewModel.user != null) {
-          _chatViewModel.setSendbird(_userViewModel.user!.email, _userViewModel.user!.name);
+          _chatViewModel.setSendbird(
+              _userViewModel.user!.email, _userViewModel.user!.name);
         }
         return Scaffold(
           backgroundColor: Colors.white,
@@ -406,49 +412,67 @@ class _MateProfilePageState extends State<MateProfilePage> {
   }
 
   Widget get _buildVoice {
-    return Padding(
-      padding: const EdgeInsets.only(top: 15, bottom: 21),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 6),
-            child: Text(
-              '음성소개',
-              style: TextStyle(height: 16.71 / 14, color: MyColors.gray_06),
-            ),
-          ),
-          // Figma Flutter Generator Group760Widget - GROUP
-          Container(
-            width: 180,
-            height: 45,
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: MyColors.black_03,
-                width: 0.8,
+    return ChangeNotifierProvider<MateAudioViewModel>(
+      create: (_) => _mateAudioViewModel,
+      child: Consumer<MateAudioViewModel>(builder: (context, viewmodel, _) {
+        _mateAudioViewModel = viewmodel;
+        _isPlayVoice = _mateAudioViewModel.userId == _mateViewModel.user?.id;
+        return Padding(
+          padding: const EdgeInsets.only(top: 15, bottom: 21),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Text(
+                  '음성소개',
+                  style: TextStyle(height: 16.71 / 14, color: MyColors.gray_06),
+                ),
               ),
-            ),
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  _isPlayVoice = !_isPlayVoice;
-                });
-              },
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/icon_${_isPlayVoice ? 'pause' : 'play'}.svg',
-                    width: 33,
-                    height: 33,
+              // Figma Flutter Generator Group760Widget - GROUP
+              Container(
+                width: 180,
+                height: 45,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: MyColors.black_03,
+                    width: 0.8,
                   ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
+                ),
+                child: InkWell(
+                  onTap: () async {
+                    if (!_isPlayVoice) {
+                      await _mateAudioViewModel.play(
+                        url: '/assets/audio/test.mp3',
+                        userId: widget.id,
+                      );
+                    } else {
+                      await _mateAudioViewModel.pause();
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/icon_${_isPlayVoice ? 'pause' : 'play'}.svg',
+                        width: 33,
+                        height: 33,
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/icon_play_test.svg',
+                        width: 20,
+                        height: 20,
+                      ),
+                      Text(_mateAudioViewModel.getLeftTime()),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 
