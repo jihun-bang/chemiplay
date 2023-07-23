@@ -1,11 +1,13 @@
 import 'dart:math';
 
 import 'package:chemiplay/data/models/user.dart';
+import 'package:chemiplay/injection.dart';
+import 'package:chemiplay/presentation/viewmodels/mate_audio_viewmodel.dart';
+import 'package:chemiplay/presentation/widgets/profile_card.dart';
 import 'package:chemiplay/utils/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../widgets/profile_card.dart';
+import 'package:provider/provider.dart';
 
 class MatesFilterPage extends StatefulWidget {
   const MatesFilterPage({super.key});
@@ -15,6 +17,7 @@ class MatesFilterPage extends StatefulWidget {
 }
 
 class _MatesFilterPageState extends State<MatesFilterPage> {
+  late MateAudioViewModel _mateAudioViewModel;
   final List<String> _games = [
     'lol',
     'valorant',
@@ -31,6 +34,8 @@ class _MatesFilterPageState extends State<MatesFilterPage> {
   @override
   void initState() {
     super.initState();
+    _mateAudioViewModel = getIt();
+    _mateAudioViewModel.init();
 
     /// TODO 임시 Mate
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -48,16 +53,22 @@ class _MatesFilterPageState extends State<MatesFilterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          _buildBanner,
-          _buildTitle('추천 게임'),
-          _buildGames,
-          _buildTitle('추천 메이트'),
-          if (_users.isNotEmpty) _buildMateCards,
-        ],
-      ),
+    return ChangeNotifierProvider<MateAudioViewModel>(
+      create: (_) => _mateAudioViewModel,
+      child: Consumer<MateAudioViewModel>(builder: (context, viewmodel, _) {
+        _mateAudioViewModel = viewmodel;
+        return Scaffold(
+          body: CustomScrollView(
+            slivers: [
+              _buildBanner,
+              _buildTitle('추천 게임'),
+              _buildGames,
+              _buildTitle('추천 메이트'),
+              if (_users.isNotEmpty) _buildMateCards,
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -132,6 +143,7 @@ class _MatesFilterPageState extends State<MatesFilterPage> {
             final user = _users[index];
             if (randomBoolean) {
               return ProfileCard(
+                id: user.id,
                 isOnline: status,
                 name: user.name,
                 rating: 4.9,
@@ -139,6 +151,7 @@ class _MatesFilterPageState extends State<MatesFilterPage> {
                 description:
                     '원딜 주력 올라이버/3+1서비스중 칼바람 협곡 다 좋아해요!💙🫶🏾 재밌게 겜 하실분 신청해주세요!',
                 cost: 1000,
+                mateAudioViewModel: _mateAudioViewModel,
                 imageUrl: user.profileImageUrl ?? '',
                 onTap: () {
                   context.goNamed('mate',
@@ -147,12 +160,14 @@ class _MatesFilterPageState extends State<MatesFilterPage> {
               );
             } else {
               return ProfileCard(
+                id: user.id,
                 isOnline: status,
                 name: _users[index].name,
                 rating: 4.6,
                 game: '리그오브레전드',
                 description: '브론즈 소농민 대기중',
                 cost: 1100,
+                mateAudioViewModel: _mateAudioViewModel,
                 imageUrl: user.profileImageUrl ?? '',
                 onTap: () {
                   context.goNamed('mate',
@@ -160,6 +175,7 @@ class _MatesFilterPageState extends State<MatesFilterPage> {
                 },
               );
             }
+            return null;
           },
           childCount: _users.length,
         ),

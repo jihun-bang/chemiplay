@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chemiplay/presentation/viewmodels/mate_audio_viewmodel.dart';
 import 'package:chemiplay/presentation/widgets/rating.dart';
 import 'package:chemiplay/utils/text_style.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../utils/colors.dart';
 
 class ProfileCard extends StatefulWidget {
+  final String id;
   final bool isOnline;
   final String name;
   final double rating;
@@ -15,9 +17,11 @@ class ProfileCard extends StatefulWidget {
   final int cost;
   final String imageUrl;
   final VoidCallback? onTap;
+  final MateAudioViewModel mateAudioViewModel;
 
   const ProfileCard({
     super.key,
+    required this.id,
     required this.isOnline,
     required this.name,
     required this.rating,
@@ -25,6 +29,7 @@ class ProfileCard extends StatefulWidget {
     required this.description,
     required this.cost,
     required this.imageUrl,
+    required this.mateAudioViewModel,
     this.onTap,
   });
 
@@ -37,6 +42,7 @@ class _ProfileCardState extends State<ProfileCard> {
 
   @override
   Widget build(BuildContext context) {
+    _isPlay = widget.mateAudioViewModel.userId == widget.id;
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       height: 156,
@@ -86,10 +92,15 @@ class _ProfileCardState extends State<ProfileCard> {
                 color: Colors.white.withOpacity(0.9),
               ),
               child: InkWell(
-                onTap: () {
-                  setState(() {
-                    _isPlay = !_isPlay;
-                  });
+                onTap: () async {
+                  if (!_isPlay) {
+                    await widget.mateAudioViewModel.play(
+                      url: '/assets/audio/test.mp3',
+                      userId: widget.id,
+                    );
+                  } else {
+                    await widget.mateAudioViewModel.pause();
+                  }
                 },
                 child: Row(
                   children: [
@@ -97,6 +108,11 @@ class _ProfileCardState extends State<ProfileCard> {
                       'assets/icons/icon_${_isPlay ? 'pause' : 'play'}.svg',
                       width: 33,
                       height: 33,
+                    ),
+                    SvgPicture.asset(
+                      'assets/icons/icon_play_test.svg',
+                      width: 20,
+                      height: 20,
                     ),
                   ],
                 ),

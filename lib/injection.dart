@@ -4,6 +4,7 @@ import 'package:chemiplay/data/repositories/sendbird_message_repository_impl.dar
 import 'package:chemiplay/domain/usecases/mate_usecase.dart';
 import 'package:chemiplay/presentation/viewmodels/chat_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/login_viewmodel.dart';
+import 'package:chemiplay/presentation/viewmodels/mate_audio_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/mate_together_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/mate_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/my_mate_profile_viewmodel.dart';
@@ -59,6 +60,7 @@ void setupDependencies() {
   getIt.registerSingleton<UserViewModel>(UserViewModel(getIt()));
   getIt.registerSingleton<ChatViewModel>(ChatViewModel(getIt()));
   getIt.registerFactory<MateViewModel>(() => MateViewModel(getIt()));
+  getIt.registerFactory<MateAudioViewModel>(() => MateAudioViewModel());
   getIt.registerFactory<MateTogetherViewModel>(() => MateTogetherViewModel());
   getIt.registerFactory<TimerViewModel>(() => TimerViewModel());
   getIt.registerSingleton<SignupProfileViewModel>(
