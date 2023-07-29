@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chemiplay/presentation/viewmodels/mate_audio_viewmodel.dart';
+import 'package:chemiplay/presentation/widgets/color_progress.dart';
 import 'package:chemiplay/presentation/widgets/rating.dart';
 import 'package:chemiplay/utils/text_style.dart';
 import 'package:flutter/material.dart';
@@ -109,10 +110,12 @@ class _ProfileCardState extends State<ProfileCard> {
                       width: 33,
                       height: 33,
                     ),
-                    SvgPicture.asset(
-                      'assets/icons/icon_play_test.svg',
-                      width: 20,
-                      height: 20,
+                    ColorProgress(
+                      isRun: _isPlay,
+                      duration: widget.mateAudioViewModel.duration,
+                      child: SvgPicture.asset(
+                        'assets/icons/icon_audiowave_on.svg',
+                      ),
                     ),
                   ],
                 ),

@@ -4,6 +4,7 @@ import 'package:chemiplay/injection.dart';
 import 'package:chemiplay/presentation/viewmodels/chat_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/mate_audio_viewmodel.dart';
 import 'package:chemiplay/presentation/viewmodels/mate_viewmodel.dart';
+import 'package:chemiplay/presentation/widgets/color_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -459,12 +460,18 @@ class _MateProfilePageState extends State<MateProfilePage> {
                         width: 33,
                         height: 33,
                       ),
-                      SvgPicture.asset(
-                        'assets/icons/icon_play_test.svg',
-                        width: 20,
-                        height: 20,
+                      ColorProgress(
+                        isRun: _isPlayVoice,
+                        duration: _mateAudioViewModel.duration,
+                        child: SvgPicture.asset(
+                          'assets/icons/icon_audiowave_on.svg',
+                        ),
                       ),
-                      Text(_mateAudioViewModel.getLeftTime()),
+                      Expanded(
+                          child: Text(
+                        _mateAudioViewModel.getLeftTime(),
+                        textAlign: TextAlign.end,
+                      )),
                     ],
                   ),
                 ),

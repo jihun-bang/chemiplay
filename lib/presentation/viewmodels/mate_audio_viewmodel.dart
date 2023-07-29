@@ -25,7 +25,8 @@ class MateAudioViewModel extends ChangeNotifier {
   }
 
   pause() async {
-    await _player.pause();
+    // 음성 재생 Progress와 맞추다보니 pause보다는 stop을 해야 컨트롤이 용이
+    await _player.stop();
     _userId = null;
     notifyListeners();
   }
@@ -39,18 +40,18 @@ class MateAudioViewModel extends ChangeNotifier {
   }
 
   _onDurationChanged(Duration duration) {
-    _duration = duration.inSeconds;
+    _duration = duration.inMilliseconds;
   }
 
   _onPositionChanged(Duration position) {
-    _position = position.inSeconds;
+    _position = position.inMilliseconds;
     notifyListeners();
   }
 
   String getLeftTime() {
-    int totalLeftSecond = _duration - _position;
-    int leftMinute = totalLeftSecond ~/ 60;
-    int leftSecond = totalLeftSecond % 60;
+    int totalLeftMillisecond = _duration - _position;
+    int leftMinute = (totalLeftMillisecond / 1000) ~/ 60;
+    int leftSecond = (totalLeftMillisecond / 1000).ceil() % 60;
     String getTwoDigitString(String stringNumber) {
       if (stringNumber.length == 1) {
         return '0$stringNumber';
