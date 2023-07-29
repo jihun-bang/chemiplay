@@ -62,4 +62,10 @@ class MateAudioViewModel extends ChangeNotifier {
 
     return '${getTwoDigitString(leftMinute.toString())}:${getTwoDigitString(leftSecond.toString())}';
   }
+
+  @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
 }

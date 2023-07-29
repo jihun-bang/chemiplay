@@ -63,6 +63,7 @@ class _MateProfilePageState extends State<MateProfilePage> {
 
   @override
   void dispose() {
+    _mateAudioViewModel.dispose();
     _gamInfoController.dispose();
     _mateViewModel.dispose();
 

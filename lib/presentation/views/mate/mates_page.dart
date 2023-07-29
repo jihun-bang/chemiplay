@@ -53,6 +53,12 @@ class _MatesPageState extends State<MatesPage> {
   }
 
   @override
+  void dispose() {
+    _mateAudioViewModel.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MateAudioViewModel>(
       create: (_) => _mateAudioViewModel,
@@ -155,6 +161,7 @@ class _MatesPageState extends State<MatesPage> {
                 imageUrl: user.profileImageUrl ?? '',
                 mateAudioViewModel: _mateAudioViewModel,
                 onTap: () {
+                  _mateAudioViewModel.pause();
                   context.goNamed('mate',
                       pathParameters: {'id': _users[index].id});
                 },
@@ -171,6 +178,7 @@ class _MatesPageState extends State<MatesPage> {
                 imageUrl: user.profileImageUrl ?? '',
                 mateAudioViewModel: _mateAudioViewModel,
                 onTap: () {
+                  _mateAudioViewModel.pause();
                   context.goNamed('mate',
                       pathParameters: {'id': _users[index].id});
                 },
