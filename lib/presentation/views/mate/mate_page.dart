@@ -447,7 +447,8 @@ class _MateProfilePageState extends State<MateProfilePage> {
                   onTap: () async {
                     if (!_isPlayVoice) {
                       await _mateAudioViewModel.play(
-                        url: '/assets/audio/test.mp3',
+                        url:
+                            'https://firebasestorage.googleapis.com/v0/b/gigi-chemiplay.appspot.com/o/test.mp3?alt=media&token=85ff5cf5-6d59-4a48-a963-d16e8877b1da',
                         userId: widget.id,
                       );
                     } else {
